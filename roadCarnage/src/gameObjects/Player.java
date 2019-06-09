@@ -14,6 +14,7 @@ public class Player extends MovingObject {
     private boolean immortal;
     private int immortal_counter;
 
+
     public Player(float scale, int x, int y, Rectangle borders, PlayerCars car) {
         super(car.getImage(), scale, x, y, car.getSpeed(), borders);
         typeOfCar = car;
@@ -46,8 +47,8 @@ public class Player extends MovingObject {
         return mobility;
     }
 
-    public boolean moveForward() {
-        y -= speed;
+    public boolean moveForward(int delta) {
+        y -= speed*delta*1f/10;
         if (y <= startY()) {
             y = startY();
             return false;
@@ -55,8 +56,8 @@ public class Player extends MovingObject {
         return true;
     }
 
-    public boolean moveBackward() {
-        y += speed;
+    public boolean moveBackward(int delta) {
+        y += speed*delta*1f/10;
         if (y + height >= bordersHeight() + startY()) {
             y = bordersHeight() - height;
             return false;
@@ -64,8 +65,8 @@ public class Player extends MovingObject {
         return true;
     }
 
-    public boolean moveRight() {
-        x += getCurrentMobility();
+    public boolean moveRight(int delta) {
+        x += getCurrentMobility()*delta*1f/10;
         if (x + width >= startX() + bordersWidth()) {
             x = bordersWidth() + startX() - width;
             return false;
@@ -73,8 +74,8 @@ public class Player extends MovingObject {
         return true;
     }
 
-    public boolean moveLeft() {
-        x -= getCurrentMobility();
+    public boolean moveLeft(int delta) {
+        x -= getCurrentMobility()*delta*1f/10;
         if (x <= startX()) {
             x = startX();
             return false;
@@ -126,5 +127,16 @@ public class Player extends MovingObject {
 
     public void setUnbroken(boolean unbroken) {
         this.unbroken = unbroken;
+    }
+
+    @Override
+    public void update(int delta) {
+        if(immortal){
+            immortal_counter += delta;
+            if(immortal_counter >= 5000){
+                immortal = false;
+                immortal_counter = 0;
+            }
+        }
     }
 }

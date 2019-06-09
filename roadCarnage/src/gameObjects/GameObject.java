@@ -54,6 +54,10 @@ public class GameObject {
         this.animation = animation;
     }
 
+    public void update(int delta){
+
+    }
+
     public void update(){
 
     }
