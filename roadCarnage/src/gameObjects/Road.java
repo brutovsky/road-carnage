@@ -7,20 +7,18 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Road extends StaticObject {
 
     private int id;
-    Image road, secondRoad ;
+    Image road, secondRoad;
     int[] duration = {200, 200};
-    float x ,y , yS = -road.getHeight();
+    float x, y, yS = -road.getHeight();
 
     public Road(Image image, float scale, int x, int y, MovingObject player) {
         super(image, scale, x, y, player);
         this.road = image;
         this.secondRoad = image;
-        this.x = (1000-image.getWidth())/2;
+        this.x = (1000 - image.getWidth()) / 2;
         this.y = y;
         road.draw(x, y);
-        secondRoad.draw(x,yS);
-
-
+        secondRoad.draw(x, yS);
 
 
     }
@@ -31,13 +29,13 @@ public class Road extends StaticObject {
         if (input.isKeyDown(Input.KEY_UP)) {
             y += 5 * 1f;
             yS += 5 * 1f;
-            if(y>710) {
+            if (y > 710) {
                 road.draw(x, -854);
-                y=-854;
+                y = -854;
             }
-            if(yS>710) {
+            if (yS > 710) {
                 secondRoad.draw(x, -854);
-                yS=-854;
+                yS = -854;
             }
 
         }

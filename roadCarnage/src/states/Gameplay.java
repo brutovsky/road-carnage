@@ -31,8 +31,6 @@ public class Gameplay extends BasicGameState {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-        Image roadImage = new Image("");
-        Road road = new Road(roadImage, 1,0,0,null);
-        road.update();
+
     }
 }
