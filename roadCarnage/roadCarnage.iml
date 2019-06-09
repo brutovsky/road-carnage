@@ -25,5 +25,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="lwjgl" level="project" />
+    <orderEntry type="library" name="slick" level="project" />
   </component>
 </module>
