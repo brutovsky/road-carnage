@@ -2,10 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="292d2d8b-981e-4d9f-be5d-a03b33857ce9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/states/Game.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/states/Gameplay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roadCarnage.iml" beforeDir="false" afterPath="$PROJECT_DIR$/roadCarnage.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slick_lib/natives/linux/libjinput-linux.so" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/linux/libjinput-linux.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slick_lib/natives/linux/libjinput-linux64.so" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/linux/libjinput-linux64.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slick_lib/natives/linux/liblwjgl.so" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/linux/liblwjgl.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slick_lib/natives/linux/liblwjgl64.so" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/linux/liblwjgl64.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slick_lib/natives/linux/libopenal.so" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/linux/libopenal.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slick_lib/natives/linux/libopenal64.so" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/linux/libopenal64.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slick_lib/natives/macosx/libjinput-osx.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/macosx/libjinput-osx.dylib" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slick_lib/natives/macosx/liblwjgl.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/macosx/liblwjgl.dylib" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slick_lib/natives/macosx/openal.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/macosx/openal.dylib" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slick_lib/natives/solaris/liblwjgl.so" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/solaris/liblwjgl.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slick_lib/natives/solaris/liblwjgl64.so" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/solaris/liblwjgl64.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slick_lib/natives/solaris/libopenal.so" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/solaris/libopenal.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slick_lib/natives/solaris/libopenal64.so" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/solaris/libopenal64.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slick_lib/natives/windows/OpenAL32.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/windows/OpenAL32.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slick_lib/natives/windows/OpenAL64.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/windows/OpenAL64.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slick_lib/natives/windows/jinput-dx8.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/windows/jinput-dx8.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slick_lib/natives/windows/jinput-dx8_64.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/windows/jinput-dx8_64.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slick_lib/natives/windows/jinput-raw.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/windows/jinput-raw.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slick_lib/natives/windows/jinput-raw_64.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/windows/jinput-raw_64.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slick_lib/natives/windows/lwjgl.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/windows/lwjgl.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slick_lib/natives/windows/lwjgl64.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/windows/lwjgl64.dll" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -54,6 +71,17 @@
               <item name="roadCarnage" type="b2602c69:ProjectViewProjectNode" />
               <item name="roadCarnage" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="roadCarnage" type="b2602c69:ProjectViewProjectNode" />
+              <item name="roadCarnage" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="roadCarnage" type="b2602c69:ProjectViewProjectNode" />
+              <item name="roadCarnage" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="jars" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -99,7 +127,7 @@
     <configuration name="Game" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="states.Game" />
       <module name="roadCarnage" />
-      <option name="VM_PARAMETERS" value="-Djava.library.path=slick_lib/natives/windows" />
+      <option name="VM_PARAMETERS" value="-Djava.library.path=lib/natives/windows" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="states.*" />
@@ -126,23 +154,22 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1560077188564</updated>
-      <workItem from="1560077191256" duration="274000" />
+      <workItem from="1560077191256" duration="913000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="274000" />
+    <option name="totallyTimeSpent" value="913000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Image Layers" />
       <window_info id="Designer" />
       <window_info id="UI Designer" />
       <window_info id="Capture Tool" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24966443" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24966443" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
@@ -152,7 +179,7 @@
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3286119" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3286119" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -182,9 +209,77 @@
   </component>
   <component name="masterDetails">
     <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>roadCarnage</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
       <state key="ProjectJDKs.UI">
         <settings>
           <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
           <splitter-proportions>
             <option name="proportions">
               <list>
