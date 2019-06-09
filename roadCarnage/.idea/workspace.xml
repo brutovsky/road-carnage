@@ -1,29 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="292d2d8b-981e-4d9f-be5d-a03b33857ce9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/slick_lib/natives/linux/libjinput-linux.so" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/linux/libjinput-linux.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slick_lib/natives/linux/libjinput-linux64.so" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/linux/libjinput-linux64.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slick_lib/natives/linux/liblwjgl.so" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/linux/liblwjgl.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slick_lib/natives/linux/liblwjgl64.so" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/linux/liblwjgl64.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slick_lib/natives/linux/libopenal.so" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/linux/libopenal.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slick_lib/natives/linux/libopenal64.so" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/linux/libopenal64.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slick_lib/natives/macosx/libjinput-osx.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/macosx/libjinput-osx.dylib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slick_lib/natives/macosx/liblwjgl.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/macosx/liblwjgl.dylib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slick_lib/natives/macosx/openal.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/macosx/openal.dylib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slick_lib/natives/solaris/liblwjgl.so" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/solaris/liblwjgl.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slick_lib/natives/solaris/liblwjgl64.so" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/solaris/liblwjgl64.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slick_lib/natives/solaris/libopenal.so" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/solaris/libopenal.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slick_lib/natives/solaris/libopenal64.so" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/solaris/libopenal64.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slick_lib/natives/windows/OpenAL32.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/windows/OpenAL32.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slick_lib/natives/windows/OpenAL64.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/windows/OpenAL64.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slick_lib/natives/windows/jinput-dx8.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/windows/jinput-dx8.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slick_lib/natives/windows/jinput-dx8_64.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/windows/jinput-dx8_64.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slick_lib/natives/windows/jinput-raw.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/windows/jinput-raw.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slick_lib/natives/windows/jinput-raw_64.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/windows/jinput-raw_64.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slick_lib/natives/windows/lwjgl.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/windows/lwjgl.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slick_lib/natives/windows/lwjgl64.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/natives/windows/lwjgl64.dll" afterDir="false" />
-    </list>
+    <list default="true" id="292d2d8b-981e-4d9f-be5d-a03b33857ce9" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -51,7 +29,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-8" />
     <option name="width" value="977" />
     <option name="height" value="1038" />
@@ -75,12 +53,6 @@
               <item name="roadCarnage" type="b2602c69:ProjectViewProjectNode" />
               <item name="roadCarnage" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="roadCarnage" type="b2602c69:ProjectViewProjectNode" />
-              <item name="roadCarnage" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="jars" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -154,12 +126,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1560077188564</updated>
-      <workItem from="1560077191256" duration="913000" />
+      <workItem from="1560077191256" duration="1426000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="913000" />
+    <option name="totallyTimeSpent" value="1426000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
