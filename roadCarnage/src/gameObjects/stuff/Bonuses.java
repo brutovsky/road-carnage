@@ -6,11 +6,13 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 public enum Bonuses {
-    CHERRY("res/bonuses/cherry_sprite_list.png","CHERRY",3, 1);
+    CHERRY("res/bonuses/cherry_sprite_list.png","CHERRY",3, 1,Constants.BONUS_CHERRY);
     private Animation animation;
     private Image image;
     private SpriteSheet sprite_sheet;
-    Bonuses(String path, String name, int columns,int lines) {
+    private int collision;
+    Bonuses(String path, String name, int columns,int lines,int collision) {
+        this.collision = collision;
         animation = new Animation();
         try {
             image = new Image(path);
@@ -40,5 +42,9 @@ public enum Bonuses {
 
     public void setAnimation(Animation animation) {
         this.animation = animation;
+    }
+
+    public int collision(){
+        return collision;
     }
 }
