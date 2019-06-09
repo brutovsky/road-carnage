@@ -7,6 +7,8 @@ public class Game extends StateBasedGame{
 
     public static final String GAME_NAME = "Road Carnage";
     public static final int GAMEPLAY_STATE = 0;
+    public static final int WIDTH = 1000;
+    public static final int HEIGHT = 700;
 
     public static void main(String[] args) {
         Game game = new Game(GAME_NAME);
@@ -24,6 +26,7 @@ public class Game extends StateBasedGame{
     public Game(String gameName){
         super(gameName);
         addState(new Gameplay(GAMEPLAY_STATE));
+
     }
 
     @Override
