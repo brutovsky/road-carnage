@@ -1,8 +1,7 @@
 package states;
 
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
+import gameObjects.Road;
+import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -10,7 +9,8 @@ public class Gameplay extends BasicGameState {
 
     private int id;
 
-    public Gameplay(int id){
+
+    public Gameplay(int id) {
         this.id = id;
     }
 
@@ -31,6 +31,8 @@ public class Gameplay extends BasicGameState {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-
+        Image roadImage = new Image("");
+        Road road = new Road(roadImage, 1,0,0,null);
+        road.update();
     }
 }
