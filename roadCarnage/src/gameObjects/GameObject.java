@@ -9,7 +9,7 @@ public class GameObject {
     protected int height;
     private Image image;
 
-    public GameObject(Image image,float scale){
+    public GameObject(Image image, float scale) {
         this.image = image.getScaledCopy(scale);
         x = 0;
         y = 0;
@@ -17,7 +17,7 @@ public class GameObject {
         height = this.image.getHeight();
     }
 
-    public GameObject(Image image,float scale,int x, int y){
+    public GameObject(Image image, float scale, int x, int y) {
         this.image = image.getScaledCopy(scale);
         this.x = x;
         this.y = y;
@@ -25,4 +25,11 @@ public class GameObject {
         height = this.image.getHeight();
     }
 
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
 }
