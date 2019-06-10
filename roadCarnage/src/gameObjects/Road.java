@@ -8,12 +8,14 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class Road extends GameObject {
     public static final String PATH = "\\res\\roadSkins\\desert.jpg";
-    public static final float X = 195;
+    public static final float X = 200;
     public static final float Y = 0;
-    public static final float WIDTH = 610;
+    public static final float WIDTH = 600;
     public static final float HEIGHT = 700;
     public static final float STRIP_LENGTH = 100;
     public static final float ROUGH_ROAD_LENGTH = 70;
+    public static final Rectangle DANGER_ZONE_LEFT = new Rectangle(X,Y,57,states.Game.HEIGHT);
+    public static final Rectangle DANGER_ZONE_RIGHT= new Rectangle(737,0,63,states.Game.HEIGHT);
     public static final int STRIP1 = 2;
     public static final int STRIP2 = 3;
     public static final int STRIP3 = 4;

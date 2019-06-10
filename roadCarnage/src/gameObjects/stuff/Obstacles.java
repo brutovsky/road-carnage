@@ -12,7 +12,8 @@ public enum Obstacles {
     CACTUS("res/obstacles/cactus", "CACTUS", 1, 1, Obstacle.ONE_LINE_SIZE,Constants.MINUS_DURABILITY),
     DUNA("res/obstacles/duna.png", "DUNA", 1, 1,Obstacle.THREE_LINES_SIZE,Constants.MINUS_DURABILITY),
     KONUS("res/obstacles/stop.png", "KONUS", 1, 1,Obstacle.ONE_LINE_SIZE,Constants.MINUS_DURABILITY),
-    HOLE("res/obstacles/hole.png", "HOLE", 1, 1,Obstacle.ONE_LINE_SIZE,Constants.DEAD_END);
+    HOLE("res/obstacles/hole.png", "HOLE", 1, 1,Obstacle.ONE_LINE_SIZE,Constants.DEAD_END),
+    TRAMPOLINE("res/obstacles/trampoline.png", "TRAMPOLINE", 5, 1,Obstacle.ONE_LINE_SIZE,Constants.JUMP);
     private Animation animation;
     private Image image;
     private SpriteSheet sprite_sheet;
