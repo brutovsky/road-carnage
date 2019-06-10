@@ -23,7 +23,7 @@ public enum Obstacles {
         try {
             if (path.endsWith("cactus")) {
                 Random random = new Random();
-                image = new Image(path + random.nextInt(5) + 1 + "png");
+                image = new Image(path + (random.nextInt(5) + 1) + ".png");
                 animation.addFrame(image, 100);
                 return;
             } else {

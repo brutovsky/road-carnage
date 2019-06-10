@@ -5,6 +5,7 @@ import gameObjects.*;
 
 import gameObjects.Road;
 
+import gameObjects.stuff.Obstacles;
 import org.newdawn.slick.*;
 import gameObjects.stuff.Bonuses;
 import gameObjects.stuff.Cars;
@@ -28,6 +29,7 @@ public class Gameplay extends BasicGameState {
     Car car3;
 
     Bonus cherry;
+    Obstacle cactus;
     //
 
     ArrayList<GameObject> obstacles = new ArrayList();
@@ -44,17 +46,18 @@ public class Gameplay extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-
         player = new Player(0.5f, 350, 500, Road.FULL_ROAD, PlayerCars.ANISTON);
         road = new Road();
         car1 = new Car(1f, road.getStripX(Road.STRIP1), 10, Road.ROAD, Cars.TRUCK);
         car2 = new Car(1f, road.getStripX(Road.STRIP2), 10, Road.ROAD, Cars.TAXI);
         car3 = new Car(1f, road.getStripX(Road.STRIP3), 10, Road.ROAD, Cars.TRUCK);
         cherry = new Bonus(1f, 500, 100,Bonuses.CHERRY);
+        cactus = new Obstacle(1f,700,10, Obstacles.CACTUS);
         obstacles.add(car1);
         obstacles.add(car2);
         obstacles.add(car3);
         obstacles.add(cherry);
+        obstacles.add(cactus);
   }
 
     @Override
@@ -71,9 +74,11 @@ public class Gameplay extends BasicGameState {
 
         Input input = gameContainer.getInput();
         if (input.isKeyDown(Input.KEY_UP)) {
+            player.setSpeed(player.getSpeed()*2);
             player.moveForward(i);
         }
         if (input.isKeyDown(Input.KEY_DOWN)) {
+            player.setSpeed(player.getSpeed()/2);
             player.moveBackward(i);
         }
         if (input.isKeyDown(Input.KEY_RIGHT)) {
@@ -86,7 +91,7 @@ public class Gameplay extends BasicGameState {
         road.update(player.getSpeed(),i);
 
         for(GameObject go:obstacles){
-            go.update();
+            go.update(player.getSpeed(),i);
         }
         for (GameObject object : obstacles) {
             if (player.checkForCollision(object)) {

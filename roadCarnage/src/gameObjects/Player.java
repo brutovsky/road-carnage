@@ -19,7 +19,7 @@ public class Player extends MovingObject {
 
 
     public Player(float scale, int x, int y, Rectangle borders, PlayerCars car) {
-        super(car.getImage(), scale, x, y);
+        super(car.getImage(), scale, x, y,car.getSpeed(),borders);
         typeOfCar = car;
         durability = typeOfCar.getDurability();
         mobility = typeOfCar.getMobility();
@@ -28,7 +28,6 @@ public class Player extends MovingObject {
         }
         immortal = false;
         immortal_counter = 0;
-
         try {
             Image temp = new Image(typeOfCar.getPath()+"Immortal"+".png").getScaledCopy(scale);
             immortalAnimation = new Animation();
@@ -60,7 +59,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveForward(int delta) {
-        y -= speed * delta * 1f / 10;
+        y -= speed * delta/ Constants.DIVIDE_DELTA;
         if (y <= startY()) {
             y = startY();
             return false;
@@ -69,7 +68,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveBackward(int delta) {
-        y += speed * delta * 1f / 10;
+        y += speed * delta/ Constants.DIVIDE_DELTA;
         if (y + height >= bordersHeight() + startY()) {
             y = bordersHeight() - height;
             return false;
@@ -78,7 +77,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveRight(int delta) {
-        x += getCurrentMobility() * delta * 1f / 10;
+        x += getCurrentMobility() * delta/ Constants.DIVIDE_DELTA;
         if (x + width >= startX() + bordersWidth()) {
             x = bordersWidth() + startX() - width;
             return false;
@@ -87,7 +86,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveLeft(int delta) {
-        x -= getCurrentMobility() * delta * 1f / 10;
+        x -= getCurrentMobility() * delta / Constants.DIVIDE_DELTA;
         if (x <= startX()) {
             x = startX();
             return false;
@@ -148,6 +147,11 @@ public class Player extends MovingObject {
 
     public boolean isImmortal() {
         return immortal;
+    }
+
+    @Override
+    public float getSpeed() {
+        return typeOfCar.getSpeed();
     }
 
     @Override

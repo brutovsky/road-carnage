@@ -1,5 +1,6 @@
 package gameObjects;
 
+import gameObjects.stuff.Constants;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
@@ -18,7 +19,7 @@ public class Road extends GameObject {
     public static final int STRIP3 = 4;
     public static final int ROUGH_ROAD1 = 1;
     public static final int ROUGH_ROAD2 = 5;
-    public static final int SPEED = 1;
+    //public static final int SPEED = 1;
     public static final Rectangle FULL_ROAD = new Rectangle(X, Y, WIDTH, HEIGHT);
     public static final Rectangle ROAD = new Rectangle(X + ROUGH_ROAD_LENGTH, Y, WIDTH - 2 * ROUGH_ROAD_LENGTH, HEIGHT);
     private int id;
@@ -46,8 +47,8 @@ public class Road extends GameObject {
     }*/
 
     public void update(float shift, int delta) {
-        y += shift* delta * SPEED;
-        yS += shift * delta * SPEED;
+        y += shift* delta / Constants.DIVIDE_DELTA;
+        yS += shift * delta / Constants.DIVIDE_DELTA;
         if (y > 700) {
             y = -1500;
         }

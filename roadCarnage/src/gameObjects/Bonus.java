@@ -1,6 +1,7 @@
 package gameObjects;
 
 import gameObjects.stuff.Bonuses;
+import gameObjects.stuff.Constants;
 
 public class Bonus extends GameObject {
 
@@ -12,6 +13,11 @@ public class Bonus extends GameObject {
 
     public void draw(){
         getAnimation().draw(x,y);
+    }
+
+    @Override
+    public void update(float shift, int delta) {
+        y += shift*delta/ Constants.DIVIDE_DELTA;
     }
 
     @Override
