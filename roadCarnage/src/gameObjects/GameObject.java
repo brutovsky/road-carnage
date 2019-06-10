@@ -22,8 +22,12 @@ public class GameObject {
     }
 
     public GameObject(Animation animation, float scale, float x, float y) {
-        this.image = animation.getImage(0);
-        this.animation = animation;
+        Animation temp = new Animation();
+        for(int i =0;i < animation.getFrameCount();i++){
+            temp.addFrame(animation.getImage(i).getScaledCopy(scale),animation.getDuration(i));
+        }
+        this.image = temp.getImage(0);
+        this.animation = temp;
         this.x = x;
         this.y = y;
         width = this.image.getWidth();
@@ -46,11 +50,11 @@ public class GameObject {
         this.animation = animation;
     }
 
-    public void update(int delta){
+    public void update(float shift, int delta){
 
     }
 
-    public void update(){
+    public void update(int delta){
 
     }
 

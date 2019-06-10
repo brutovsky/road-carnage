@@ -1,12 +1,11 @@
 package gameObjects;
-
 import gameObjects.stuff.Bonuses;
 import gameObjects.stuff.Constants;
 
-public class Bonus extends GameObject {
+public class Decoration extends GameObject {
 
     Bonuses typeOf;
-    public Bonus(float scale, int x, int y, Bonuses bonus) {
+    public Decoration(float scale, int x, int y, Bonuses bonus) {
         super(bonus.getAnimation(), scale, x, y);
         typeOf = bonus;
     }
@@ -23,5 +22,10 @@ public class Bonus extends GameObject {
     @Override
     public int collisionOccured() {
         return typeOf.collision();
+    }
+    private void drawDecorations() {
+
+        //  Decorations.TREE.getImage().draw(10, (yD ));
+        coordinates.add(yD);
     }
 }

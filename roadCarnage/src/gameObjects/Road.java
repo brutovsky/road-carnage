@@ -1,21 +1,25 @@
 package gameObjects;
 
+import gameObjects.stuff.Constants;
+import gameObjects.stuff.Decorations;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 
 public class Road extends GameObject {
-    public static final String PATH = "\\res\\roadSkins\\desert" +
-            ".png";
-    public static final float X = 195;
+    public static final String PATH = "\\res\\roadSkins\\backSide.png";
+    public static final float X = 200;
     public static final float Y = 0;
-    public static final float WIDTH = 610;
+    public static final float WIDTH = 600;
     public static final float HEIGHT = 700;
     public static final float STRIP_LENGTH = 100;
     public static final float ROUGH_ROAD_LENGTH = 70;
+    public static final Rectangle DANGER_ZONE_LEFT = new Rectangle(X, Y, 57, states.Game.HEIGHT);
+    public static final Rectangle DANGER_ZONE_RIGHT = new Rectangle(737, 0, 63, states.Game.HEIGHT);
     public static final int STRIP1 = 2;
     public static final int STRIP2 = 3;
     public static final int STRIP3 = 4;
@@ -36,20 +40,11 @@ public class Road extends GameObject {
     }
 
 
-    public void update(float shift) {
-        y += shift * 5f;
-        yS += shift * 5f;
-        if (y > 700) {
-            y = -800;
-        }
-        if (yS > 700) {
-            yS = -800;
-        }
-    }
-
     public void update(float shift, int delta) {
-        y += shift * delta * SPEED;
-        yS += shift * delta * SPEED;
+        y += shift * delta / Constants.DIVIDE_DELTA;
+        yS += shift * delta / Constants.DIVIDE_DELTA;
+
+
         if (y > 700) {
             y = -1500;
         }
@@ -88,4 +83,6 @@ public class Road extends GameObject {
         secondRoad.draw(x, yS);
 
     }
+
+
 }

@@ -14,8 +14,11 @@ public class Player extends MovingObject {
     private PlayerCars typeOfCar;
     private boolean unbroken;
     private boolean immortal;
-    private int immortal_counter;
+    private boolean jumping;
+    private int counter;
     private Animation immortalAnimation;
+    private Animation jumpAnimation;
+    private int jumpAnimDur = 50;
 
 
     public Player(float scale, int x, int y, Rectangle borders, PlayerCars car) {
@@ -27,16 +30,27 @@ public class Player extends MovingObject {
             unbroken = true;
         }
         immortal = false;
-        immortal_counter = 0;
-
+        counter = 0;
         try {
-            Image temp = new Image(typeOfCar.getPath()+"Immortal"+".png").getScaledCopy(scale);
+            Image temp = new Image(typeOfCar.getPath() + "Immortal" + ".png").getScaledCopy(scale);
             immortalAnimation = new Animation();
-            immortalAnimation.addFrame(getImage(),100);
-            immortalAnimation.addFrame(temp,100);
+            immortalAnimation.addFrame(getImage(), 100);
+            immortalAnimation.addFrame(temp, 100);
         } catch (SlickException e) {
             e.printStackTrace();
         }
+
+        jumpAnimation = new Animation();
+        jumpAnimation.addFrame(getImage().getScaledCopy(1.1f), jumpAnimDur);
+        jumpAnimation.addFrame(getImage().getScaledCopy(1.15f), jumpAnimDur);
+        jumpAnimation.addFrame(getImage().getScaledCopy(1.20f), jumpAnimDur);
+        jumpAnimation.addFrame(getImage().getScaledCopy(1.25f), jumpAnimDur);
+        jumpAnimation.addFrame(getImage().getScaledCopy(1.30f), jumpAnimDur);
+        jumpAnimation.addFrame(getImage().getScaledCopy(1.25f), jumpAnimDur);
+        jumpAnimation.addFrame(getImage().getScaledCopy(1.20f), jumpAnimDur);
+        jumpAnimation.addFrame(getImage().getScaledCopy(1.15f), jumpAnimDur);
+        jumpAnimation.addFrame(getImage().getScaledCopy(1.1f), jumpAnimDur);
+        jumpAnimation.setLooping(false);
     }
 
     public int getDurability() {
@@ -60,7 +74,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveForward(int delta) {
-        y -= speed * delta * 1f / 10;
+        y -= speed * delta / Constants.DIVIDE_DELTA;
         if (y <= startY()) {
             y = startY();
             return false;
@@ -69,7 +83,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveBackward(int delta) {
-        y += speed * delta * 1f / 10;
+        y += speed * delta / Constants.DIVIDE_DELTA;
         if (y + height >= bordersHeight() + startY()) {
             y = bordersHeight() - height;
             return false;
@@ -78,7 +92,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveRight(int delta) {
-        x += getCurrentMobility() * delta * 1f / 10;
+        x += getCurrentMobility() * delta / Constants.DIVIDE_DELTA;
         if (x + width >= startX() + bordersWidth()) {
             x = bordersWidth() + startX() - width;
             return false;
@@ -87,7 +101,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveLeft(int delta) {
-        x -= getCurrentMobility() * delta * 1f / 10;
+        x -= getCurrentMobility() * delta / Constants.DIVIDE_DELTA;
         if (x <= startX()) {
             x = startX();
             return false;
@@ -96,7 +110,9 @@ public class Player extends MovingObject {
     }
 
     public void draw() {
-        if (immortal) {
+        if (jumping) {
+            jumpAnimation.draw(x, y);
+        } else if (immortal) {
             immortalAnimation.draw(x, y);
         } else {
             getImage().draw(x, y);
@@ -123,6 +139,26 @@ public class Player extends MovingObject {
         return (true);
     }
 
+    public boolean checkForCollision(Rectangle object) {
+        float thisTop = y;
+        float thisBottom = thisTop + height;
+        float thisLeft = x;
+        float thisRight = thisLeft + width;
+
+        float otherTop = object.getY();
+        float otherBottom = otherTop + object.getHeight();
+        float otherLeft = object.getX();
+        float otherRight = otherLeft + object.getWidth();
+
+        if (thisBottom < otherTop) return (false);
+        if (thisTop > otherBottom) return (false);
+
+        if (thisRight < otherLeft) return (false);
+        if (thisLeft > otherRight) return (false);
+
+        return (true);
+    }
+
     public void collision(int collision) {
         switch (collision) {
             case Constants
@@ -132,8 +168,26 @@ public class Player extends MovingObject {
                     unbroken = false;
                 } else {
                     immortal = true;
-                    immortal_counter = 3;
+                    counter = 3;
                 }
+                break;
+            }
+            case Constants
+                    .DEAD_END: {
+                durability = 0;
+                if (durability <= 0) {
+                    unbroken = false;
+                } else {
+                    immortal = true;
+                    counter = 3;
+                }
+                break;
+            }
+            case Constants
+                    .JUMP: {
+                jumping = true;
+                setAnimation(jumpAnimation);
+                break;
             }
         }
     }
@@ -151,13 +205,34 @@ public class Player extends MovingObject {
     }
 
     @Override
+    public float getSpeed() {
+        return typeOfCar.getSpeed();
+    }
+
+    @Override
     public void update(int delta) {
         if (immortal) {
-            immortal_counter += delta;
-            if (immortal_counter >= 5000) {
+            counter += delta;
+            if (counter >= 5000) {
                 immortal = false;
-                immortal_counter = 0;
+                counter = 0;
             }
+        } else if (jumping) {
+            counter += (jumpAnimation.getFrameCount() * jumpAnimDur) / 30;
+            if (counter >= jumpAnimation.getFrameCount() * jumpAnimDur) {
+                jumping = false;
+            }
+        }
+
+    }
+
+    public boolean isJumping() {
+        return jumping;
+    }
+
+    public void dangerZone() {
+        if (Constants.random.nextInt(1001) < Constants.RISK) {
+            collision(Constants.MINUS_DURABILITY);
         }
     }
 }
