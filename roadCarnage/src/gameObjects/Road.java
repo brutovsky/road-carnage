@@ -27,9 +27,9 @@ public class Road extends StaticObject {
 
     @Override
     public void update() {
-        y += player.speed * 3f;
-        yS += player.speed* 3f;
-        if (y > 800) {
+        y += player.speed * 5f;
+        yS += player.speed* 5f;
+        if (y >800) {
             road.draw(x, -800);
             y = -800;
         }

@@ -24,8 +24,9 @@ public class SidesOfRoad extends StaticObject {
 
         @Override
         public void update() {
-            y += player.speed * 3f;
-            yS += player.speed* 3f;
+
+            y += player.speed * 5f;
+            yS += player.speed* 5f;
             if (y > 800) {
                 backSide.draw(x, -800);
                 y = -800;
