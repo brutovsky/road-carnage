@@ -1,9 +1,6 @@
 package gameObjects;
 
-import gameObjects.MovingObject;
-import gameObjects.StaticObject;
 import gameObjects.stuff.Bonuses;
-import org.newdawn.slick.Image;
 
 public class Bonus extends GameObject {
 
