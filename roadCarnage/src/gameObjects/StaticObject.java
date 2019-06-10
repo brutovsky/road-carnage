@@ -14,10 +14,11 @@ public class StaticObject extends GameObject {
 
     public StaticObject(Animation animation, float scale, int x, int y, MovingObject player) {
         super(animation, scale, x, y);
+        relationTo = player;
     }
 
     public void setRelationTo(MovingObject object) {
-        object.getSpeed();
+        relationTo = object;
     }
 
     public void update() {

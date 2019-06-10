@@ -1,20 +1,23 @@
 package gameObjects.stuff;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 public enum PlayerCars {
-    ANISTON("res/playerCars/playerCar.png", "Aniston", 1f, 1, 5f, 0);
+    ANISTON("res/playerCars/playerCar", "Aniston", 1f, 5, 5f, 0);
     private Image image;
     private float speed;
     private int durability;
     private float mobility;
     private int price;
     private String name;
+    private String path;
 
     PlayerCars(String path, String name, float speed, int durability, float mobility, int price) {
+        this.path = path;
         try {
-            image = new Image(path);
+            image = new Image(path+".png");
         } catch (SlickException e) {
             e.printStackTrace();
         }
@@ -23,6 +26,9 @@ public enum PlayerCars {
         this.mobility = mobility;
         this.price = price;
         this.name = name;
+
+
+
     }
 
     public Image getImage() {
@@ -43,5 +49,9 @@ public enum PlayerCars {
 
     public String getName() {
         return name;
+    }
+
+    public String getPath() {
+        return path;
     }
 }

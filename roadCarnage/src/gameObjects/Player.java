@@ -2,7 +2,9 @@ package gameObjects;
 
 import gameObjects.stuff.Constants;
 import gameObjects.stuff.PlayerCars;
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 public class Player extends MovingObject {
@@ -13,6 +15,7 @@ public class Player extends MovingObject {
     private boolean unbroken;
     private boolean immortal;
     private int immortal_counter;
+    private Animation immortalAnimation;
 
 
     public Player(float scale, int x, int y, Rectangle borders, PlayerCars car) {
@@ -20,11 +23,20 @@ public class Player extends MovingObject {
         typeOfCar = car;
         durability = typeOfCar.getDurability();
         mobility = typeOfCar.getMobility();
-        if(durability >= 0){
+        if (durability >= 0) {
             unbroken = true;
         }
         immortal = false;
         immortal_counter = 0;
+
+        try {
+            Image temp = new Image(typeOfCar.getPath()+"Immortal"+".png").getScaledCopy(scale);
+            immortalAnimation = new Animation();
+            immortalAnimation.addFrame(getImage(),100);
+            immortalAnimation.addFrame(temp,100);
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
     }
 
     public int getDurability() {
@@ -48,7 +60,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveForward(int delta) {
-        y -= speed*delta*1f/10;
+        y -= speed * delta * 1f / 10;
         if (y <= startY()) {
             y = startY();
             return false;
@@ -57,7 +69,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveBackward(int delta) {
-        y += speed*delta*1f/10;
+        y += speed * delta * 1f / 10;
         if (y + height >= bordersHeight() + startY()) {
             y = bordersHeight() - height;
             return false;
@@ -66,7 +78,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveRight(int delta) {
-        x += getCurrentMobility()*delta*1f/10;
+        x += getCurrentMobility() * delta * 1f / 10;
         if (x + width >= startX() + bordersWidth()) {
             x = bordersWidth() + startX() - width;
             return false;
@@ -75,7 +87,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveLeft(int delta) {
-        x -= getCurrentMobility()*delta*1f/10;
+        x -= getCurrentMobility() * delta * 1f / 10;
         if (x <= startX()) {
             x = startX();
             return false;
@@ -84,7 +96,11 @@ public class Player extends MovingObject {
     }
 
     public void draw() {
-        getImage().draw(x, y);
+        if (immortal) {
+            immortalAnimation.draw(x, y);
+        } else {
+            getImage().draw(x, y);
+        }
     }
 
     public boolean checkForCollision(GameObject object) {
@@ -112,9 +128,10 @@ public class Player extends MovingObject {
             case Constants
                     .MINUS_DURABILITY: {
                 durability--;
-                if(durability <= 0){
+                if (durability <= 0) {
                     unbroken = false;
-                }else{
+                } else {
+                    immortal = true;
                     immortal_counter = 3;
                 }
             }
@@ -129,11 +146,15 @@ public class Player extends MovingObject {
         this.unbroken = unbroken;
     }
 
+    public boolean isImmortal() {
+        return immortal;
+    }
+
     @Override
     public void update(int delta) {
-        if(immortal){
+        if (immortal) {
             immortal_counter += delta;
-            if(immortal_counter >= 5000){
+            if (immortal_counter >= 5000) {
                 immortal = false;
                 immortal_counter = 0;
             }

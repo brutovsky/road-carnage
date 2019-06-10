@@ -1,6 +1,7 @@
 package states;
 
 import gameObjects.*;
+import gameObjects.stuff.Constants;
 import org.newdawn.slick.*;
 import gameObjects.stuff.Bonuses;
 import gameObjects.stuff.Cars;
@@ -41,49 +42,64 @@ public class Gameplay extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        player = new Player(0.5f,350, 500,Road.FULL_ROAD,PlayerCars.ANISTON);
-        road = new Road(new Image("\\res\\roadSkins\\road.bmp"), 1,0,0,player);
-        car1 = new Car(1f,road.getStripX(Road.STRIP1),10,Road.ROAD,Cars.TRUCK);
-        car2 = new Car(1f,road.getStripX(Road.STRIP2),10,Road.ROAD,Cars.TAXI);
-        car3 = new Car(1f,road.getStripX(Road.STRIP3),10,Road.ROAD,Cars.TRUCK);
+        player = new Player(0.5f, 350, 500, Road.FULL_ROAD, PlayerCars.ANISTON);
+        road = new Road(new Image("\\res\\roadSkins\\road.bmp"), 1, 0, 0, player);
+        car1 = new Car(1f, road.getStripX(Road.STRIP1), 10, Road.ROAD, Cars.TRUCK);
+        car2 = new Car(1f, road.getStripX(Road.STRIP2), 10, Road.ROAD, Cars.TAXI);
+        car3 = new Car(1f, road.getStripX(Road.STRIP3), 10, Road.ROAD, Cars.TRUCK);
+        cherry = new Bonus(1f, 500, 100, player, Bonuses.CHERRY);
         obstacles.add(car1);
         obstacles.add(car2);
         obstacles.add(car3);
+        obstacles.add(cherry);
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         road.draw();
-        car1.draw();
-        car2.draw();
-        car3.draw();
+        for(GameObject go:obstacles){
+            go.draw();
+        }
         player.draw();
     }
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         Input input = gameContainer.getInput();
-        if(input.isKeyDown(Input.KEY_UP)){
+        if (input.isKeyDown(Input.KEY_UP)) {
             player.moveForward(i);
         }
-        if(input.isKeyDown(Input.KEY_DOWN)){
+        if (input.isKeyDown(Input.KEY_DOWN)) {
             player.moveBackward(i);
         }
-        if(input.isKeyDown(Input.KEY_RIGHT)){
+        if (input.isKeyDown(Input.KEY_RIGHT)) {
             player.moveRight(i);
         }
-        if(input.isKeyDown(Input.KEY_LEFT)){
+        if (input.isKeyDown(Input.KEY_LEFT)) {
             player.moveLeft(i);
         }
         road.update(i);
-        car1.update();
-        car2.update();
-        car3.update();
-        for(GameObject object:obstacles){
-            if(player.checkForCollision(object)){
-                player.setSpeed(0);
-                System.out.println("COLLISION");
+        for(GameObject go:obstacles){
+            go.update();
+        }
+        for (GameObject object : obstacles) {
+            if (player.checkForCollision(object)) {
+                if (player.isImmortal()) {
+                } else {
+                    if (object instanceof Car) {
+                        player.collision(((Car) object).collisionOccured());
+                        System.out.println("COLLISION");
+                        obstacles.remove(object);
+                        break;
+                    } else if (object instanceof Bonus) {
+                        player.collision(((Bonus) object).collisionOccured());
+                        System.out.println("BONUS");
+                        obstacles.remove(object);
+                        break;
+                    }
+                }
             }
         }
+        player.update(i);
     }
 }
