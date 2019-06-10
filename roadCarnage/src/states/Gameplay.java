@@ -69,8 +69,6 @@ public class Gameplay extends BasicGameState {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-
-        //road.update();
         Input input = gameContainer.getInput();
         if (input.isKeyDown(Input.KEY_UP)) {
             player.moveForward(i);
