@@ -34,7 +34,7 @@ public class Road extends GameObject {
     }
 
 
-    public void update(float shift) {
+    /*public void update(float shift) {
         y += shift * 5f;
         yS += shift * 5f;
         if (y > 700) {
@@ -43,7 +43,7 @@ public class Road extends GameObject {
         if (yS > 700) {
             yS = -800;
         }
-    }
+    }*/
 
     public void update(float shift, int delta) {
         y += shift* delta * SPEED;

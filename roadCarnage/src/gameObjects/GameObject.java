@@ -46,11 +46,11 @@ public class GameObject {
         this.animation = animation;
     }
 
-    public void update(int delta){
+    public void update(float shift, int delta){
 
     }
 
-    public void update(){
+    public void update(int delta){
 
     }
 

@@ -7,7 +7,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
-public class Player extends GameObject implements Movable{
+public class Player extends MovingObject {
 
     private int durability;
     private float mobility;
