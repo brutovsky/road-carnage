@@ -84,7 +84,7 @@ public class Gameplay extends BasicGameState {
         if (input.isKeyDown(Input.KEY_LEFT)) {
             player.moveLeft(i);
         }
-        road.update(i);
+        road.update();
         for(GameObject go:obstacles){
             go.update();
         }
