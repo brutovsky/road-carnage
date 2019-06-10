@@ -40,8 +40,8 @@ public enum Bonuses {
         return animation;
     }
 
-    public void setAnimation(Animation animation) {
-        this.animation = animation;
+    public Image getImage() {
+        return image;
     }
 
     public int collision(){
