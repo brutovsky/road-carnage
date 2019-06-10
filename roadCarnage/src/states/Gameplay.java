@@ -1,13 +1,15 @@
 package states;
 
+
 import gameObjects.*;
-import gameObjects.stuff.Constants;
+
+import gameObjects.Road;
+
 import org.newdawn.slick.*;
 import gameObjects.stuff.Bonuses;
 import gameObjects.stuff.Cars;
 import gameObjects.stuff.PlayerCars;
-import org.newdawn.slick.*;
-import org.newdawn.slick.geom.Rectangle;
+
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -21,6 +23,7 @@ public class Gameplay extends BasicGameState {
 
     // Test
     Road road;
+    SidesOfRoad sides;
     Car car1;
     Car car2;
     Car car3;
@@ -52,10 +55,12 @@ public class Gameplay extends BasicGameState {
         obstacles.add(car2);
         obstacles.add(car3);
         obstacles.add(cherry);
+
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+        sides.draw();
         road.draw();
         for(GameObject go:obstacles){
             go.draw();
@@ -65,6 +70,10 @@ public class Gameplay extends BasicGameState {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+        car1.update();
+        car2.update();
+        car3.update();
+        road.update();
         Input input = gameContainer.getInput();
         if (input.isKeyDown(Input.KEY_UP)) {
             player.moveForward(i);
