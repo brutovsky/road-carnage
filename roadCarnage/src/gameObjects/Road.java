@@ -17,7 +17,7 @@ public class Road extends StaticObject {
     public static final int STRIP3 = 3;
     public static final int ROUGH_ROAD1 = 0;
     public static final int ROUGH_ROAD2 = 4;
-    public static final int SPEED = 21;
+    public static final int SPEED = 1;
     public static final Rectangle FULL_ROAD = new Rectangle(X, Y, WIDTH, HEIGHT);
     public static final Rectangle ROAD = new Rectangle(X + ROUGH_ROAD_LENGTH, Y, WIDTH - 2 * ROUGH_ROAD_LENGTH, HEIGHT);
     private int id;
