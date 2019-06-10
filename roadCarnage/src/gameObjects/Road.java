@@ -17,8 +17,9 @@ public class Road extends StaticObject {
     public static final int STRIP3 = 3;
     public static final int ROUGH_ROAD1 = 0;
     public static final int ROUGH_ROAD2 = 4;
-    public static final Rectangle FULL_ROAD = new Rectangle(X,Y,WIDTH,HEIGHT);
-    public static final Rectangle ROAD = new Rectangle(X+ROUGH_ROAD_LENGTH,Y,WIDTH - 2*ROUGH_ROAD_LENGTH,HEIGHT);
+    public static final int SPEED = 1;
+    public static final Rectangle FULL_ROAD = new Rectangle(X, Y, WIDTH, HEIGHT);
+    public static final Rectangle ROAD = new Rectangle(X + ROUGH_ROAD_LENGTH, Y, WIDTH - 2 * ROUGH_ROAD_LENGTH, HEIGHT);
     private int id;
     Image road, secondRoad;
     float x, y, yS;
@@ -30,36 +31,32 @@ public class Road extends StaticObject {
         this.road = image;
         this.secondRoad = image;
         this.x = (1000 - image.getWidth()) / 2;
-        this.y = y;
+        this.y = -500;
         this.player = player;
         yS = -road.getHeight();
 
-
     }
 
-    @Override
-    public void update() {
-        y += player.speed * 3f;
-        yS += player.speed* 3f;
-        if (y > 800) {
 
+    public void update() {
+        y += player.speed * 5f;
+        yS += player.speed * 5f;
+        if (y > 700) {
             y = -800;
         }
-        if (yS > 800) {
-
+        if (yS > 700) {
             yS = -800;
         }
     }
 
-    @Override
     public void update(int delta) {
-        y += player.speed *  delta / 10;
-        yS += player.speed *  delta / 10;
-        if (y > 710) {
-            y = -854;
+        y += player.speed * delta * SPEED;
+        yS += player.speed * delta * SPEED;
+        if (y > 700) {
+            y = -1500;
         }
-        if (yS > 710) {
-            yS = -854;
+        if (yS > 700) {
+            yS = -1500;
         }
     }
 

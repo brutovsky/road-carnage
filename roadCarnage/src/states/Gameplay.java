@@ -23,7 +23,6 @@ public class Gameplay extends BasicGameState {
 
     // Test
     Road road;
-    SidesOfRoad sides;
     Car car1;
     Car car2;
     Car car3;
@@ -45,8 +44,9 @@ public class Gameplay extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+
         player = new Player(0.5f, 350, 500, Road.FULL_ROAD, PlayerCars.ANISTON);
-        road = new Road(new Image("\\res\\roadSkins\\road.bmp"), 1, 0, 0, player);
+        road = new Road(new Image("\\res\\roadSkins\\desert.jpg"), 1, 0, -50, player);
         car1 = new Car(1f, road.getStripX(Road.STRIP1), 10, Road.ROAD, Cars.TRUCK);
         car2 = new Car(1f, road.getStripX(Road.STRIP2), 10, Road.ROAD, Cars.TAXI);
         car3 = new Car(1f, road.getStripX(Road.STRIP3), 10, Road.ROAD, Cars.TRUCK);
@@ -55,8 +55,7 @@ public class Gameplay extends BasicGameState {
         obstacles.add(car2);
         obstacles.add(car3);
         obstacles.add(cherry);
-
-    }
+  }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
@@ -69,6 +68,7 @@ public class Gameplay extends BasicGameState {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+
         Input input = gameContainer.getInput();
         if (input.isKeyDown(Input.KEY_UP)) {
             player.moveForward(i);
@@ -82,7 +82,9 @@ public class Gameplay extends BasicGameState {
         if (input.isKeyDown(Input.KEY_LEFT)) {
             player.moveLeft(i);
         }
-        road.update();
+
+        road.update(i);
+
         for(GameObject go:obstacles){
             go.update();
         }
