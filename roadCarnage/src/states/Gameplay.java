@@ -50,7 +50,7 @@ public class Gameplay extends BasicGameState {
         car1 = new Car(1f, road.getStripX(Road.STRIP1), 10, Road.ROAD, Cars.TRUCK);
         car2 = new Car(1f, road.getStripX(Road.STRIP2), 10, Road.ROAD, Cars.TAXI);
         car3 = new Car(1f, road.getStripX(Road.STRIP3), 10, Road.ROAD, Cars.TRUCK);
-        cherry = new Bonus(1f, 500, 100, player, Bonuses.CHERRY);
+        cherry = new Bonus(1f, 500, 100,Bonuses.CHERRY);
         obstacles.add(car1);
         obstacles.add(car2);
         obstacles.add(car3);
