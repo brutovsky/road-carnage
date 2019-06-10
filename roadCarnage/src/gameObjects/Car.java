@@ -1,6 +1,7 @@
 package gameObjects;
 
 import gameObjects.stuff.Cars;
+import gameObjects.stuff.Constants;
 import org.newdawn.slick.geom.Rectangle;
 
 public class Car extends MovingObject{
@@ -21,5 +22,10 @@ public class Car extends MovingObject{
     @Override
     public void draw() {
         getImage().draw(x,y);
+    }
+
+    @Override
+    public int collisionOccured() {
+        return Constants.MINUS_DURABILITY;
     }
 }

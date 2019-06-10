@@ -1,5 +1,6 @@
 package gameObjects;
 
+import gameObjects.stuff.Constants;
 import org.newdawn.slick.*;
 
 public class GameObject {
@@ -53,11 +54,19 @@ public class GameObject {
         this.animation = animation;
     }
 
+    public void update(int delta){
+
+    }
+
     public void update(){
 
     }
 
     public void draw(){
 
+    }
+
+    public int collisionOccured(){
+        return Constants.NO_OUTPUT;
     }
 }
