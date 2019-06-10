@@ -5,13 +5,12 @@ import gameObjects.StaticObject;
 import gameObjects.stuff.Bonuses;
 import org.newdawn.slick.Image;
 
-public class Bonus extends StaticObject {
+public class Bonus extends GameObject {
 
     Bonuses typeOf;
-    public Bonus(float scale, int x, int y, MovingObject player, Bonuses bonus) {
-        super(bonus.getAnimation(), scale, x, y, player);
+    public Bonus(float scale, int x, int y, Bonuses bonus) {
+        super(bonus.getAnimation(), scale, x, y);
         typeOf = bonus;
-
     }
 
     public void draw(){

@@ -11,14 +11,6 @@ public class GameObject {
     private Image image;
     private Animation animation;
 
-    public GameObject(Image image, float scale) {
-        this.image = image.getScaledCopy(scale);
-        x = 0;
-        y = 0;
-        width = this.image.getWidth();
-        height = this.image.getHeight();
-    }
-
     public GameObject(Image image, float scale, float x, float y) {
         this.image = image.getScaledCopy(scale);
         this.animation = new Animation();
