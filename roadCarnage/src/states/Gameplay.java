@@ -60,7 +60,6 @@ public class Gameplay extends BasicGameState {
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        sides.draw();
         road.draw();
         for(GameObject go:obstacles){
             go.draw();
@@ -70,10 +69,8 @@ public class Gameplay extends BasicGameState {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-        car1.update();
-        car2.update();
-        car3.update();
-        road.update();
+
+        //road.update();
         Input input = gameContainer.getInput();
         if (input.isKeyDown(Input.KEY_UP)) {
             player.moveForward(i);
