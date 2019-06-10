@@ -7,7 +7,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
-public class Player extends MovingObject {
+public class Player extends GameObject implements Movable{
 
     private int durability;
     private float mobility;
@@ -19,7 +19,7 @@ public class Player extends MovingObject {
 
 
     public Player(float scale, int x, int y, Rectangle borders, PlayerCars car) {
-        super(car.getImage(), scale, x, y, car.getSpeed(), borders);
+        super(car.getImage(), scale, x, y);
         typeOfCar = car;
         durability = typeOfCar.getDurability();
         mobility = typeOfCar.getMobility();
