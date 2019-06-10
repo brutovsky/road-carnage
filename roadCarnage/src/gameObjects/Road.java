@@ -5,42 +5,38 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
 
-public class Road extends StaticObject {
+public class Road extends GameObject {
+    public static final String PATH = "\\res\\roadSkins\\desert.jpg";
     public static final float X = 195;
     public static final float Y = 0;
     public static final float WIDTH = 610;
     public static final float HEIGHT = 700;
     public static final float STRIP_LENGTH = 100;
     public static final float ROUGH_ROAD_LENGTH = 70;
-    public static final int STRIP1 = 1;
-    public static final int STRIP2 = 2;
-    public static final int STRIP3 = 3;
-    public static final int ROUGH_ROAD1 = 0;
-    public static final int ROUGH_ROAD2 = 4;
+    public static final int STRIP1 = 2;
+    public static final int STRIP2 = 3;
+    public static final int STRIP3 = 4;
+    public static final int ROUGH_ROAD1 = 1;
+    public static final int ROUGH_ROAD2 = 5;
     public static final int SPEED = 1;
     public static final Rectangle FULL_ROAD = new Rectangle(X, Y, WIDTH, HEIGHT);
     public static final Rectangle ROAD = new Rectangle(X + ROUGH_ROAD_LENGTH, Y, WIDTH - 2 * ROUGH_ROAD_LENGTH, HEIGHT);
     private int id;
     Image road, secondRoad;
-    float x, y, yS;
-    MovingObject player;
+    float  yS;
 
 
-    public Road(Image image, float scale, int x, int y, MovingObject player) {
-        super(image, scale, x, y, player);
-        this.road = image;
-        this.secondRoad = image;
-        this.x = (1000 - image.getWidth()) / 2;
-        this.y = -500;
-        this.player = player;
+    public Road() throws SlickException{
+        super(new Image(PATH), 1f, (1000 - new Image(PATH).getWidth()) / 2, -500);
+        this.road = getImage();
+        this.secondRoad = getImage();
         yS = -road.getHeight();
-
     }
 
 
-    public void update() {
-        y += player.speed * 5f;
-        yS += player.speed * 5f;
+    public void update(float shift) {
+        y += shift * 5f;
+        yS += shift * 5f;
         if (y > 700) {
             y = -800;
         }
@@ -49,9 +45,9 @@ public class Road extends StaticObject {
         }
     }
 
-    public void update(int delta) {
-        y += player.speed * delta * SPEED;
-        yS += player.speed * delta * SPEED;
+    public void update(float shift, int delta) {
+        y += shift* delta * SPEED;
+        yS += shift * delta * SPEED;
         if (y > 700) {
             y = -1500;
         }
@@ -78,7 +74,7 @@ public class Road extends StaticObject {
                 return X + ROUGH_ROAD_LENGTH + 3 * STRIP_LENGTH;
             }
             default: {
-                return 0;
+                return strip%5;
             }
         }
     }

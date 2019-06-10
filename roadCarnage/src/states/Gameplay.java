@@ -46,7 +46,7 @@ public class Gameplay extends BasicGameState {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
 
         player = new Player(0.5f, 350, 500, Road.FULL_ROAD, PlayerCars.ANISTON);
-        road = new Road(new Image("\\res\\roadSkins\\desert.jpg"), 1, 0, -50, player);
+        road = new Road();
         car1 = new Car(1f, road.getStripX(Road.STRIP1), 10, Road.ROAD, Cars.TRUCK);
         car2 = new Car(1f, road.getStripX(Road.STRIP2), 10, Road.ROAD, Cars.TAXI);
         car3 = new Car(1f, road.getStripX(Road.STRIP3), 10, Road.ROAD, Cars.TRUCK);
@@ -83,7 +83,7 @@ public class Gameplay extends BasicGameState {
             player.moveLeft(i);
         }
 
-        road.update(i);
+        road.update(player.getSpeed(),i);
 
         for(GameObject go:obstacles){
             go.update();
