@@ -1,10 +1,7 @@
 package states;
 
-import gameObjects.Road;
+import gameObjects.*;
 import org.newdawn.slick.*;
-import gameObjects.Bonus;
-import gameObjects.Car;
-import gameObjects.Player;
 import gameObjects.stuff.Bonuses;
 import gameObjects.stuff.Cars;
 import gameObjects.stuff.PlayerCars;
@@ -23,6 +20,7 @@ public class Gameplay extends BasicGameState {
     Rectangle rect1;
     Rectangle rect2;
     Road road;
+    SidesOfRoad sides;
     Car car1;
     Car car2;
     Car car3;
@@ -50,11 +48,14 @@ public class Gameplay extends BasicGameState {
         car3 = new Car(1f,(int)rect2.getX()+rect2.getWidth()/1.3f,10,rect2, Cars.TRUCK);
         cherry = new Bonus(0.5f,400,50,player, Bonuses.CHERRY);
         road = new Road(new Image("\\res\\roadSkins\\road.bmp"), 1,0,0,player);
+        sides = new SidesOfRoad(new Image("\\res\\roadSkins\\backSide.jpg"), 1,0,0,player);
+
 
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+        sides.draw();
         road.draw();
         player.draw();
         car1.draw();
@@ -69,6 +70,7 @@ public class Gameplay extends BasicGameState {
         car1.update();
         car2.update();
         car3.update();
+        sides.update();
         road.update();
         Input input = gameContainer.getInput();
         if(input.isKeyDown(Input.KEY_UP)){
