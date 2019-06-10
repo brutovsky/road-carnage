@@ -10,6 +10,6 @@ public class Constants {
     public static final int JUMP = 30;
     public static final int DEAD_END = 100;
     public static final Random random = new Random();
-    public static final int RISK = 2;
+    public static final int RISK = 4;
     private Constants(){};
 }

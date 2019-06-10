@@ -34,7 +34,9 @@ public class Gameplay extends BasicGameState {
     Obstacle conus;
     Obstacle hole;
     Obstacle tramp;
+    Obstacle duna;
     int durability;
+    int speed_koef;
     //
 
     ArrayList<GameObject> obstacles = new ArrayList();
@@ -51,6 +53,7 @@ public class Gameplay extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+        speed_koef =1;
         player = new Player(0.5f, 350, 500, Road.FULL_ROAD, PlayerCars.ANISTON);
         road = new Road();
         car1 = new Car(1f, road.getStripX(Road.STRIP1), 10, Road.ROAD, Cars.TRUCK);
@@ -61,16 +64,20 @@ public class Gameplay extends BasicGameState {
         conus = new Obstacle(0.08f, 490, 10, Obstacles.KONUS);
         hole = new Obstacle(1f, road.getStripX(2) + 5, 10, Obstacles.HOLE);
         tramp = new Obstacle(1f,road.getStripX(3)+5,50,Obstacles.TRAMPOLINE);
+        duna = new Obstacle(0.95f,road.getStripX(2),0,Obstacles.DUNA);
         //obstacles.add(car1);
         //obstacles.add(car2);
         //obstacles.add(car3);
         //obstacles.add(cherry);
         //obstacles.add(cactus);
         //obstacles.add(conus);
-        obstacles.add(hole);
+        obstacles.add(duna);
+        //obstacles.add(hole);
         obstacles.add(tramp);
         durability = player.getCurrentDurability();
     }
+
+
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
@@ -84,30 +91,30 @@ public class Gameplay extends BasicGameState {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-
+        if(!player.isUnbroken()){
+            speed_koef =0;
+        }
         Input input = gameContainer.getInput();
         if (input.isKeyDown(Input.KEY_UP)) {
-            player.setSpeed(player.getSpeed() * 2);
-            player.moveForward(i);
+            player.moveForward(i*speed_koef);
         }
         if (input.isKeyDown(Input.KEY_DOWN)) {
-            player.setSpeed(player.getSpeed() / 2);
-            player.moveBackward(i);
+            player.moveBackward(i*speed_koef);
         }
         if (input.isKeyDown(Input.KEY_RIGHT)) {
-            player.moveRight(i);
+            player.moveRight(i*speed_koef);
         }
         if (input.isKeyDown(Input.KEY_LEFT)) {
-            player.moveLeft(i);
+            player.moveLeft(i*speed_koef);
         }
 
-        road.update(player.getSpeed(), i);
+        road.update(player.getSpeed()*speed_koef, i);
 
         for (GameObject go : obstacles) {
-            go.update(player.getSpeed(), i);
+            go.update(player.getSpeed()*speed_koef, i);
         }
 
-        if (!player.isImmortal()|| !player.isJumping()) {
+        if (!player.isImmortal()|| !player.isJumping() || !player.isFalling()) {
             if(player.checkForCollision(Road.DANGER_ZONE_LEFT)) {
                 player.dangerZone();
             }else if(player.checkForCollision(Road.DANGER_ZONE_RIGHT)) {
@@ -117,7 +124,7 @@ public class Gameplay extends BasicGameState {
 
             for (GameObject object : obstacles) {
                 if (player.checkForCollision(object)) {
-                    if (player.isImmortal() || player.isJumping()) {
+                    if (player.isImmortal() || player.isJumping()|| player.isFalling()) {
                         break;
                     } else {
                         if (object instanceof Car) {

@@ -6,9 +6,11 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
 
+
 public class Road extends GameObject {
-    public static final String PATH = "\\res\\roadSkins\\desert.jpg";
+
     public static final float X = 200;
+    public static final String PATH = "res\\roadSkins\\desert" + ".png";
     public static final float Y = 0;
     public static final float WIDTH = 600;
     public static final float HEIGHT = 700;
@@ -21,15 +23,13 @@ public class Road extends GameObject {
     public static final int STRIP3 = 4;
     public static final int ROUGH_ROAD1 = 1;
     public static final int ROUGH_ROAD2 = 5;
-    //public static final int SPEED = 1;
     public static final Rectangle FULL_ROAD = new Rectangle(X, Y, WIDTH, HEIGHT);
     public static final Rectangle ROAD = new Rectangle(X + ROUGH_ROAD_LENGTH, Y, WIDTH - 2 * ROUGH_ROAD_LENGTH, HEIGHT);
     private int id;
     Image road, secondRoad;
-    float  yS;
+    float yS;
 
-
-    public Road() throws SlickException{
+    public Road() throws SlickException {
         super(new Image(PATH), 1f, (1000 - new Image(PATH).getWidth()) / 2, -500);
         this.road = getImage();
         this.secondRoad = getImage();
@@ -77,7 +77,7 @@ public class Road extends GameObject {
                 return X + ROUGH_ROAD_LENGTH + 3 * STRIP_LENGTH;
             }
             default: {
-                return strip%5;
+                return strip % 5;
             }
         }
     }
@@ -87,7 +87,6 @@ public class Road extends GameObject {
     public void draw() {
         road.draw(x, y);
         secondRoad.draw(x, yS);
+
     }
-
-
 }
