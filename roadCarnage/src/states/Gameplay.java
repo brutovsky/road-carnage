@@ -11,6 +11,7 @@ import gameObjects.stuff.Bonuses;
 import gameObjects.stuff.Cars;
 import gameObjects.stuff.PlayerCars;
 
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -56,22 +57,22 @@ public class Gameplay extends BasicGameState {
         speed_koef =1;
         player = new Player(0.5f, 350, 500, Road.FULL_ROAD, PlayerCars.ANISTON);
         road = new Road();
-        car1 = new Car(1f, road.getStripX(Road.STRIP1), 10, Road.ROAD, Cars.TRUCK);
-        car2 = new Car(1f, road.getStripX(Road.STRIP2), 10, Road.ROAD, Cars.TAXI);
-        car3 = new Car(1f, road.getStripX(Road.STRIP3), 10, Road.ROAD, Cars.TRUCK);
+        car1 = new Car(1f, Road.STRIP1, 10, Road.ROAD, Cars.TRUCK);
+        car2 = new Car(1f, Road.STRIP2, 10, Road.ROAD, Cars.TAXI);
+        car3 = new Car(1f, Road.STRIP3, 10, Road.ROAD, Cars.TRUCK);
         cherry = new Bonus(1f, 500, 100, Bonuses.CHERRY);
         cactus = new Obstacle(1f, 700, 10, Obstacles.CACTUS);
         conus = new Obstacle(0.08f, 490, 10, Obstacles.KONUS);
-        hole = new Obstacle(1f, road.getStripX(2) + 5, 10, Obstacles.HOLE);
-        tramp = new Obstacle(1f,road.getStripX(3)+5,50,Obstacles.TRAMPOLINE);
-        duna = new Obstacle(0.95f,road.getStripX(2),0,Obstacles.DUNA);
+        hole = new Obstacle(1f, Road.STRIP2, 10, Obstacles.HOLE);
+        tramp = new Obstacle(1f,Road.X,Road.Y,Obstacles.TRAMPOLINE);
+        duna = new Obstacle(0.95f,Road.STRIP2,0,Obstacles.DUNA);
         //obstacles.add(car1);
         //obstacles.add(car2);
         //obstacles.add(car3);
         //obstacles.add(cherry);
         //obstacles.add(cactus);
         //obstacles.add(conus);
-        obstacles.add(duna);
+        //obstacles.add(duna);
         //obstacles.add(hole);
         obstacles.add(tramp);
         durability = player.getCurrentDurability();
@@ -87,6 +88,7 @@ public class Gameplay extends BasicGameState {
         }
         player.draw();
         graphics.drawString("" + durability, 0, 0);
+        graphics.draw(new Rectangle(Road.X+Road.WIDTH/2,Road.Y, 100,100));
     }
 
     @Override

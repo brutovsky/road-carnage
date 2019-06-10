@@ -10,21 +10,36 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Road extends GameObject {
 
     public static final float X = 200;
+
     public static final String PATH = "res\\roadSkins\\desert" + ".png";
     public static final float Y = 0;
-    public static final float WIDTH = 600;
+
+    public static final float ROUGH_ROAD_WIDTH = 56;
+    public static final float BLACK_LINE_WIDTH = 13;
+    public static final float YELLOW_LINE_WIDTH = 11;
+    public static final float CENTER_LINES_WIDTH = 25;
     public static final float HEIGHT = 700;
-    public static final float STRIP_LENGTH = 100;
-    public static final float ROUGH_ROAD_LENGTH = 70;
-    public static final Rectangle DANGER_ZONE_LEFT = new Rectangle(X,Y,57,states.Game.HEIGHT);
-    public static final Rectangle DANGER_ZONE_RIGHT= new Rectangle(737,0,63,states.Game.HEIGHT);
+    public static final float STRIP_LENGTH = 101;
+
+    public static final float LINE1 = X;
+    public static final float LINE2 = X+ROUGH_ROAD_WIDTH+BLACK_LINE_WIDTH;
+    public static final float LINE3 = X+ROUGH_ROAD_WIDTH+BLACK_LINE_WIDTH+STRIP_LENGTH+YELLOW_LINE_WIDTH;
+    public static final float LINE4 = X+ROUGH_ROAD_WIDTH+BLACK_LINE_WIDTH+2*STRIP_LENGTH+YELLOW_LINE_WIDTH+CENTER_LINES_WIDTH;
+    public static final float LINE5 = X+ROUGH_ROAD_WIDTH+BLACK_LINE_WIDTH+3*STRIP_LENGTH+2*YELLOW_LINE_WIDTH + CENTER_LINES_WIDTH;
+    public static final float LINE6 = X+ROUGH_ROAD_WIDTH+2*BLACK_LINE_WIDTH+4*STRIP_LENGTH+2*YELLOW_LINE_WIDTH + CENTER_LINES_WIDTH;
+    public static final Rectangle DANGER_ZONE_LEFT = new Rectangle(X,Y,ROUGH_ROAD_WIDTH,HEIGHT);
+    public static final Rectangle DANGER_ZONE_RIGHT= new Rectangle(LINE6,Y,ROUGH_ROAD_WIDTH,HEIGHT);
+    public static final float WIDTH = 2*ROUGH_ROAD_WIDTH+2*BLACK_LINE_WIDTH+4*STRIP_LENGTH+2*YELLOW_LINE_WIDTH + CENTER_LINES_WIDTH;
+    public static final float ROAD_END = X + WIDTH;
+    public static final float CENTR = X + WIDTH/2;
     public static final int STRIP1 = 2;
     public static final int STRIP2 = 3;
     public static final int STRIP3 = 4;
+    public static final int STRIP4 = 5;
     public static final int ROUGH_ROAD1 = 1;
-    public static final int ROUGH_ROAD2 = 5;
+    public static final int ROUGH_ROAD2 = 6;
     public static final Rectangle FULL_ROAD = new Rectangle(X, Y, WIDTH, HEIGHT);
-    public static final Rectangle ROAD = new Rectangle(X + ROUGH_ROAD_LENGTH, Y, WIDTH - 2 * ROUGH_ROAD_LENGTH, HEIGHT);
+    public static final Rectangle ROAD = new Rectangle(X + ROUGH_ROAD_WIDTH, Y, WIDTH - 2 * ROUGH_ROAD_WIDTH, HEIGHT);
     private int id;
     Image road, secondRoad;
     float yS;
@@ -56,29 +71,6 @@ public class Road extends GameObject {
         }
         if (yS > 700) {
             yS = -1500;
-        }
-    }
-
-    public float getStripX(int strip) {
-        switch (strip) {
-            case STRIP1: {
-                return X + ROUGH_ROAD_LENGTH;
-            }
-            case STRIP2: {
-                return X + ROUGH_ROAD_LENGTH + STRIP_LENGTH + 10;
-            }
-            case STRIP3: {
-                return X + ROUGH_ROAD_LENGTH + 2 * STRIP_LENGTH + 40;
-            }
-            case ROUGH_ROAD1: {
-                return X;
-            }
-            case ROUGH_ROAD2: {
-                return X + ROUGH_ROAD_LENGTH + 3 * STRIP_LENGTH;
-            }
-            default: {
-                return strip % 5;
-            }
         }
     }
 
