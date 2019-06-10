@@ -30,6 +30,8 @@ public class Gameplay extends BasicGameState {
 
     Bonus cherry;
     Obstacle cactus;
+    Obstacle conus;
+    Obstacle hole;
     //
 
     ArrayList<GameObject> obstacles = new ArrayList();
@@ -53,11 +55,16 @@ public class Gameplay extends BasicGameState {
         car3 = new Car(1f, road.getStripX(Road.STRIP3), 10, Road.ROAD, Cars.TRUCK);
         cherry = new Bonus(1f, 500, 100,Bonuses.CHERRY);
         cactus = new Obstacle(1f,700,10, Obstacles.CACTUS);
+        conus = new Obstacle(0.08f,490,10, Obstacles.KONUS);
+        hole = new Obstacle(1f,road.getStripX(2)+5,10, Obstacles.HOLE);;
         obstacles.add(car1);
         obstacles.add(car2);
         obstacles.add(car3);
         obstacles.add(cherry);
         obstacles.add(cactus);
+        obstacles.add(conus);
+        obstacles.add(hole);
+
   }
 
     @Override
