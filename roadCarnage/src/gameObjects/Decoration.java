@@ -1,31 +1,25 @@
 package gameObjects;
+
 import gameObjects.stuff.Bonuses;
 import gameObjects.stuff.Constants;
+import gameObjects.stuff.Decorations;
 
 public class Decoration extends GameObject {
 
-    Bonuses typeOf;
-    public Decoration(float scale, int x, int y, Bonuses bonus) {
-        super(bonus.getAnimation(), scale, x, y);
+    Decorations typeOf;
+
+    public Decoration(float scale, int x, int y, Decorations bonus) {
+        super(bonus.getImage(), scale, x, y);
         typeOf = bonus;
     }
 
-    public void draw(){
-        getAnimation().draw(x,y);
+    public void draw() {
+        getImage().draw(x, y);
     }
 
     @Override
     public void update(float shift, int delta) {
-        y += shift*delta/ Constants.DIVIDE_DELTA;
+        y += shift * delta / Constants.DIVIDE_DELTA;
     }
 
-    @Override
-    public int collisionOccured() {
-        return typeOf.collision();
-    }
-    private void drawDecorations() {
-
-        //  Decorations.TREE.getImage().draw(10, (yD ));
-        coordinates.add(yD);
-    }
 }

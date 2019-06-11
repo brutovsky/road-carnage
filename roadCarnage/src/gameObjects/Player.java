@@ -15,10 +15,13 @@ public class Player extends MovingObject {
     private boolean unbroken;
     private boolean immortal;
     private boolean jumping;
+    private boolean falling;
     private int counter;
     private Animation immortalAnimation;
     private Animation jumpAnimation;
+    private Animation fallAnimation;
     private int jumpAnimDur = 50;
+    private int fallAnimDur = 100;
 
 
     public Player(float scale, int x, int y, Rectangle borders, PlayerCars car) {
@@ -46,11 +49,31 @@ public class Player extends MovingObject {
         jumpAnimation.addFrame(getImage().getScaledCopy(1.20f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.25f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.30f), jumpAnimDur);
+        jumpAnimation.addFrame(getImage().getScaledCopy(1.35f), jumpAnimDur);
+        jumpAnimation.addFrame(getImage().getScaledCopy(1.40f), jumpAnimDur);
+        jumpAnimation.addFrame(getImage().getScaledCopy(1.45f), jumpAnimDur);
+        jumpAnimation.addFrame(getImage().getScaledCopy(1.50f), jumpAnimDur);
+        jumpAnimation.addFrame(getImage().getScaledCopy(1.45f), jumpAnimDur);
+        jumpAnimation.addFrame(getImage().getScaledCopy(1.40f), jumpAnimDur);
+        jumpAnimation.addFrame(getImage().getScaledCopy(1.30f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.25f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.20f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.15f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.1f), jumpAnimDur);
         jumpAnimation.setLooping(false);
+
+        fallAnimation = new Animation();
+        fallAnimation.addFrame(getImage().getScaledCopy(0.9f), fallAnimDur);
+        fallAnimation.addFrame(getImage().getScaledCopy(0.8f), fallAnimDur);
+        fallAnimation.addFrame(getImage().getScaledCopy(0.7f), fallAnimDur);
+        fallAnimation.addFrame(getImage().getScaledCopy(0.6f), fallAnimDur);
+        fallAnimation.addFrame(getImage().getScaledCopy(0.5f), fallAnimDur);
+        fallAnimation.addFrame(getImage().getScaledCopy(0.4f), fallAnimDur);
+        fallAnimation.addFrame(getImage().getScaledCopy(0.3f), fallAnimDur);
+        fallAnimation.addFrame(getImage().getScaledCopy(0.2f), fallAnimDur);
+        fallAnimation.addFrame(getImage().getScaledCopy(0.1f), fallAnimDur);
+        fallAnimation.addFrame(getImage().getScaledCopy(0.05f), fallAnimDur);
+        fallAnimation.setLooping(false);
     }
 
     public int getDurability() {
@@ -114,7 +137,11 @@ public class Player extends MovingObject {
             jumpAnimation.draw(x, y);
         } else if (immortal) {
             immortalAnimation.draw(x, y);
-        } else {
+        } else if(falling){
+            y -= 0.5;
+            fallAnimation.draw(x,y);
+        }
+        else {
             getImage().draw(x, y);
         }
     }
@@ -175,12 +202,9 @@ public class Player extends MovingObject {
             case Constants
                     .DEAD_END: {
                 durability = 0;
-                if (durability <= 0) {
-                    unbroken = false;
-                } else {
-                    immortal = true;
-                    counter = 3;
-                }
+                unbroken = false;
+                falling = true;
+                setAnimation(fallAnimation);
                 break;
             }
             case Constants
@@ -189,6 +213,7 @@ public class Player extends MovingObject {
                 setAnimation(jumpAnimation);
                 break;
             }
+
         }
     }
 
@@ -218,9 +243,14 @@ public class Player extends MovingObject {
                 counter = 0;
             }
         } else if (jumping) {
-            counter += (jumpAnimation.getFrameCount() * jumpAnimDur) / 30;
+            counter += (jumpAnimation.getFrameCount() * jumpAnimDur) / 60;
             if (counter >= jumpAnimation.getFrameCount() * jumpAnimDur) {
                 jumping = false;
+            }
+        } else if (falling) {
+            counter += (fallAnimation.getFrameCount() * fallAnimDur) / 40;
+            if (counter >= jumpAnimation.getFrameCount() * fallAnimDur) {
+                falling = false;
             }
         }
 
@@ -228,6 +258,10 @@ public class Player extends MovingObject {
 
     public boolean isJumping() {
         return jumping;
+    }
+
+    public boolean isFalling() {
+        return falling;
     }
 
     public void dangerZone() {
