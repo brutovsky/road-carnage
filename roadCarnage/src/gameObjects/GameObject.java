@@ -6,8 +6,8 @@ import org.newdawn.slick.*;
 public class GameObject {
     protected float x;
     protected float y;
-    protected int width;
-    protected int height;
+    protected float width;
+    protected float height;
     private Image image;
     private Animation animation;
 
@@ -15,7 +15,7 @@ public class GameObject {
         this.image = image.getScaledCopy(scale);
         this.animation = new Animation();
         animation.addFrame(image,100);
-        this.x = x;
+        this.x = x - width/2;
         this.y = y;
         width = this.image.getWidth();
         height = this.image.getHeight();
