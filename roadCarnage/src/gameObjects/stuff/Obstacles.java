@@ -18,6 +18,7 @@ public enum Obstacles {
     private Image image;
     private SpriteSheet sprite_sheet;
     private int collision;
+
     private int size;
 
     Obstacles(String path, String name, int columns, int lines, int size, int collision) {
