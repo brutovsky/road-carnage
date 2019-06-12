@@ -24,7 +24,7 @@ public class Player extends MovingObject {
     private int fallAnimDur = 100;
 
 
-    public Player(float scale, int x, int y, Rectangle borders, PlayerCars car) {
+    public Player(float scale, float x, float y, Rectangle borders, PlayerCars car) {
         super(car.getImage(), scale, x, y, car.getSpeed(), borders);
         typeOfCar = car;
         durability = typeOfCar.getDurability();

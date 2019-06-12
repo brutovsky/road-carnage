@@ -44,7 +44,7 @@ public class Gameplay extends BasicGameState {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         speed_koef = 1;
-        player = new Player(0.5f, 350, 500, Road.FULL_ROAD, PlayerCars.ANISTON);
+        player = new Player(0.5f, Road.LINE1, 500, Road.FULL_ROAD, PlayerCars.ANISTON);
         road = new Road();
     }
 
