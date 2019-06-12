@@ -1,5 +1,5 @@
 package gameObjects;
 
-public class LevelGenerator {
+public abstract class LevelGenerator {
 
 }
