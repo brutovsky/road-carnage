@@ -6,6 +6,7 @@ import org.newdawn.slick.SlickException;
 
 public enum PlayerCars {
     ANISTON("res/playerCars/playerCar", "Aniston", 1f, 5, 1f, 0);
+    //TANK("res/playerCars/tank", "Aniston", 1f, 5, 1f, 0);
     private Image image;
     private float speed;
     private int durability;

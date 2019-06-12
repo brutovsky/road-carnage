@@ -6,7 +6,6 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
 
-
 public class Road extends GameObject {
 
     public static final float X = 200;
@@ -22,16 +21,16 @@ public class Road extends GameObject {
     public static final float STRIP_LENGTH = 101;
 
     public static final float LINE1 = X;
-    public static final float LINE2 = X+ROUGH_ROAD_WIDTH+BLACK_LINE_WIDTH + STRIP_LENGTH/2;
-    public static final float LINE3 = X+ROUGH_ROAD_WIDTH+BLACK_LINE_WIDTH+1.5f*STRIP_LENGTH+YELLOW_LINE_WIDTH;
-    public static final float LINE4 = X+ROUGH_ROAD_WIDTH+BLACK_LINE_WIDTH+2.5f*STRIP_LENGTH+YELLOW_LINE_WIDTH+CENTER_LINES_WIDTH;
-    public static final float LINE5 = X+ROUGH_ROAD_WIDTH+BLACK_LINE_WIDTH+3.5f*STRIP_LENGTH+2*YELLOW_LINE_WIDTH + CENTER_LINES_WIDTH;
-    public static final float LINE6 = X+ROUGH_ROAD_WIDTH+2*BLACK_LINE_WIDTH+4*STRIP_LENGTH+2*YELLOW_LINE_WIDTH + CENTER_LINES_WIDTH;
-    public static final Rectangle DANGER_ZONE_LEFT = new Rectangle(X,Y,ROUGH_ROAD_WIDTH,HEIGHT);
-    public static final Rectangle DANGER_ZONE_RIGHT= new Rectangle(LINE6,Y,ROUGH_ROAD_WIDTH,HEIGHT);
-    public static final float WIDTH = 2*ROUGH_ROAD_WIDTH+2*BLACK_LINE_WIDTH+4*STRIP_LENGTH+2*YELLOW_LINE_WIDTH + CENTER_LINES_WIDTH;
+    public static final float LINE2 = X + ROUGH_ROAD_WIDTH + BLACK_LINE_WIDTH + STRIP_LENGTH / 2;
+    public static final float LINE3 = X + ROUGH_ROAD_WIDTH + BLACK_LINE_WIDTH + 1.5f * STRIP_LENGTH + YELLOW_LINE_WIDTH;
+    public static final float LINE4 = X + ROUGH_ROAD_WIDTH + BLACK_LINE_WIDTH + 2.5f * STRIP_LENGTH + YELLOW_LINE_WIDTH + CENTER_LINES_WIDTH;
+    public static final float LINE5 = X + ROUGH_ROAD_WIDTH + BLACK_LINE_WIDTH + 3.5f * STRIP_LENGTH + 2 * YELLOW_LINE_WIDTH + CENTER_LINES_WIDTH;
+    public static final float LINE6 = X + ROUGH_ROAD_WIDTH + 2 * BLACK_LINE_WIDTH + 4 * STRIP_LENGTH + 2 * YELLOW_LINE_WIDTH + CENTER_LINES_WIDTH;
+    public static final Rectangle DANGER_ZONE_LEFT = new Rectangle(X, Y, ROUGH_ROAD_WIDTH, HEIGHT);
+    public static final Rectangle DANGER_ZONE_RIGHT = new Rectangle(LINE6, Y, ROUGH_ROAD_WIDTH, HEIGHT);
+    public static final float WIDTH = 2 * ROUGH_ROAD_WIDTH + 2 * BLACK_LINE_WIDTH + 4 * STRIP_LENGTH + 2 * YELLOW_LINE_WIDTH + CENTER_LINES_WIDTH;
     public static final float ROAD_END = X + WIDTH;
-    public static final float CENTR = X + WIDTH/2;
+    public static final float CENTR = X + WIDTH / 2;
     public static final Rectangle FULL_ROAD = new Rectangle(X, Y, WIDTH, HEIGHT);
     public static final Rectangle ROAD = new Rectangle(X + ROUGH_ROAD_WIDTH, Y, WIDTH - 2 * ROUGH_ROAD_WIDTH, HEIGHT);
     private int id;
@@ -39,7 +38,9 @@ public class Road extends GameObject {
     float yS;
 
     public Road() throws SlickException {
-        super(new Image(PATH), 1f, (1000 - new Image(PATH).getWidth()) / 2, -500);
+        super(new Image(PATH), 1f, 0, 0);
+        x = states.Game.WIDTH - getImage().getWidth();
+        y = states.Game.HEIGHT - getImage().getHeight();
         this.road = getImage();
         this.secondRoad = getImage();
         yS = -road.getHeight();
@@ -58,7 +59,7 @@ public class Road extends GameObject {
     }*/
 
     public void update(float shift, int delta) {
-        y += shift* delta / Constants.DIVIDE_DELTA;
+        y += shift * delta / Constants.DIVIDE_DELTA;
         yS += shift * delta / Constants.DIVIDE_DELTA;
         if (y > 700) {
             y = -1500;
