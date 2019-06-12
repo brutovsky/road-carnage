@@ -66,21 +66,21 @@ public class Gameplay extends BasicGameState {
         cherry = new Bonus(1f, 500, 100, Bonuses.CHERRY);
         cactus = new Obstacle(1f, 700, 10, Obstacles.CACTUS);
         conus = new Obstacle(0.08f, 490, 10, Obstacles.KONUS);
-        hole = new Obstacle(1f, Road.STRIP2, 10, Obstacles.HOLE);
-        tramp = new Obstacle(1f, Road.X, Road.Y, Obstacles.TRAMPOLINE);
-        duna = new Obstacle(0.95f, Road.STRIP2, 0, Obstacles.DUNA);
+        hole = new Obstacle(1f, 500, 100, Obstacles.HOLE);
+        tramp = new Obstacle(1f, Road.LINE4, 50, Obstacles.TRAMPOLINE);
+        duna = new Obstacle(0.95f, 300, 0, Obstacles.DUNA);
 
-        //obstacles.add(car1);
-        //obstacles.add(car2);
-        //obstacles.add(car3);
-        //obstacles.add(cherry);
-        //obstacles.add(cactus);
-        //obstacles.add(conus);
-        //obstacles.add(duna);
-        //obstacles.add(hole);
+        obstacles.add(car1);
+        obstacles.add(car2);
+        obstacles.add(car3);
+        obstacles.add(cherry);
+        obstacles.add(cactus);
+        obstacles.add(conus);
+        obstacles.add(duna);
+        obstacles.add(hole);
 
 
-       
+
 
 
         obstacles.add(tramp);
