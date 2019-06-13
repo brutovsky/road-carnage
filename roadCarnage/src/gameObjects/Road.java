@@ -6,6 +6,9 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Road extends GameObject {
 
@@ -38,6 +41,23 @@ public class Road extends GameObject {
     Image road, secondRoad;
     float yS;
 
+    private List<GameObject> line1;
+    private List<GameObject> line2;
+    private List<GameObject> line3;
+    private List<GameObject> line4;
+    private List<GameObject> line5;
+    private List<GameObject> line6;
+
+    {
+        line1 = new ArrayList();
+        line2 = new ArrayList();
+        line3 = new ArrayList();
+        line4 = new ArrayList();
+        line5 = new ArrayList();
+        line6 = new ArrayList();
+    }
+
+
     public Road() throws SlickException {
         super(new Image(PATH), 1f, 0, 0);
         x = states.Game.WIDTH - getImage().getWidth();
@@ -68,5 +88,38 @@ public class Road extends GameObject {
 
     }
 
+    public List<GameObject> getLine1() {
+        return line1;
+    }
 
+    public List<GameObject> getLine2() {
+        return line2;
+    }
+
+    public List<GameObject> getLine3() {
+        return line3;
+    }
+
+    public List<GameObject> getLine4() {
+        return line4;
+    }
+
+    public List<GameObject> getLine5() {
+        return line5;
+    }
+
+    public List<GameObject> getLine6() {
+        return line6;
+    }
+
+    public List<GameObject> getAllLines(){
+        ArrayList<GameObject> list = new ArrayList<>();
+        list.addAll(line1);
+        list.addAll(line2);
+        list.addAll(line3);
+        list.addAll(line4);
+        list.addAll(line5);
+        list.addAll(line6);
+        return list;
+    }
 }
