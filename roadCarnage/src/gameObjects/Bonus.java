@@ -6,7 +6,7 @@ import gameObjects.stuff.Constants;
 public class Bonus extends GameObject {
 
     Bonuses typeOf;
-    public Bonus(float scale, int x, int y, Bonuses bonus) {
+    public Bonus(float scale, float x, float y, Bonuses bonus) {
         super(bonus.getAnimation(), scale, x, y);
         typeOf = bonus;
     }
