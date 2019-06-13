@@ -62,6 +62,10 @@ public class GameObject {
 
     }
 
+    public String getName(){
+        return "noname";
+    }
+
     public int collisionOccured(){
         return Constants.NO_OUTPUT;
     }

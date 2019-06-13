@@ -10,6 +10,7 @@ public abstract class LevelGenerator {
     protected int[][] grid;
     protected final int roadLines;
     private HashMap<Integer, GameObject> obstacles;
+    private HashMap<Integer, GameObject> obstacles;
     static final float X = Road.X;
     static final float Y = -Road.HEIGHT;
 
@@ -22,7 +23,11 @@ public abstract class LevelGenerator {
     }
 
     public void initObstacles(){
+        obstacles = new HashMap<>();
+    }
 
+    public void initBonuses(){
+        obstacles = new HashMap<>();
     }
 
     public void generate(){

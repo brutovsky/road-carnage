@@ -31,4 +31,8 @@ public class Obstacle extends GameObject {
     public int collisionOccured() {
         return typeOf.collision();
     }
+
+    public String getName(){
+        return typeOf.getName();
+    }
 }

@@ -18,10 +18,12 @@ public enum Obstacles {
     private Image image;
     private SpriteSheet sprite_sheet;
     private int collision;
+    private String name;
 
     private int size;
 
     Obstacles(String path, String name, int columns, int lines, int size, int collision) {
+        this.name = name;
         this.collision = collision;
         animation = new Animation();
         try {
@@ -58,6 +60,10 @@ public enum Obstacles {
 
     public Image getImage() {
         return image;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getSize() {

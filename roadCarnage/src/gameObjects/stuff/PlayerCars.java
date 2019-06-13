@@ -26,9 +26,6 @@ public enum PlayerCars {
         this.mobility = mobility;
         this.price = price;
         this.name = name;
-
-
-
     }
 
     public Image getImage() {

@@ -122,4 +122,8 @@ public class Road extends GameObject {
         list.addAll(line6);
         return list;
     }
+
+    public String getName(){
+        return "Road";
+    }
 }
