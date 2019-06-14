@@ -6,7 +6,13 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 public enum Bonuses {
-    CHERRY("res/bonuses/cherry_sprite_list.png","CHERRY",3, 1,Constants.BONUS_CHERRY);
+    CHERRY("res/bonuses/cherry_sprite_list.png","CHERRY",3, 1,Constants.BONUS_CHERRY),
+    SURPRISE("res/bonuses/surprise_sprite_list.png","SURPRISE",3, 1,Constants.BONUS_SURPRISE),
+    FIRE("res/bonuses/fire_sprite_list.png","FIRE",3, 1,Constants.BONUS_FIRE),
+    ICE("res/bonuses/ice_sprite_list.png","ICE",3, 1,Constants.BONUS_ICE),
+    BARRIER("res/bonuses/barrier_sprite_list.png","BARRIER",3, 1,Constants.BONUS_BARRIER),
+    WRENCH("res/bonuses/wrench_sprite_list.png","WRENCH",3, 1,Constants.BONUS_WRENCH),
+    FAN("res/bonuses/fan_sprite_list.png","FAN",3, 1,Constants.BONUS_FAN);
     private Animation animation;
     private Image image;
     private SpriteSheet sprite_sheet;
