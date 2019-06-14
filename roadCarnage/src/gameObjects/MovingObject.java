@@ -45,4 +45,6 @@ public class MovingObject extends GameObject{
     public void setSpeed(float speed) {
         this.speed = speed;
     }
+
+
 }

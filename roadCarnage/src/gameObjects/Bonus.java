@@ -24,4 +24,8 @@ public class Bonus extends GameObject {
     public int collisionOccured() {
         return typeOf.collision();
     }
+
+    public Bonuses getType() {
+        return typeOf;
+    }
 }

@@ -73,4 +73,6 @@ public enum Obstacles {
     public int collision() {
         return collision;
     }
+
+
 }

@@ -6,11 +6,11 @@ import org.newdawn.slick.geom.Rectangle;
 
 public class Car extends MovingObject{
 
-    private Cars typeOfCar;
+    private Cars typeOf;
 
     public Car(float scale, float x, float y, Rectangle borders, Cars car) {
         super(car.getImage(), scale, x, y, car.getSpeed(), borders);
-        typeOfCar = car;
+        typeOf = car;
     }
 
     @Override
@@ -26,5 +26,9 @@ public class Car extends MovingObject{
     @Override
     public int collisionOccured() {
         return Constants.MINUS_DURABILITY;
+    }
+
+    public Cars getType() {
+        return typeOf;
     }
 }

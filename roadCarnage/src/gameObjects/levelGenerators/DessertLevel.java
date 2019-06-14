@@ -8,9 +8,15 @@ import gameObjects.stuff.Obstacles;
 
 import java.util.HashMap;
 
+import static gameObjects.stuff.Obstacles.*;
+
 public class DessertLevel extends LevelGenerator {
 
     private boolean isDuna;
+
+    private static final float STAGE_Y = 175;
+    //private static final float STAGE2_Y = 175*2;
+    //private static final float STAGE3_Y = 175;
 
     DessertLevel() {
         super(3, 4);
@@ -22,7 +28,7 @@ public class DessertLevel extends LevelGenerator {
         getObstacles().put(i++, null);
         getObstacles().put(i++, new Obstacle(1f, X, Y, Obstacles.KONUS));
         getObstacles().put(i++, new Obstacle(1f, X, Y, Obstacles.DUNA));
-        getObstacles().put(i++, new Obstacle(1f, X, Y, Obstacles.CACTUS));
+        getObstacles().put(i++, new Obstacle(1f, X, Y, CACTUS));
         getObstacles().put(i++, new Obstacle(1f, X, Y, Obstacles.HOLE));
         getObstacles().put(i++, new Obstacle(1f, X, Y, Obstacles.TRAMPOLINE));
         getObstacles().put(i++, new Car(1f, X, Y, Road.ROAD, Cars.TRUCK));
@@ -126,6 +132,89 @@ public class DessertLevel extends LevelGenerator {
 
     private void generateStage3() {
 
+    }
+
+    public void createObstacles(Road road){
+        for(int i =0; i < grid.length;i++){
+            for(int j =0; j < grid[i].length;j++){
+                GameObject object = getObstacles().get(grid[i][j]);
+                if(object == null){
+
+                }else if(object instanceof Obstacle){
+                    switch(((Obstacle)object).getType()){
+                        case CACTUS:{
+                            road.getObstacles().add(new Obstacle(1f,road.getLineX(j+1),Road.Y-(i+1)*STAGE_Y, CACTUS));
+                        }
+                        case DUNA:{
+                            road.getObstacles().add(new Obstacle(1f,road.getLineX(j+1),Road.Y-(i+1)*STAGE_Y, DUNA));
+                        }
+                        case HOLE:{
+                            road.getObstacles().add(new Obstacle(1f,road.getLineX(j+1),Road.Y-(i+1)*STAGE_Y, HOLE));
+                        }
+                        case KONUS:{
+                            road.getObstacles().add(new Obstacle(1f,road.getLineX(j+1),Road.Y-(i+1)*STAGE_Y, KONUS));
+                        }
+                        case TRAMPOLINE:{
+                            road.getObstacles().add(new Obstacle(1f,road.getLineX(j+1),Road.Y-(i+1)*STAGE_Y, TRAMPOLINE));
+                        }
+                        default:{
+
+                        }
+                    }
+                }else if(object instanceof Car){
+                    switch(((Car)object).getType()){
+                        case CASUAL_BLACK:{
+
+                        }
+                        case CASUAL_BLUE:{
+
+                        }
+                        case CASUAL_GREEN:{
+
+                        }
+                        case HOTDOG:{
+
+                        }
+                        case TAXI:{
+
+                        }
+                        case TRUCK:{
+
+                        }
+                        default:{
+
+                        }
+                    }
+                }else if(object instanceof Bonus){
+                    switch(((Bonus)object).getType()){
+                        case BARRIER:{
+
+                        }
+                        case CHERRY:{
+
+                        }
+                        case FAN:{
+
+                        }
+                        case FIRE:{
+
+                        }
+                        case ICE:{
+
+                        }
+                        case SURPRISE:{
+
+                        }
+                        case WRENCH:{
+
+                        }
+                        default:{
+
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }

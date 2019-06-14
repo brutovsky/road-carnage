@@ -35,4 +35,8 @@ public class Obstacle extends GameObject {
     public String getName(){
         return typeOf.getName();
     }
+
+    public Obstacles getType() {
+        return typeOf;
+    }
 }
