@@ -52,6 +52,7 @@ public enum Obstacles {
                         sprite_sheet.getSprite(x, y), 100);
             }
         }
+        this.name = name;
     }
 
     public Animation getAnimation() {

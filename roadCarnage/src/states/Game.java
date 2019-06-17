@@ -26,7 +26,6 @@ public class Game extends StateBasedGame{
     public Game(String gameName){
         super(gameName);
         addState(new Gameplay(GAMEPLAY_STATE));
-
     }
 
     @Override

@@ -22,11 +22,12 @@ public abstract class LevelGenerator {
     public static final int TYPE_CARS = 2;
     public static final int TYPE_BONUSES = 3;
 
+    protected int auxiliaryList=0;
+
     LevelGenerator(int stages, int roadLines) {
         this.stages = stages;
         this.roadLines = roadLines;
         grid = new int[stages][roadLines];
-        obstacles = new HashMap<>();
         initObstacles();
         initProbability();
     }
@@ -62,7 +63,7 @@ public abstract class LevelGenerator {
     public int getObstacleIdByName(String name) {
         for (int i = 0; i < getObstacles().size(); i++) {
             if (getObstacles().get(i) == null) {
-                return 0;
+                continue;
             }
             if (getObstacles().get(i).getName().equals(name)) {
                 return i;
@@ -72,7 +73,7 @@ public abstract class LevelGenerator {
     }
 
     public int getLastObstacleTypeId(int type) {
-        for (int i = getObstacles().size(); i < 0; i--) {
+        for (int i = getObstacles().size()-auxiliaryList; i > 0; i--) {
             if (type == TYPE_NONE) {
                 if (getObstacles().get(i) == null) {
                     return i;
@@ -98,7 +99,7 @@ public abstract class LevelGenerator {
     }
 
     public int getFirstObstacleTypeId(int type) {
-        for (int i = 0; i < getObstacles().size(); i++) {
+        for (int i = 0; i < getObstacles().size() - auxiliaryList; i++) {
             if (type == TYPE_NONE) {
                 if (getObstacles().get(i) == null) {
                     return i;
@@ -121,5 +122,9 @@ public abstract class LevelGenerator {
             }
         }
         return 0;
+    }
+
+    public int[][] getGrid() {
+        return grid;
     }
 }

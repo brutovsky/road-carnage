@@ -28,4 +28,8 @@ public class Bonus extends GameObject {
     public Bonuses getType() {
         return typeOf;
     }
+
+    public String getName(){
+        return typeOf.getName();
+    }
 }

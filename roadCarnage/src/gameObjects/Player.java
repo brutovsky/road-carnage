@@ -106,7 +106,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveBackward(int delta) {
-        y += speed * delta / Constants.DIVIDE_DELTA;
+        y += getCurrentMobility()*0.3*speed * delta / Constants.DIVIDE_DELTA;
         if (y + height >= bordersHeight() + startY()) {
             y = bordersHeight() - height;
             return false;

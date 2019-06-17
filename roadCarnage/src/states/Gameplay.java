@@ -5,6 +5,7 @@ import gameObjects.*;
 
 import gameObjects.Road;
 
+import gameObjects.levelGenerators.DessertLevel;
 import gameObjects.stuff.*;
 import org.newdawn.slick.*;
 
@@ -14,12 +15,15 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import java.awt.font.FontRenderContext;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Gameplay extends BasicGameState {
 
     private int id;
     private Player player;
+
+    private float generateTimer = -Road.HEIGHT;
 
 
     // Test
@@ -29,6 +33,8 @@ public class Gameplay extends BasicGameState {
 
     ArrayList<GameObject> obstacles = new ArrayList();
     ArrayList<GameObject> decorations = new ArrayList();
+
+    DessertLevel level;
 
 
     public Gameplay(int id) {
@@ -43,10 +49,9 @@ public class Gameplay extends BasicGameState {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         road = new Road();
-
         player = new Player(1f, Road.LINE5, 600, Road.FULL_ROAD, PlayerCars.ANISTON);
         speed_koef = 1;
-
+        level = new DessertLevel();
     }
 
 
@@ -59,12 +64,28 @@ public class Gameplay extends BasicGameState {
         for (GameObject go : decorations) {
             go.draw();
         }
+        for (GameObject go : road.getObstacles()) {
+            go.draw();
+        }
         player.draw();
     }
 
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+
+
+        //test
+        //System.out.println(generateTimer);
+        if(generateTimer <= 0){
+            level.generate();
+            level.createObstacles(road);
+            generateTimer = Road.HEIGHT;
+        }else{
+            generateTimer -=player.getSpeed() * speed_koef*i/10;
+        }
+
+
         if (!player.isUnbroken()) {
             speed_koef = 0;
         }
@@ -84,6 +105,10 @@ public class Gameplay extends BasicGameState {
 
         road.update(player.getSpeed() * speed_koef, i);
 
+        for (GameObject go : road.getObstacles()) {
+            go.update(player.getSpeed() * speed_koef, i);
+        }
+
         for (GameObject go : obstacles) {
             go.update(player.getSpeed() * speed_koef, i);
         }
@@ -99,7 +124,7 @@ public class Gameplay extends BasicGameState {
             }
         }
 
-        for (GameObject object : obstacles) {
+        for (GameObject object : road.getObstacles()) {
             if (player.checkForCollision(object)) {
                 if (player.isImmortal() || player.isJumping() || player.isFalling()) {
                     break;
@@ -122,7 +147,6 @@ public class Gameplay extends BasicGameState {
                 }
             }
             player.update(i);
-
         }
     }
 }

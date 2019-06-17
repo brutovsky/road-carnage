@@ -31,4 +31,8 @@ public class Car extends MovingObject{
     public Cars getType() {
         return typeOf;
     }
+
+    public String getName(){
+        return typeOf.getName();
+    }
 }

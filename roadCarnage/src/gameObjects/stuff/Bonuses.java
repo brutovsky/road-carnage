@@ -6,17 +6,18 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 public enum Bonuses {
-    CHERRY("res/bonuses/cherry_sprite_list.png","CHERRY",3, 1,Constants.BONUS_CHERRY),
-    SURPRISE("res/bonuses/surprise_sprite_list.png","SURPRISE",3, 1,Constants.BONUS_SURPRISE),
-    FIRE("res/bonuses/fire_sprite_list.png","FIRE",3, 1,Constants.BONUS_FIRE),
-    ICE("res/bonuses/ice_sprite_list.png","ICE",3, 1,Constants.BONUS_ICE),
-    BARRIER("res/bonuses/barrier_sprite_list.png","BARRIER",3, 1,Constants.BONUS_BARRIER),
-    WRENCH("res/bonuses/wrench_sprite_list.png","WRENCH",3, 1,Constants.BONUS_WRENCH),
-    FAN("res/bonuses/fan_sprite_list.png","FAN",3, 1,Constants.BONUS_FAN);
+    CHERRY("res/bonuses/cherry.png","CHERRY",3, 1,Constants.BONUS_CHERRY),
+    SURPRISE("res/bonuses/surprise.png","SURPRISE",3, 1,Constants.BONUS_SURPRISE),
+    FIRE("res/bonuses/fire.png","FIRE",3, 1,Constants.BONUS_FIRE),
+    ICE("res/bonuses/ice.png","ICE",3, 1,Constants.BONUS_ICE),
+    BARRIER("res/bonuses/barrier.png","BARRIER",3, 1,Constants.BONUS_BARRIER),
+    WRENCH("res/bonuses/wrench.png","WRENCH",3, 1,Constants.BONUS_WRENCH),
+    FAN("res/bonuses/fan.png","FAN",3, 1,Constants.BONUS_FAN);
     private Animation animation;
     private Image image;
     private SpriteSheet sprite_sheet;
     private int collision;
+    private String name;
     Bonuses(String path, String name, int columns,int lines,int collision) {
         this.collision = collision;
         animation = new Animation();
@@ -39,7 +40,7 @@ public enum Bonuses {
                         sprite_sheet.getSprite(x,y),100);
             }
         }
-
+        this.name = name;
     }
 
     public Animation getAnimation() {
@@ -52,5 +53,9 @@ public enum Bonuses {
 
     public int collision(){
         return collision;
+    }
+
+    public String getName() {
+        return name;
     }
 }

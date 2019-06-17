@@ -14,7 +14,7 @@ public class Obstacle extends GameObject {
 
 
     public Obstacle(float scale, float x, float y, Obstacles obstacle) {
-        super(obstacle.getAnimation(), scale, x - obstacle.getImage().getWidth()/2, y);
+        super(obstacle.getAnimation(), scale, x , y);
         typeOf = obstacle;
     }
 
