@@ -24,7 +24,7 @@ public class Obstacle extends GameObject {
 
     @Override
     public void update(float shift, int delta) {
-        y += shift * delta / Constants.DIVIDE_DELTA;
+        y += (shift * delta) / Constants.DIVIDE_DELTA;
     }
 
     @Override

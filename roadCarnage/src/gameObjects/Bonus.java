@@ -17,7 +17,7 @@ public class Bonus extends GameObject {
 
     @Override
     public void update(float shift, int delta) {
-        y += shift*delta/ Constants.DIVIDE_DELTA;
+        y += (shift*delta)/ Constants.DIVIDE_DELTA;
     }
 
     @Override

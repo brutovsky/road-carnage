@@ -5,7 +5,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 public enum PlayerCars {
-    ANISTON("res/playerCars/playerCar", "Aniston", 2f, 2, 5f, 0);
+    ANISTON("res/playerCars/playerCar", "Aniston", 100f, 200, 100f, 0);
     private Image image;
     private float speed;
     private int durability;

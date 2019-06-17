@@ -10,8 +10,10 @@ public class GameObject {
     protected float height;
     private Image image;
     private Animation animation;
+    private float scale;
 
     public GameObject(Image image, float scale, float x, float y) {
+        this.scale = scale;
         this.image = image.getScaledCopy(scale);
         this.animation = new Animation();
         animation.addFrame(image,100);
@@ -85,4 +87,10 @@ public class GameObject {
     public float getHeight() {
         return height;
     }
+
+    public float getScale() {
+        return scale;
+    }
+
+
 }

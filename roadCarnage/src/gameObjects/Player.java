@@ -12,16 +12,21 @@ public class Player extends MovingObject {
     private int durability;
     private float mobility;
     private PlayerCars typeOfCar;
-    private boolean unbroken;
+    private boolean broken;
+
     private boolean immortal;
     private boolean jumping;
     private boolean falling;
-    private int counter;
+
+    private float counter;
     private Animation immortalAnimation;
     private Animation jumpAnimation;
     private Animation fallAnimation;
-    private int jumpAnimDur = 50;
+    private int immortalAnimDur = 100;
+    private int jumpAnimDur = 200;
     private int fallAnimDur = 100;
+    private int immortalTimer = 5;
+    private int jumpingTimer;
 
 
     public Player(float scale, float x, float y, Rectangle borders, PlayerCars car) {
@@ -30,19 +35,46 @@ public class Player extends MovingObject {
         durability = typeOfCar.getDurability();
         mobility = typeOfCar.getMobility();
         if (durability >= 0) {
-            unbroken = true;
+            broken = true;
         }
         immortal = false;
+        jumping=false;
+        falling =false;
         counter = 0;
+
+        setImmortlaAnim();
+        setJumpAnim();
+        setFallAnim();
+        jumpingTimer = ((jumpAnimation.getFrameCount()) * jumpAnimDur)/Constants.DIVIDE_DELTA;
+    }
+
+    private void setImmortlaAnim(){
         try {
-            Image temp = new Image(typeOfCar.getPath() + "Immortal" + ".png").getScaledCopy(scale);
+            Image temp = new Image(typeOfCar.getPath() + "Immortal" + ".png").getScaledCopy(getScale());
             immortalAnimation = new Animation();
-            immortalAnimation.addFrame(getImage(), 100);
-            immortalAnimation.addFrame(temp, 100);
+            immortalAnimation.addFrame(getImage(), immortalAnimDur);
+            immortalAnimation.addFrame(temp, immortalAnimDur);
         } catch (SlickException e) {
             e.printStackTrace();
         }
+    }
 
+    private void setFallAnim() {
+        fallAnimation = new Animation();
+        fallAnimation.addFrame(getImage().getScaledCopy(0.9f), fallAnimDur);
+        fallAnimation.addFrame(getImage().getScaledCopy(0.8f), fallAnimDur);
+        fallAnimation.addFrame(getImage().getScaledCopy(0.7f), fallAnimDur);
+        fallAnimation.addFrame(getImage().getScaledCopy(0.6f), fallAnimDur);
+        fallAnimation.addFrame(getImage().getScaledCopy(0.5f), fallAnimDur);
+        fallAnimation.addFrame(getImage().getScaledCopy(0.4f), fallAnimDur);
+        fallAnimation.addFrame(getImage().getScaledCopy(0.3f), fallAnimDur);
+        fallAnimation.addFrame(getImage().getScaledCopy(0.2f), fallAnimDur);
+        fallAnimation.addFrame(getImage().getScaledCopy(0.1f), fallAnimDur);
+        fallAnimation.addFrame(getImage().getScaledCopy(0.05f), fallAnimDur);
+        fallAnimation.setLooping(false);
+    }
+
+    private void setJumpAnim() {
         jumpAnimation = new Animation();
         jumpAnimation.addFrame(getImage().getScaledCopy(1.1f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.15f), jumpAnimDur);
@@ -60,20 +92,7 @@ public class Player extends MovingObject {
         jumpAnimation.addFrame(getImage().getScaledCopy(1.20f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.15f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.1f), jumpAnimDur);
-        jumpAnimation.setLooping(false);
-
-        fallAnimation = new Animation();
-        fallAnimation.addFrame(getImage().getScaledCopy(0.9f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.8f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.7f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.6f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.5f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.4f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.3f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.2f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.1f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.05f), fallAnimDur);
-        fallAnimation.setLooping(false);
+        jumpAnimation.setLooping(true);
     }
 
     public int getDurability() {
@@ -97,7 +116,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveForward(int delta) {
-        y -= speed * delta / Constants.DIVIDE_DELTA;
+        y -= speed * delta *1f / 1000;
         if (y <= startY()) {
             y = startY();
             return false;
@@ -106,7 +125,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveBackward(int delta) {
-        y += getCurrentMobility()*0.3*speed * delta / Constants.DIVIDE_DELTA;
+        y += getCurrentMobility()*0.3*speed * delta *1f / 1000;
         if (y + height >= bordersHeight() + startY()) {
             y = bordersHeight() - height;
             return false;
@@ -115,7 +134,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveRight(int delta) {
-        x += getCurrentMobility() * delta / Constants.DIVIDE_DELTA;
+        x += getCurrentMobility() * delta *1f / 1000;
         if (x + width >= startX() + bordersWidth()) {
             x = bordersWidth() + startX() - width;
             return false;
@@ -124,7 +143,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveLeft(int delta) {
-        x -= getCurrentMobility() * delta / Constants.DIVIDE_DELTA;
+        x -= getCurrentMobility() * delta *1f / 1000;
         if (x <= startX()) {
             x = startX();
             return false;
@@ -192,23 +211,24 @@ public class Player extends MovingObject {
                     .MINUS_DURABILITY: {
                 durability--;
                 if (durability <= 0) {
-                    unbroken = false;
+                    broken = false;
                 } else {
                     immortal = true;
-                    counter = 3;
+                    counter = 0;
                 }
                 break;
             }
             case Constants
                     .DEAD_END: {
                 durability = 0;
-                unbroken = false;
+                broken = false;
                 falling = true;
                 setAnimation(fallAnimation);
                 break;
             }
             case Constants
                     .JUMP: {
+                counter = 0;
                 jumping = true;
                 setAnimation(jumpAnimation);
                 break;
@@ -217,12 +237,12 @@ public class Player extends MovingObject {
         }
     }
 
-    public boolean isUnbroken() {
-        return unbroken;
+    public boolean isBroken() {
+        return broken;
     }
 
-    public void setUnbroken(boolean unbroken) {
-        this.unbroken = unbroken;
+    public void setBroken(boolean broken) {
+        this.broken = broken;
     }
 
     public boolean isImmortal() {
@@ -237,20 +257,25 @@ public class Player extends MovingObject {
     @Override
     public void update(int delta) {
         if (immortal) {
-            counter += delta;
-            if (counter >= 5000) {
+            counter += (delta*1f)/Constants.DIVIDE_DELTA;
+            System.out.println(counter);
+            if (counter >= immortalTimer) {
                 immortal = false;
                 counter = 0;
             }
         } else if (jumping) {
-            counter += (jumpAnimation.getFrameCount() * jumpAnimDur) / 60;
-            if (counter >= jumpAnimation.getFrameCount() * jumpAnimDur) {
+            counter += (delta*1f)/Constants.DIVIDE_DELTA;
+            System.out.println(counter);
+            if (counter >= jumpingTimer) {
                 jumping = false;
+                counter = 0;
             }
         } else if (falling) {
             counter += (fallAnimation.getFrameCount() * fallAnimDur) / 40;
             if (counter >= jumpAnimation.getFrameCount() * fallAnimDur) {
                 falling = false;
+                counter = 0;
+
             }
         }
 

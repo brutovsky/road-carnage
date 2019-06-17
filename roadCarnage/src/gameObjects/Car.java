@@ -15,7 +15,7 @@ public class Car extends MovingObject{
 
     @Override
     public void update(float shift,int delta) {
-        y += speed+shift*delta/Constants.DIVIDE_DELTA;
+        y += ((speed+shift)*delta)/Constants.DIVIDE_DELTA;
     }
 
     @Override
