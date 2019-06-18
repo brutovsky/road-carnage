@@ -15,7 +15,7 @@ public enum Obstacles {
     KONUS("res/obstacles/stop.png", "KONUS", 1, 1,Obstacle.ONE_LINE_SIZE,Constants.MINUS_DURABILITY),
     HOLE("res/obstacles/hole.png", "HOLE", 1, 1,Obstacle.ONE_LINE_SIZE,Constants.DEAD_END),
     TRAMPOLINE("res/obstacles/trampoline.png", "TRAMPOLINE", 5, 1,Obstacle.ONE_LINE_SIZE,Constants.JUMP),
-    //ICE_POOL("res/obstacles/ice_pool.png", "ICE POOL", 1, 1,Obstacle.ONE_LINE_SIZE,Constants.NO_MOVABILITY),
+    ICE_POOL("res/obstacles/ice_pool.png", "ICE POOL", 1, 1,Obstacle.ONE_LINE_SIZE,Constants.NO_MOVABILITY),
     ROAD_BARRIER("res/obstacles/roadBarrier.png","ROAD BARRIER",1,1,Obstacle.ONE_LINE_SIZE,Constants.MINUS_DURABILITY);
 
     private Animation animation;
