@@ -273,7 +273,7 @@ public abstract class LevelGenerator {
         }
     }
 
-    private int getRandomType() {
+    protected int getRandomType() {
         int sum = 0;
         int c = new Random().nextInt(101);
         sum += none_chance;
