@@ -18,12 +18,14 @@ public class Player extends MovingObject {
     private boolean immortal;
     private boolean jumping;
     private boolean falling;
+    private boolean slipping;
 
     private float counter;
     private Animation immortalAnimation;
     private Animation jumpAnimation;
     private Animation fallAnimation;
     private Animation explosionAnimation;
+    //private Animation slipAnimation;
     private Image wasted;
     private Image badtomat;
 
@@ -32,6 +34,9 @@ public class Player extends MovingObject {
     private int fallAnimDur = 100;
     private int immortalTimer = 5;
     private int jumpingTimer;
+
+    private float slipTimer = 3;
+    private float slipCounter = 0;
 
     private int bonusTimer = 10;
     private float bonusCounter = 0;
@@ -74,6 +79,10 @@ public class Player extends MovingObject {
         } catch (SlickException e) {
             e.printStackTrace();
         }
+    }
+
+    private void setCarImage(){
+        setImage(typeOfCar.getImage());
     }
 
     public void setExplosionAnim() {
@@ -284,6 +293,12 @@ public class Player extends MovingObject {
                 collision(bonus);
                 break;
             }
+            case Constants.NO_MOVABILITY:{
+                slipping = true;
+                mobility = 0;
+                slipCounter = 0;
+                break;
+            }
         }
     }
 
@@ -334,6 +349,19 @@ public class Player extends MovingObject {
             }
         }
 
+        if(slipping){
+            slipCounter +=(delta * 1f) / Constants.DIVIDE_DELTA;
+            System.out.println(slipCounter);
+            if(slipCounter >= slipTimer){
+                slipping = false;
+                setCarImage();
+                toNormalMode();
+
+            }else{
+                getImage().rotate(5);
+            }
+        }
+
     }
 
     private void toNormalMode() {
@@ -341,6 +369,7 @@ public class Player extends MovingObject {
         mobility = getMobility();
         isTomat = false;
     }
+
 
     public boolean isJumping() {
         return jumping;
