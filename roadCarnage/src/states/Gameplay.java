@@ -5,6 +5,7 @@ import gameObjects.*;
 
 import gameObjects.Road;
 
+import gameObjects.levelGenerators.AntarcticLevel;
 import gameObjects.levelGenerators.DessertLevel;
 import gameObjects.stuff.*;
 import org.newdawn.slick.*;
@@ -38,7 +39,7 @@ public class Gameplay extends BasicGameState {
     ArrayList<GameObject> obstacles = new ArrayList();
     ArrayList<GameObject> decorations = new ArrayList();
 
-    DessertLevel level;
+    AntarcticLevel level;
 
 
     public Gameplay(int id) {
@@ -55,7 +56,7 @@ public class Gameplay extends BasicGameState {
         road = new Road();
         player = new Player(1f, Road.LINE5, 600, Road.FULL_ROAD, PlayerCars.ANISTON);
         speed_koef = 1;
-        level = new DessertLevel();
+        level = new AntarcticLevel();
     }
 
 

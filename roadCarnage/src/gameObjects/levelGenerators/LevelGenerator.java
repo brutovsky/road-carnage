@@ -173,13 +173,30 @@ public abstract class LevelGenerator {
                             road.getObstacles().add(new Obstacle(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, CACTUS));
                             continue;
                         }
+                        case ROAD_BARRIER:{
+                            road.getObstacles().add(new Obstacle(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, ROAD_BARRIER));
+                            continue;
+                        }
+                        case ICE_POOL:{
+                            road.getObstacles().add(new Obstacle(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, ICE_POOL));
+                            continue;
+                        }
+                        case PENGUINS:{
+                            Obstacle penguins = new Obstacle(1f, Road.CENTR, Road.Y - (i + 1) * stage_y, PENGUINS);
+                            road.getObstacles().add(penguins);
+                            int r = Constants.random.nextInt(4) + 1;
+                            float ty = penguins.getY() + penguins.getHeight();
+                            float tx = road.getLineX(r);
+                            road.getObstacles().add(new Obstacle(1f, tx, ty, TRAMPOLINE));
+                            j = grid[i].length;
+                            break;
+                        }
                         case DUNA: {
                             Obstacle duna = new Obstacle(1f, Road.CENTR, Road.Y - (i + 1) * stage_y, DUNA);
                             road.getObstacles().add(duna);
                             int r = Constants.random.nextInt(4) + 1;
                             float ty = duna.getY() + duna.getHeight();
                             float tx = road.getLineX(r);
-                            System.out.println(r);
                             road.getObstacles().add(new Obstacle(1f, tx, ty, TRAMPOLINE));
                             j = grid[i].length;
                             break;
@@ -224,6 +241,14 @@ public abstract class LevelGenerator {
                         }
                         case TRUCK: {
                             road.getObstacles().add(new Car(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, Road.ROAD, TRUCK));
+                            continue;
+                        }
+                        case ICECREAM: {
+                            road.getObstacles().add(new Car(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, Road.ROAD, ICECREAM));
+                            continue;
+                        }
+                        case MEGABUS: {
+                            road.getObstacles().add(new Car(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, Road.ROAD, MEGABUS));
                             continue;
                         }
                         default: {
