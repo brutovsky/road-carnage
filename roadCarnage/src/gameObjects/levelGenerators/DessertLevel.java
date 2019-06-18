@@ -37,6 +37,7 @@ public class DessertLevel extends LevelGenerator {
         getObstacles().put(i++, new Car(1f, X, Y, Road.ROAD, Cars.CASUAL_BLUE));
         getObstacles().put(i++, new Car(1f, X, Y, Road.ROAD, Cars.CASUAL_GREEN));
         getObstacles().put(i++, new Car(1f, X, Y, Road.ROAD, CASUAL_BLACK));
+        getObstacles().put(i++, new Bonus(1f, X, Y, Bonuses.TOMAT));
         getObstacles().put(i++, new Bonus(1f, X, Y, Bonuses.CHERRY));
         getObstacles().put(i++, new Bonus(1f, X, Y, Bonuses.SURPRISE));
         getObstacles().put(i++, new Bonus(1f, X, Y, Bonuses.FIRE));
@@ -61,7 +62,7 @@ public class DessertLevel extends LevelGenerator {
         obstacle_chance = 35;
         getProbability().put(i++, none_chance);//0
         //obstacles
-        getProbability().put(i++, 50);//1
+        getProbability().put(i++, 40);//1
         getProbability().put(i++, 20);//2
         getProbability().put(i++, 30);//3
         //cars
@@ -71,7 +72,8 @@ public class DessertLevel extends LevelGenerator {
         getProbability().put(i++, 20);
         getProbability().put(i++, 20);
         //bonuses
-        getProbability().put(i++, 40);
+        getProbability().put(i++, 30);
+        getProbability().put(i++, 10);
         getProbability().put(i++, 10);
         getProbability().put(i++, 10);
         getProbability().put(i++, 10);
@@ -138,6 +140,12 @@ public class DessertLevel extends LevelGenerator {
                 for (int j = getFirstObstacleTypeId(type); j <= getLastObstacleTypeId(type); j++) {
                     sum += getProbability().get(j);
                     if (c <= sum) {
+                        if(type == TYPE_BONUSES){
+                            if(checkForId(j)){
+                                grid[stage][i] = getObstacleIdByName("noname");
+                                break;
+                            }
+                        }
                         grid[stage][i] = j;
                         break;
                     }
@@ -262,6 +270,10 @@ public class DessertLevel extends LevelGenerator {
                     }
                 } else if (object instanceof Bonus) {
                     switch (((Bonus) object).getType()) {
+                        case TOMAT:{
+                            road.getObstacles().add(new Bonus(1f, road.getLineX(j + 1), Road.Y - (i + 1) * STAGE_Y, Bonuses.TOMAT));
+                            continue;
+                        }
                         case BARRIER: {
                             road.getObstacles().add(new Bonus(1f, road.getLineX(j + 1), Road.Y - (i + 1) * STAGE_Y, Bonuses.BARRIER));
                             continue;

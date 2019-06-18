@@ -1,5 +1,6 @@
 package gameObjects.stuff;
 
+import gameObjects.Obstacle;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -12,7 +13,8 @@ public enum Bonuses {
     ICE("res/bonuses/ice.png","ICE",3, 1,Constants.BONUS_ICE),
     BARRIER("res/bonuses/barrier.png","BARRIER",3, 1,Constants.BONUS_BARRIER),
     WRENCH("res/bonuses/wrench.png","WRENCH",3, 1,Constants.BONUS_WRENCH),
-    FAN("res/bonuses/fan.png","FAN",3, 1,Constants.BONUS_FAN);
+    FAN("res/bonuses/fan.png","FAN",3, 1,Constants.BONUS_FAN),
+    TOMAT("res/bonuses/tomat.png", "TOMAT", 1, 1,Constants.BONUS_TOMAT);
     private Animation animation;
     private Image image;
     private SpriteSheet sprite_sheet;

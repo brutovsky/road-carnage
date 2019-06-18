@@ -110,4 +110,15 @@ public class Road extends GameObject {
     public String getName(){
         return "Road";
     }
+
+    public void collectGarbage(){
+        for(GameObject object: obstacles){
+            if(object.getY() + object.getHeight() > Road.HEIGHT){
+                System.out.println(object.getName() + " DELETED");
+                obstacles.remove(object);
+                collectGarbage();
+                return;
+            }
+        }
+    }
 }

@@ -25,12 +25,18 @@ public class Player extends MovingObject {
     private Animation fallAnimation;
     private Animation explosionAnimation;
     private Image wasted;
+    private Image badtomat;
 
     private int immortalAnimDur = 100;
     private int jumpAnimDur = 60;
     private int fallAnimDur = 100;
     private int immortalTimer = 5;
     private int jumpingTimer;
+
+    private int bonusTimer = 10;
+    private float bonusCounter = 0;
+    private boolean bonusActive = false;
+    private boolean isTomat;
 
 
     public Player(float scale, float x, float y, Rectangle borders, PlayerCars car) {
@@ -42,12 +48,13 @@ public class Player extends MovingObject {
             broken = true;
         }
         immortal = false;
-        jumping=false;
-        falling =false;
+        jumping = false;
+        falling = false;
         counter = 0;
 
         try {
             wasted = new Image("res/playerCars/wasted.png");
+            badtomat=new Image("res/obstacles/badtomat.png");
         } catch (SlickException e) {
             e.printStackTrace();
         }
@@ -58,7 +65,7 @@ public class Player extends MovingObject {
         setExplosionAnim();
     }
 
-    private void setImmortlaAnim(){
+    private void setImmortlaAnim() {
         try {
             Image temp = new Image(typeOfCar.getPath() + "Immortal" + ".png").getScaledCopy(getScale());
             immortalAnimation = new Animation();
@@ -82,16 +89,16 @@ public class Player extends MovingObject {
         }
         int spriteSheetWidth = image.getWidth();
         int spriteSheetHeight = image.getHeight();
-        int spriteWidth = (int)(spriteSheetWidth/columns);
+        int spriteWidth = (int) (spriteSheetWidth / columns);
         int spriteHeight =
-                (int)(spriteSheetHeight/lines);
+                (int) (spriteSheetHeight / lines);
         sprite_sheet = new SpriteSheet(image,
                 spriteWidth,
                 spriteHeight);
-        for(int y = 0;y < lines;y++){
-            for(int x = 0;x < columns;x++){
+        for (int y = 0; y < lines; y++) {
+            for (int x = 0; x < columns; x++) {
                 explosionAnimation.addFrame(
-                        sprite_sheet.getSprite(x,y),100);
+                        sprite_sheet.getSprite(x, y), 100);
             }
         }
         explosionAnimation.setLooping(false);
@@ -134,7 +141,7 @@ public class Player extends MovingObject {
         jumpAnimation.addFrame(getImage().getScaledCopy(1.1f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1f), jumpAnimDur);
         jumpAnimation.setLooping(false);
-        jumpingTimer = ((jumpAnimation.getFrameCount()) * jumpAnimDur)/Constants.DIVIDE_DELTA;
+        jumpingTimer = ((jumpAnimation.getFrameCount()) * jumpAnimDur) / Constants.DIVIDE_DELTA;
     }
 
     public int getDurability() {
@@ -158,7 +165,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveForward(int delta) {
-        y -= speed * delta *1f / 1000;
+        y -= speed * delta * 1f / 1000;
         if (y <= startY()) {
             y = startY();
             return false;
@@ -167,7 +174,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveBackward(int delta) {
-        y += speed * delta *1f / 1000;
+        y += speed * delta * 1f / 1000;
         if (y + height >= bordersHeight() + startY()) {
             y = bordersHeight() - height;
             return false;
@@ -176,7 +183,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveRight(int delta) {
-        x += getCurrentMobility() * delta *1f / 1000;
+        x += getCurrentMobility() * delta * 1f / 1000;
         if (x + width >= startX() + bordersWidth()) {
             x = bordersWidth() + startX() - width;
             return false;
@@ -185,7 +192,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveLeft(int delta) {
-        x -= getCurrentMobility() * delta *1f / 1000;
+        x -= getCurrentMobility() * delta * 1f / 1000;
         if (x <= startX()) {
             x = startX();
             return false;
@@ -198,52 +205,14 @@ public class Player extends MovingObject {
             jumpAnimation.draw(x, y);
         } else if (immortal) {
             immortalAnimation.draw(x, y);
-        } else if(falling){
-            wasted.draw(50,100);
-        }
-        else {
+        } else if (falling) {
+            wasted.draw(50, 100);
+        } else {
             getImage().draw(x, y);
         }
-    }
-
-    public boolean checkForCollision(GameObject object) {
-        float thisTop = y;
-        float thisBottom = thisTop + height;
-        float thisLeft = x;
-        float thisRight = thisLeft + width;
-
-        float otherTop = object.y;
-        float otherBottom = otherTop + object.height;
-        float otherLeft = object.x;
-        float otherRight = otherLeft + object.width;
-
-        if (thisBottom < otherTop) return (false);
-        if (thisTop > otherBottom) return (false);
-
-        if (thisRight < otherLeft) return (false);
-        if (thisLeft > otherRight) return (false);
-
-        return (true);
-    }
-
-    public boolean checkForCollision(Rectangle object) {
-        float thisTop = y;
-        float thisBottom = thisTop + height;
-        float thisLeft = x;
-        float thisRight = thisLeft + width;
-
-        float otherTop = object.getY();
-        float otherBottom = otherTop + object.getHeight();
-        float otherLeft = object.getX();
-        float otherRight = otherLeft + object.getWidth();
-
-        if (thisBottom < otherTop) return (false);
-        if (thisTop > otherBottom) return (false);
-
-        if (thisRight < otherLeft) return (false);
-        if (thisLeft > otherRight) return (false);
-
-        return (true);
+        if(isTomat){
+            badtomat.draw(Road.CENTR-badtomat.getWidth()/2,Road.Y);
+        }
     }
 
     public void collision(int collision) {
@@ -277,7 +246,44 @@ public class Player extends MovingObject {
                 setJumpAnim();
                 break;
             }
-
+            case Constants.BONUS_BARRIER: {
+                immortal = true;
+                counter = 0;
+                break;
+            }
+            case Constants.BONUS_FIRE:{
+                bonusActive = true;
+                speed*=2;
+                bonusCounter = 0;
+                break;
+            }
+            case Constants.BONUS_ICE:{
+                bonusActive = true;
+                speed/=2;
+                bonusCounter = 0;
+                break;
+            }
+            case Constants.BONUS_WRENCH:{
+                durability++;
+                break;
+            }
+            case Constants.BONUS_TOMAT:{
+                bonusActive = true;
+                isTomat = true;
+                bonusCounter = 0;
+                break;
+            }
+            case Constants.BONUS_FAN:{
+                bonusActive = true;
+                mobility *=2;
+                bonusCounter = 0;
+                break;
+            }
+            case Constants.BONUS_SURPRISE:{
+                int bonus = 1000 + Constants.random.nextInt(7);
+                collision(bonus);
+                break;
+            }
         }
     }
 
@@ -301,14 +307,14 @@ public class Player extends MovingObject {
     @Override
     public void update(int delta) {
         if (immortal) {
-            counter += (delta*1f)/Constants.DIVIDE_DELTA;
+            counter += (delta * 1f) / Constants.DIVIDE_DELTA;
             System.out.println(counter);
             if (counter >= immortalTimer) {
                 immortal = false;
                 counter = 0;
             }
         } else if (jumping) {
-            counter += (delta*1f)/Constants.DIVIDE_DELTA;
+            counter += (delta * 1f) / Constants.DIVIDE_DELTA;
             System.out.println(counter);
             if (counter >= jumpingTimer) {
                 jumping = false;
@@ -318,6 +324,22 @@ public class Player extends MovingObject {
 
         }
 
+        if(bonusActive){
+            bonusCounter += (delta * 1f) / Constants.DIVIDE_DELTA;
+            System.out.println(bonusCounter);
+            if(bonusCounter >= bonusTimer){
+                bonusActive = false;
+                toNormalMode();
+                bonusCounter = 0;
+            }
+        }
+
+    }
+
+    private void toNormalMode() {
+        speed = getSpeed();
+        mobility = getMobility();
+        isTomat = false;
     }
 
     public boolean isJumping() {

@@ -127,4 +127,26 @@ public abstract class LevelGenerator {
     public int[][] getGrid() {
         return grid;
     }
+
+    public boolean checkForId(int id){
+        for(int[] array:grid){
+            for(int i:array){
+                if(i == id){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public int howManyId(int id){
+        int counter = 0;
+        for(int[] array:grid){
+            for(int i:array){
+                if(i == id){
+                    counter++;
+                }
+            }
+        }
+        return counter;
+    }
 }

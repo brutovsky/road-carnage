@@ -23,8 +23,10 @@ public class Gameplay extends BasicGameState {
     private int id;
     private Player player;
 
+    private float km = 0;
+
     private float generateTimer = -Road.HEIGHT;
-    float konusTimer = generateTimer/2;
+    float konusTimer = generateTimer / 2;
     float counter = 0;
 
 
@@ -37,7 +39,6 @@ public class Gameplay extends BasicGameState {
     ArrayList<GameObject> decorations = new ArrayList();
 
     DessertLevel level;
-
 
 
     public Gameplay(int id) {
@@ -68,9 +69,10 @@ public class Gameplay extends BasicGameState {
             go.draw();
         }
         player.draw();
-        graphics.drawString("Speed - " + new Integer((int)player.getCurrentSpeed()).toString(),10,30);
-        graphics.drawString("Mobility - " + new Integer((int)player.getCurrentMobility()).toString(),10,60);
-        graphics.drawString("Durability - " + new Integer((int)player.getCurrentDurability()).toString(),10,90);
+        graphics.drawString("Speed - " + new Integer((int) player.getCurrentSpeed()).toString(), 10, 30);
+        graphics.drawString("Mobility - " + new Integer((int) player.getCurrentMobility()).toString(), 10, 60);
+        graphics.drawString("Durability - " + new Integer((int) player.getCurrentDurability()).toString(), 10, 90);
+        graphics.drawString("KM - " + km, 10, 150);
     }
 
 
@@ -80,15 +82,16 @@ public class Gameplay extends BasicGameState {
             level.generate();
             level.createObstacles(road);
             generateTimer = Road.HEIGHT;
+            road.collectGarbage();
         } else {
-            generateTimer -= player.getSpeed() * speed_koef * i / Constants.DIVIDE_DELTA;
+            generateTimer -= player.getCurrentSpeed() * speed_koef * i / Constants.DIVIDE_DELTA;
         }
 
-        if(konusTimer <= 0){
+        if (konusTimer <= 0) {
             level.createKonus(road);
-            konusTimer = Road.HEIGHT/2;
-        }else {
-            konusTimer -= player.getSpeed() * speed_koef * i / Constants.DIVIDE_DELTA;
+            konusTimer = Road.HEIGHT / 2;
+        } else {
+            konusTimer -= player.getCurrentSpeed() * speed_koef * i / Constants.DIVIDE_DELTA;
         }
 
         Input input = gameContainer.getInput();
@@ -105,11 +108,12 @@ public class Gameplay extends BasicGameState {
             player.moveLeft(i * speed_koef);
         }
 
-        road.update(player.getSpeed() * speed_koef, i);
+        road.update(player.getCurrentSpeed() * speed_koef, i);
+        km += player.getCurrentSpeed() * speed_koef*i/ Constants.DIVIDE_DELTA/10000;
 
 
         for (GameObject go : road.getObstacles()) {
-            go.update(player.getSpeed() * speed_koef, i);
+            go.update(player.getCurrentSpeed() * speed_koef, i);
         }
 
 
@@ -120,9 +124,9 @@ public class Gameplay extends BasicGameState {
 
         if (!(player.isImmortal() || player.isJumping() || player.isFalling())) {
             if (player.checkForCollision(Road.DANGER_ZONE_LEFT)) {
-                //player.dangerZone();
+                player.dangerZone();
             } else if (player.checkForCollision(Road.DANGER_ZONE_RIGHT)) {
-                //player.dangerZone();
+                player.dangerZone();
             }
         }
 
@@ -130,6 +134,7 @@ public class Gameplay extends BasicGameState {
             for (GameObject object : road.getObstacles()) {
                 if (player.checkForCollision(object)) {
                     if (object instanceof Car) {
+                        ((Car) object).setSpeed(0);
                         player.collision(((Car) object).collisionOccured());
                         System.out.println("COLLISION");
                         break;
@@ -140,13 +145,31 @@ public class Gameplay extends BasicGameState {
                         break;
                     } else if (object instanceof Obstacle) {
                         player.collision(((Obstacle) object).collisionOccured());
+                        System.out.println(((Obstacle) object).collisionOccured());
                         System.out.println("OBSTACLE");
                         break;
                     }
                 }
             }
         }
-
         player.update(i);
+
+        for (GameObject car : road.getObstacles()) {
+            if (car instanceof Car) {
+                for (GameObject object : road.getObstacles()) {
+                    if(car == object){
+                        continue;
+                    }
+                    if(((Car) car).checkForCollision(object)){
+                        ((Car) car).setSpeed(0);
+                        break;
+                    }
+                }
+            }
+        }
+
+
     }
+
 }
+
