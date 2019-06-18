@@ -24,7 +24,7 @@ public class Gameplay extends BasicGameState {
     private Player player;
 
     private float generateTimer = -Road.HEIGHT;
-
+    float konusTimer = generateTimer/2;
     float counter = 0;
 
 
@@ -37,6 +37,7 @@ public class Gameplay extends BasicGameState {
     ArrayList<GameObject> decorations = new ArrayList();
 
     DessertLevel level;
+
 
 
     public Gameplay(int id) {
@@ -67,18 +68,27 @@ public class Gameplay extends BasicGameState {
             go.draw();
         }
         player.draw();
+        graphics.drawString("Speed - " + new Integer((int)player.getCurrentSpeed()).toString(),10,30);
+        graphics.drawString("Mobility - " + new Integer((int)player.getCurrentMobility()).toString(),10,60);
+        graphics.drawString("Durability - " + new Integer((int)player.getCurrentDurability()).toString(),10,90);
     }
 
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-
         if (generateTimer <= 0) {
             level.generate();
             level.createObstacles(road);
             generateTimer = Road.HEIGHT;
         } else {
             generateTimer -= player.getSpeed() * speed_koef * i / Constants.DIVIDE_DELTA;
+        }
+
+        if(konusTimer <= 0){
+            level.createKonus(road);
+            konusTimer = Road.HEIGHT/2;
+        }else {
+            konusTimer -= player.getSpeed() * speed_koef * i / Constants.DIVIDE_DELTA;
         }
 
         Input input = gameContainer.getInput();
@@ -124,7 +134,8 @@ public class Gameplay extends BasicGameState {
                         System.out.println("COLLISION");
                         break;
                     } else if (object instanceof Bonus) {
-                        //player.collision(((Bonus) object).collisionOccured());
+                        player.collision(((Bonus) object).collisionOccured());
+                        road.getObstacles().remove(object);
                         System.out.println("BONUS");
                         break;
                     } else if (object instanceof Obstacle) {

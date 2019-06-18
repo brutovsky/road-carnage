@@ -5,6 +5,7 @@ import gameObjects.stuff.PlayerCars;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 
 public class Player extends MovingObject {
@@ -22,8 +23,11 @@ public class Player extends MovingObject {
     private Animation immortalAnimation;
     private Animation jumpAnimation;
     private Animation fallAnimation;
+    private Animation explosionAnimation;
+    private Image wasted;
+
     private int immortalAnimDur = 100;
-    private int jumpAnimDur = 200;
+    private int jumpAnimDur = 60;
     private int fallAnimDur = 100;
     private int immortalTimer = 5;
     private int jumpingTimer;
@@ -42,10 +46,16 @@ public class Player extends MovingObject {
         falling =false;
         counter = 0;
 
+        try {
+            wasted = new Image("res/playerCars/wasted.png");
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+
         setImmortlaAnim();
         setJumpAnim();
         setFallAnim();
-        jumpingTimer = ((jumpAnimation.getFrameCount()) * jumpAnimDur)/Constants.DIVIDE_DELTA;
+        setExplosionAnim();
     }
 
     private void setImmortlaAnim(){
@@ -59,6 +69,34 @@ public class Player extends MovingObject {
         }
     }
 
+    public void setExplosionAnim() {
+        explosionAnimation = new Animation();
+        Image image = null;
+        SpriteSheet sprite_sheet = null;
+        int columns = 15;
+        int lines = 1;
+        try {
+            image = new Image("res/playerCars/explosion.png");
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+        int spriteSheetWidth = image.getWidth();
+        int spriteSheetHeight = image.getHeight();
+        int spriteWidth = (int)(spriteSheetWidth/columns);
+        int spriteHeight =
+                (int)(spriteSheetHeight/lines);
+        sprite_sheet = new SpriteSheet(image,
+                spriteWidth,
+                spriteHeight);
+        for(int y = 0;y < lines;y++){
+            for(int x = 0;x < columns;x++){
+                explosionAnimation.addFrame(
+                        sprite_sheet.getSprite(x,y),100);
+            }
+        }
+        explosionAnimation.setLooping(false);
+    }
+
     private void setFallAnim() {
         fallAnimation = new Animation();
         fallAnimation.addFrame(getImage().getScaledCopy(0.9f), fallAnimDur);
@@ -70,6 +108,7 @@ public class Player extends MovingObject {
         fallAnimation.addFrame(getImage().getScaledCopy(0.3f), fallAnimDur);
         fallAnimation.addFrame(getImage().getScaledCopy(0.2f), fallAnimDur);
         fallAnimation.addFrame(getImage().getScaledCopy(0.1f), fallAnimDur);
+        fallAnimation.addFrame(getImage().getScaledCopy(0.05f), fallAnimDur);
         fallAnimation.addFrame(getImage().getScaledCopy(0.05f), fallAnimDur);
         fallAnimation.setLooping(false);
     }
@@ -87,12 +126,15 @@ public class Player extends MovingObject {
         jumpAnimation.addFrame(getImage().getScaledCopy(1.50f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.45f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.40f), jumpAnimDur);
+        jumpAnimation.addFrame(getImage().getScaledCopy(1.35f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.30f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.25f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.20f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.15f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.1f), jumpAnimDur);
-        jumpAnimation.setLooping(true);
+        jumpAnimation.addFrame(getImage().getScaledCopy(1f), jumpAnimDur);
+        jumpAnimation.setLooping(false);
+        jumpingTimer = ((jumpAnimation.getFrameCount()) * jumpAnimDur)/Constants.DIVIDE_DELTA;
     }
 
     public int getDurability() {
@@ -125,7 +167,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveBackward(int delta) {
-        y += getCurrentMobility()*0.3*speed * delta *1f / 1000;
+        y += speed * delta *1f / 1000;
         if (y + height >= bordersHeight() + startY()) {
             y = bordersHeight() - height;
             return false;
@@ -157,8 +199,7 @@ public class Player extends MovingObject {
         } else if (immortal) {
             immortalAnimation.draw(x, y);
         } else if(falling){
-            y -= 0.5;
-            fallAnimation.draw(x,y);
+            wasted.draw(50,100);
         }
         else {
             getImage().draw(x, y);
@@ -223,6 +264,8 @@ public class Player extends MovingObject {
                 durability = 0;
                 broken = false;
                 falling = true;
+                speed = 0;
+                mobility = 0;
                 setAnimation(fallAnimation);
                 break;
             }
@@ -231,6 +274,7 @@ public class Player extends MovingObject {
                 counter = 0;
                 jumping = true;
                 setAnimation(jumpAnimation);
+                setJumpAnim();
                 break;
             }
 
@@ -271,12 +315,7 @@ public class Player extends MovingObject {
                 counter = 0;
             }
         } else if (falling) {
-            counter += (fallAnimation.getFrameCount() * fallAnimDur) / 40;
-            if (counter >= jumpAnimation.getFrameCount() * fallAnimDur) {
-                falling = false;
-                counter = 0;
 
-            }
         }
 
     }

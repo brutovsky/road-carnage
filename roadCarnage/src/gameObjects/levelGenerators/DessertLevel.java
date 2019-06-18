@@ -17,7 +17,7 @@ public class DessertLevel extends LevelGenerator {
 
     private boolean isDuna;
 
-    private static final float STAGE_Y = 175;
+    private static final float STAGE_Y = 200;
     //private static final float STAGE2_Y = 175*2;
     //private static final float STAGE3_Y = 175;
 
@@ -297,6 +297,11 @@ public class DessertLevel extends LevelGenerator {
                 }
             }
         }
+    }
+
+    public void createKonus(Road road){
+        Obstacle obstacle = new Obstacle(1f,Road.CENTR,-Road.HEIGHT/2, KONUS);
+        road.getObstacles().add(obstacle);
     }
 
 }
