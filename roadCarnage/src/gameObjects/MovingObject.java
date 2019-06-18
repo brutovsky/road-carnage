@@ -22,6 +22,46 @@ public class MovingObject extends GameObject{
         this.borders = borders;
     }
 
+    public boolean checkForCollision(Rectangle object) {
+        float thisTop = y;
+        float thisBottom = thisTop + height;
+        float thisLeft = x;
+        float thisRight = thisLeft + width;
+
+        float otherTop = object.getY();
+        float otherBottom = otherTop + object.getHeight();
+        float otherLeft = object.getX();
+        float otherRight = otherLeft + object.getWidth();
+
+        if (thisBottom < otherTop) return (false);
+        if (thisTop > otherBottom) return (false);
+
+        if (thisRight < otherLeft) return (false);
+        if (thisLeft > otherRight) return (false);
+
+        return (true);
+    }
+
+    public boolean checkForCollision(GameObject object) {
+        float thisTop = y;
+        float thisBottom = thisTop + height;
+        float thisLeft = x;
+        float thisRight = thisLeft + width;
+
+        float otherTop = object.y;
+        float otherBottom = otherTop + object.height;
+        float otherLeft = object.x;
+        float otherRight = otherLeft + object.width;
+
+        if (thisBottom < otherTop) return (false);
+        if (thisTop > otherBottom) return (false);
+
+        if (thisRight < otherLeft) return (false);
+        if (thisLeft > otherRight) return (false);
+
+        return (true);
+    }
+
     public int startX(){
         return (int)borders.getX();
     }
@@ -45,4 +85,6 @@ public class MovingObject extends GameObject{
     public void setSpeed(float speed) {
         this.speed = speed;
     }
+
+
 }

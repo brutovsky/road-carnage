@@ -6,7 +6,7 @@ import gameObjects.stuff.Constants;
 public class Bonus extends GameObject {
 
     Bonuses typeOf;
-    public Bonus(float scale, int x, int y, Bonuses bonus) {
+    public Bonus(float scale, float x, float y, Bonuses bonus) {
         super(bonus.getAnimation(), scale, x, y);
         typeOf = bonus;
     }
@@ -17,11 +17,19 @@ public class Bonus extends GameObject {
 
     @Override
     public void update(float shift, int delta) {
-        y += shift*delta/ Constants.DIVIDE_DELTA;
+        y += (shift*delta)/ Constants.DIVIDE_DELTA;
     }
 
     @Override
     public int collisionOccured() {
         return typeOf.collision();
+    }
+
+    public Bonuses getType() {
+        return typeOf;
+    }
+
+    public String getName(){
+        return typeOf.getName();
     }
 }
