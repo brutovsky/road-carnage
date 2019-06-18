@@ -1,10 +1,21 @@
 package gameObjects.levelGenerators;
 
 import gameObjects.*;
+import gameObjects.stuff.Bonuses;
+import gameObjects.stuff.Constants;
 
 import java.util.HashMap;
+import java.util.Random;
+
+import static gameObjects.stuff.Cars.*;
+import static gameObjects.stuff.Cars.TRUCK;
+import static gameObjects.stuff.Obstacles.*;
+import static gameObjects.stuff.Obstacles.TRAMPOLINE;
 
 public abstract class LevelGenerator {
+
+    protected float stage_y;
+
     protected final int stages;
     protected final int[][] grid;
     protected final int roadLines;
@@ -149,4 +160,141 @@ public abstract class LevelGenerator {
         }
         return counter;
     }
+
+    public void createObstacles(Road road) {
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                GameObject object = getObstacles().get(grid[i][j]);
+                if (object == null) {
+                    continue;
+                } else if (object instanceof Obstacle) {
+                    switch (((Obstacle) object).getType()) {
+                        case CACTUS: {
+                            road.getObstacles().add(new Obstacle(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, CACTUS));
+                            continue;
+                        }
+                        case DUNA: {
+                            Obstacle duna = new Obstacle(1f, Road.CENTR, Road.Y - (i + 1) * stage_y, DUNA);
+                            road.getObstacles().add(duna);
+                            int r = Constants.random.nextInt(4) + 1;
+                            float ty = duna.getY() + duna.getHeight();
+                            float tx = road.getLineX(r);
+                            System.out.println(r);
+                            road.getObstacles().add(new Obstacle(1f, tx, ty, TRAMPOLINE));
+                            j = grid[i].length;
+                            break;
+                        }
+                        case HOLE: {
+                            road.getObstacles().add(new Obstacle(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, HOLE));
+                            continue;
+                        }
+                        case KONUS: {
+                            road.getObstacles().add(new Obstacle(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, KONUS));
+                            continue;
+                        }
+                        case TRAMPOLINE: {
+                            road.getObstacles().add(new Obstacle(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, TRAMPOLINE));
+                            continue;
+                        }
+                        default: {
+                            System.out.println("NO OBSTACLE");
+                        }
+                    }
+                } else if (object instanceof Car) {
+                    switch (((Car) object).getType()) {
+                        case CASUAL_BLACK: {
+                            road.getObstacles().add(new Car(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, Road.ROAD, CASUAL_BLACK));
+                            continue;
+                        }
+                        case CASUAL_BLUE: {
+                            road.getObstacles().add(new Car(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, Road.ROAD, CASUAL_BLUE));
+                            continue;
+                        }
+                        case CASUAL_GREEN: {
+                            road.getObstacles().add(new Car(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, Road.ROAD, CASUAL_GREEN));
+                            continue;
+                        }
+                        case HOTDOG: {
+                            road.getObstacles().add(new Car(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, Road.ROAD, HOTDOG));
+                            continue;
+                        }
+                        case TAXI: {
+                            road.getObstacles().add(new Car(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, Road.ROAD, TAXI));
+                            continue;
+                        }
+                        case TRUCK: {
+                            road.getObstacles().add(new Car(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, Road.ROAD, TRUCK));
+                            continue;
+                        }
+                        default: {
+                            System.out.println("NO CAR");
+                        }
+                    }
+                } else if (object instanceof Bonus) {
+                    switch (((Bonus) object).getType()) {
+                        case TOMAT:{
+                            road.getObstacles().add(new Bonus(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, Bonuses.TOMAT));
+                            continue;
+                        }
+                        case BARRIER: {
+                            road.getObstacles().add(new Bonus(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, Bonuses.BARRIER));
+                            continue;
+                        }
+                        case CHERRY: {
+                            road.getObstacles().add(new Bonus(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, Bonuses.CHERRY));
+                            continue;
+                        }
+                        case FAN: {
+                            road.getObstacles().add(new Bonus(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, Bonuses.FAN));
+                            continue;
+                        }
+                        case FIRE: {
+                            road.getObstacles().add(new Bonus(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, Bonuses.FIRE));
+                            continue;
+                        }
+                        case ICE: {
+                            road.getObstacles().add(new Bonus(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, Bonuses.ICE));
+                            continue;
+                        }
+                        case SURPRISE: {
+                            road.getObstacles().add(new Bonus(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, Bonuses.SURPRISE));
+                            continue;
+                        }
+                        case WRENCH: {
+                            road.getObstacles().add(new Bonus(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, Bonuses.WRENCH));
+                            continue;
+                        }
+                        default: {
+                            System.out.println("NO BONUS");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private int getRandomType() {
+        int sum = 0;
+        int c = new Random().nextInt(101);
+        sum += none_chance;
+        if (c <= sum) {
+            return TYPE_NONE;
+        }
+        sum += obstacle_chance;
+        if (c <= sum) {
+            return TYPE_OBSTACLES;
+        }
+        sum += car_chance;
+        if (c <= sum) {
+            return TYPE_CARS;
+        }
+        return TYPE_BONUSES;
+    }
+
+
+    public void createKonus(Road road){
+        Obstacle obstacle = new Obstacle(1f,Road.CENTR,-Road.HEIGHT/2, KONUS);
+        road.getObstacles().add(obstacle);
+    }
+
 }
