@@ -18,12 +18,14 @@ public class Player extends MovingObject {
     private boolean immortal;
     private boolean jumping;
     private boolean falling;
+    private boolean slipping;
 
     private float counter;
     private Animation immortalAnimation;
     private Animation jumpAnimation;
     private Animation fallAnimation;
     private Animation explosionAnimation;
+    //private Animation slipAnimation;
     private Image wasted;
     private Image badtomat;
 
@@ -32,6 +34,9 @@ public class Player extends MovingObject {
     private int fallAnimDur = 100;
     private int immortalTimer = 5;
     private int jumpingTimer;
+
+    private float slipTimer = 1;
+    private float slipCounter = 0;
 
     private int bonusTimer = 10;
     private float bonusCounter = 0;
@@ -42,6 +47,7 @@ public class Player extends MovingObject {
     public Player(float scale, float x, float y, Rectangle borders, PlayerCars car) {
         super(car.getImage(), scale, x, y, car.getSpeed(), borders);
         typeOfCar = car;
+        setCarImage();
         durability = typeOfCar.getDurability();
         mobility = typeOfCar.getMobility();
         if (durability >= 0) {
@@ -51,10 +57,9 @@ public class Player extends MovingObject {
         jumping = false;
         falling = false;
         counter = 0;
-
         try {
             wasted = new Image("res/playerCars/wasted.png");
-            badtomat=new Image("res/obstacles/badtomat.png");
+            badtomat = new Image("res/obstacles/badtomat.png");
         } catch (SlickException e) {
             e.printStackTrace();
         }
@@ -69,8 +74,16 @@ public class Player extends MovingObject {
         try {
             Image temp = new Image(typeOfCar.getPath() + "Immortal" + ".png").getScaledCopy(getScale());
             immortalAnimation = new Animation();
-            immortalAnimation.addFrame(getImage(), immortalAnimDur);
+            immortalAnimation.addFrame(typeOfCar.getImage(), immortalAnimDur);
             immortalAnimation.addFrame(temp, immortalAnimDur);
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setCarImage() {
+        try {
+            setImage(new Image(typeOfCar.getPath()+".png"));
         } catch (SlickException e) {
             e.printStackTrace();
         }
@@ -210,8 +223,8 @@ public class Player extends MovingObject {
         } else {
             getImage().draw(x, y);
         }
-        if(isTomat){
-            badtomat.draw(Road.CENTR-badtomat.getWidth()/2,Road.Y);
+        if (isTomat) {
+            badtomat.draw(Road.CENTR - badtomat.getWidth() / 2, Road.Y);
         }
     }
 
@@ -219,6 +232,9 @@ public class Player extends MovingObject {
         switch (collision) {
             case Constants
                     .MINUS_DURABILITY: {
+                if(slipping){
+                    toNormalMode();
+                }
                 durability--;
                 if (durability <= 0) {
                     broken = false;
@@ -230,6 +246,9 @@ public class Player extends MovingObject {
             }
             case Constants
                     .DEAD_END: {
+                if(slipping){
+                    toNormalMode();
+                }
                 durability = 0;
                 broken = false;
                 falling = true;
@@ -240,6 +259,9 @@ public class Player extends MovingObject {
             }
             case Constants
                     .JUMP: {
+                if(slipping){
+                    toNormalMode();
+                }
                 counter = 0;
                 jumping = true;
                 setAnimation(jumpAnimation);
@@ -247,41 +269,68 @@ public class Player extends MovingObject {
                 break;
             }
             case Constants.BONUS_BARRIER: {
+                if(slipping){
+                    toNormalMode();
+                }
                 immortal = true;
                 counter = 0;
                 break;
             }
-            case Constants.BONUS_FIRE:{
+            case Constants.BONUS_FIRE: {
+                if(slipping){
+                    toNormalMode();
+                }
                 bonusActive = true;
-                speed*=2;
+                speed *= 2;
                 bonusCounter = 0;
                 break;
             }
-            case Constants.BONUS_ICE:{
+            case Constants.BONUS_ICE: {
+                if(slipping){
+                    toNormalMode();
+                }
                 bonusActive = true;
-                speed/=2;
+                speed /= 2;
                 bonusCounter = 0;
                 break;
             }
-            case Constants.BONUS_WRENCH:{
+            case Constants.BONUS_WRENCH: {
+                if(slipping){
+                    toNormalMode();
+                }
                 durability++;
                 break;
             }
-            case Constants.BONUS_TOMAT:{
+            case Constants.BONUS_TOMAT: {
+                if(slipping){
+                    toNormalMode();
+                }
                 bonusActive = true;
                 isTomat = true;
                 bonusCounter = 0;
                 break;
             }
-            case Constants.BONUS_FAN:{
+            case Constants.BONUS_FAN: {
+                if(slipping){
+                    toNormalMode();
+                }
                 bonusActive = true;
-                mobility *=2;
+                mobility *= 2;
                 bonusCounter = 0;
                 break;
             }
-            case Constants.BONUS_SURPRISE:{
+            case Constants.BONUS_SURPRISE: {
+                if(slipping){
+                    toNormalMode();
+                }
                 int bonus = 1000 + Constants.random.nextInt(7);
                 collision(bonus);
+                break;
+            }
+            case Constants.NO_MOVABILITY: {
+                slipping = true;
+                mobility = 0;
+                slipCounter = 0;
                 break;
             }
         }
@@ -322,24 +371,36 @@ public class Player extends MovingObject {
             }
         } else if (falling) {
 
+        } else if (slipping) {
+            slipCounter += (delta * 1f) / Constants.DIVIDE_DELTA;
+            if (slipCounter >= slipTimer) {
+                toNormalMode();
+            } else {
+                System.out.println("ROTATE");
+                getImage().rotate(5);
+            }
         }
 
-        if(bonusActive){
+        if (bonusActive) {
             bonusCounter += (delta * 1f) / Constants.DIVIDE_DELTA;
             System.out.println(bonusCounter);
-            if(bonusCounter >= bonusTimer){
+            if (bonusCounter >= bonusTimer) {
                 bonusActive = false;
                 toNormalMode();
                 bonusCounter = 0;
             }
         }
 
+
     }
 
     private void toNormalMode() {
+        setCarImage();
         speed = getSpeed();
         mobility = getMobility();
         isTomat = false;
+        slipping = false;
+        System.out.println("NORMAL");
     }
 
     public boolean isJumping() {

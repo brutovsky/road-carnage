@@ -9,7 +9,9 @@ public enum Cars {
     HOTDOG("res/cars/hotdog.png","HOTDOG",500f),
     CASUAL_BLACK("res/cars/blackCar.png","BLACK",300f),
     CASUAL_GREEN("res/cars/greenCar.png","GREEN",200f),
-    CASUAL_BLUE("res/cars/blueCar.png","BLUE",100f);
+    CASUAL_BLUE("res/cars/blueCar.png","BLUE",100f),
+    MEGABUS("res/cars/megabus.png","MEGABUS",100f),
+    ICECREAM("res/cars/icecream.png","ICECREAM",500f);
     private Image image;
     private float speed;
     private String name;
