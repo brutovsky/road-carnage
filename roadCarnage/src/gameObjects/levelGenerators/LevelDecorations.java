@@ -1,0 +1,159 @@
+package gameObjects.levelGenerators;
+
+import gameObjects.Decoration;
+import gameObjects.GameObject;
+import gameObjects.Road;
+import gameObjects.stuff.Constants;
+import gameObjects.stuff.Decorations;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class LevelDecorations {
+    private List<GameObject> decorationsLeft;
+    private List<GameObject> decorationsRight;
+    private String map;
+    private int location;
+
+    public LevelDecorations() {
+        decorationsLeft = new ArrayList<>();
+        decorationsRight = new ArrayList<>();
+        typoOfMap();
+        addDecorations();
+    }
+
+    private void typoOfMap() {
+        if (Road.PATH.equals("res\\roadSkins\\backSide.png")) {
+            map = "Forest";
+        }else if (Road.PATH.equals("res\\roadSkins\\desert.png")) {
+            map = "Desert";
+        } else if (Road.PATH.equals("res\\roadSkins\\arcticRoad.png")) {
+            map = "Arctic";
+        } else if (Road.PATH.equals("res\\roadSkins\\cityRoad.png")) {
+            map = "City";
+        }
+    }
+
+    public void update() {
+
+        if (getDownPictureL().getY() > 700) {
+            if (location % 2 == 0) {
+                decorationsLeft.add(randomDecoration(40, -90));
+                decorationsRight.add(randomDecoration(820, -90));
+            } else {
+                decorationsLeft.add(randomDecoration(150, -90));
+                decorationsRight.add(randomDecoration(910, -90));
+            }
+            decorationsLeft.remove(getDownPictureL());
+            decorationsRight.remove(getDownPictureR());
+            location++;
+        }
+
+    }
+
+    public void addDecorations() {
+        for (int i = 0; i < 8; i++) {
+            if (decorationsLeft.size() % 2 == 0) {
+                decorationsLeft.add(randomDecoration(20, -90 * i));
+                decorationsRight.add(randomDecoration(820, -90 * i));
+            } else {
+                decorationsLeft.add(randomDecoration(130, -90 * i));
+                decorationsRight.add(randomDecoration(910, -90 * i));
+            }
+        }
+
+    }
+
+    private Decoration randomDecoration(int x, int y) {
+System.out.println(map);
+        switch (map) {
+            case "Forest":
+                int rand = Constants.random.nextInt(11);
+                switch (rand) {
+                    case 0:
+                        return new Decoration(1f, x, y, Decorations.TREE);
+                    case 1:
+                        return new Decoration(1f, x, y, Decorations.TREE1);
+                    case 2:
+                        return new Decoration(1f, x, y, Decorations.TREE2);
+                    case 3:
+                        return new Decoration(1f, x, y, Decorations.TREE3);
+                    case 4:
+                        return new Decoration(1f, x, y, Decorations.TREE4);
+                    case 5:
+                        return new Decoration(1f, x, y, Decorations.TREE5);
+                    case 6:
+                        return new Decoration(1f, x, y, Decorations.TREE6);
+                    case 7:
+                        return new Decoration(1f, x, y, Decorations.TREE7);
+                    case 8:
+                        return new Decoration(1f, x, y, Decorations.TREE8);
+                    case 9:
+                        return new Decoration(1f, x, y, Decorations.COW1);
+                    default:
+                        return new Decoration(1f, x, y, Decorations.COW);
+
+                }
+            case "Desert":
+                 rand = Constants.random.nextInt(11);
+                switch (rand) {
+
+                }
+            case "Arctic":
+                 rand = Constants.random.nextInt(10);
+                switch (rand) {
+                    case 0:
+                        return new Decoration(1f, x+20, y, Decorations.POLAR_BEAR);
+                    case 1:
+                        return new Decoration(1f, x+20, y, Decorations.POLAR_BEAR1);
+                    case 2:
+                        return new Decoration(1f, x+20, y, Decorations.WOLF);
+                    case 3:
+                        return new Decoration(1f, x+20, y, Decorations.POLAR_BEAR2);
+                    case 4:
+                        return new Decoration(1f, x+20, y, Decorations.POCKEMON1);
+                    case 5:
+                        return new Decoration(1f, x+20, y, Decorations.WOLF1);
+                    case 6:
+                        return new Decoration(1f, x+20, y, Decorations.PENGUIN);
+                    case 7:
+                        return new Decoration(1f, x+20, y, Decorations.ICEPOOL);
+                    case 8:
+                        return new Decoration(1f, x+20, y, Decorations.PENGUIN1);
+                    case 9:
+                        return new Decoration(1f, x+20, y, Decorations.POCKEMON);
+
+                }
+            case "City":
+                rand = Constants.random.nextInt(11);
+                switch (rand) {
+
+                }
+            default:
+                return new Decoration(1f, x, y, Decorations.COW);
+
+        }
+    }
+
+    public List<GameObject> getDecorationsL() {
+        return decorationsLeft;
+    }
+
+    public List<GameObject> getDecorationsR() {
+        return decorationsRight;
+    }
+
+    private GameObject getDownPictureL() {
+        for (int i = 0; i < decorationsLeft.size(); i++)
+            if (decorationsLeft.get(i) != null)
+                return decorationsLeft.get(i);
+        return null;
+    }
+
+    private GameObject getDownPictureR() {
+        for (int i = 0; i < decorationsRight.size(); i++)
+            if (decorationsRight.get(i) != null)
+                return decorationsRight.get(i);
+        return null;
+    }
+}

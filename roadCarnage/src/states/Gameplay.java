@@ -6,6 +6,7 @@ import gameObjects.*;
 import gameObjects.Road;
 
 import gameObjects.levelGenerators.*;
+import gameObjects.levelGenerators.LevelDecorations;
 import gameObjects.stuff.*;
 import org.newdawn.slick.*;
 
@@ -32,13 +33,12 @@ public class Gameplay extends BasicGameState {
 
     // Test
     Road road;
+    LevelDecorations decor;
     int speed_koef;
     //
 
-    ArrayList<GameObject> obstacles = new ArrayList();
-    ArrayList<GameObject> decorations = new ArrayList();
 
-    CityLevel level;
+    AntarcticLevel level;
 
 
     public Gameplay(int id) {
@@ -53,16 +53,20 @@ public class Gameplay extends BasicGameState {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         road = new Road();
+        decor = new LevelDecorations();
         player = new Player(1f, Road.LINE5, 600, Road.FULL_ROAD, PlayerCars.ANISTON);
         speed_koef = 1;
-        level = new CityLevel();
+        level = new AntarcticLevel();
     }
 
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         road.draw();
-        for (GameObject go : decorations) {
+        for (GameObject go : decor.getDecorationsL()) {
+            go.draw();
+        }
+        for (GameObject go : decor.getDecorationsR()) {
             go.draw();
         }
         for (GameObject go : road.getObstacles()) {
@@ -115,7 +119,13 @@ public class Gameplay extends BasicGameState {
         for (GameObject go : road.getObstacles()) {
             go.update(player.getCurrentSpeed() * speed_koef, i);
         }
-
+        for (GameObject go : decor.getDecorationsL()) {
+            go.update(player.getCurrentSpeed() * speed_koef, i);
+        }
+        for (GameObject go : decor.getDecorationsR()) {
+            go.update(player.getCurrentSpeed() * speed_koef, i);
+        }
+        decor.update();
 
         if (!player.isBroken()) {
             speed_koef = 0;
