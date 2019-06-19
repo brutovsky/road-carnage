@@ -16,8 +16,11 @@ public enum Obstacles {
     HOLE("res/obstacles/hole.png", "HOLE", 1, 1,Obstacle.ONE_LINE_SIZE,Constants.DEAD_END),
     TRAMPOLINE("res/obstacles/trampoline.png", "TRAMPOLINE", 5, 1,Obstacle.ONE_LINE_SIZE,Constants.JUMP),
     ICE_POOL("res/obstacles/ice_pool.png", "ICE POOL", 1, 1,Obstacle.ONE_LINE_SIZE,Constants.NO_MOVABILITY),
-    ROAD_BARRIER("res/obstacles/roadBarrier.png","ROAD BARRIER",1,1,Obstacle.ONE_LINE_SIZE,Constants.MINUS_DURABILITY);
-
+    ROAD_BARRIER("res/obstacles/roadBarrier.png","ROAD BARRIER",1,1,Obstacle.ONE_LINE_SIZE,Constants.MINUS_DURABILITY),
+    WOLF("res/obstacles/wolf.png","WOLF",1,1,Obstacle.ONE_LINE_SIZE,Constants.MINUS_DURABILITY),
+    FALLEN_TREE("res/obstacles/fallenTree1.png","FALLEN TREE",1,1,Obstacle.TWO_LINES_SIZE,Constants.MINUS_DURABILITY),
+    BIG_HOLE("res/obstacles/big_hole.png","BIG HOLE",1,1,Obstacle.FOUR_LINES_SIZE,Constants.DEAD_END),
+    CENTRE_HOLE("res/obstacles/centre_hole.png","BIG CENTRE HOLE",1,1,Obstacle.ONE_LINE_SIZE,Constants.DEAD_END);
     private Animation animation;
     private Image image;
     private SpriteSheet sprite_sheet;

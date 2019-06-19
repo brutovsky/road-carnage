@@ -13,8 +13,6 @@ import static gameObjects.stuff.Cars.*;
 
 public class AntarcticLevel extends LevelGenerator{
 
-    private boolean isDuna;
-
     public AntarcticLevel() {
         super(3, 4);
         stage_y = 200;

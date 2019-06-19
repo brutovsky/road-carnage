@@ -7,6 +7,8 @@ import gameObjects.Road;
 
 import gameObjects.levelGenerators.AntarcticLevel;
 import gameObjects.levelGenerators.DessertLevel;
+import gameObjects.levelGenerators.JungleLevel;
+import gameObjects.levelGenerators.LevelGenerator;
 import gameObjects.stuff.*;
 import org.newdawn.slick.*;
 
@@ -27,7 +29,7 @@ public class Gameplay extends BasicGameState {
     private float km = 0;
 
     private float generateTimer = -Road.HEIGHT;
-    float konusTimer = generateTimer / 2;
+    float konusTimer = generateTimer;
     float counter = 0;
 
 
@@ -39,7 +41,7 @@ public class Gameplay extends BasicGameState {
     ArrayList<GameObject> obstacles = new ArrayList();
     ArrayList<GameObject> decorations = new ArrayList();
 
-    AntarcticLevel level;
+    JungleLevel level;
 
 
     public Gameplay(int id) {
@@ -56,7 +58,7 @@ public class Gameplay extends BasicGameState {
         road = new Road();
         player = new Player(1f, Road.LINE5, 600, Road.FULL_ROAD, PlayerCars.ANISTON);
         speed_koef = 1;
-        level = new AntarcticLevel();
+        level = new JungleLevel();
     }
 
 
@@ -89,8 +91,8 @@ public class Gameplay extends BasicGameState {
         }
 
         if (konusTimer <= 0) {
-            level.createKonus(road);
-            konusTimer = Road.HEIGHT / 2;
+            level.createCentreRoadObstacle(road);
+            konusTimer = Road.HEIGHT;
         } else {
             konusTimer -= player.getCurrentSpeed() * speed_koef * i / Constants.DIVIDE_DELTA;
         }

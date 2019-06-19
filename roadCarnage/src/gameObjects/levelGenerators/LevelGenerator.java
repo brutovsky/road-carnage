@@ -201,12 +201,26 @@ public abstract class LevelGenerator {
                             j = grid[i].length;
                             break;
                         }
+                        case BIG_HOLE:{
+                            Obstacle hole = new Obstacle(1f, Road.CENTR, Road.Y - (i + 1) * stage_y, BIG_HOLE);
+                            road.getObstacles().add(hole);
+                            int r = Constants.random.nextInt(4) + 1;
+                            float ty = hole.getY() + hole.getHeight();
+                            float tx = road.getLineX(r);
+                            road.getObstacles().add(new Obstacle(1f, tx, ty, TRAMPOLINE));
+                            j = grid[i].length;
+                            break;
+                        }
                         case HOLE: {
                             road.getObstacles().add(new Obstacle(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, HOLE));
                             continue;
                         }
-                        case KONUS: {
-                            road.getObstacles().add(new Obstacle(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, KONUS));
+                        case FALLEN_TREE:{
+                            road.getObstacles().add(new Obstacle(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, FALLEN_TREE));
+                            continue;
+                        }
+                        case WOLF:{
+                            road.getObstacles().add(new Obstacle(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, WOLF));
                             continue;
                         }
                         case TRAMPOLINE: {
@@ -317,7 +331,7 @@ public abstract class LevelGenerator {
     }
 
 
-    public void createKonus(Road road){
+    public void createCentreRoadObstacle(Road road){
         Obstacle obstacle = new Obstacle(1f,Road.CENTR,-Road.HEIGHT/2, KONUS);
         road.getObstacles().add(obstacle);
     }
