@@ -68,11 +68,11 @@ public class AntarcticLevel extends LevelGenerator{
         getProbability().put(i++, 20);//3
         getProbability().put(i++, 20);//4
         //cars
-        getProbability().put(i++, 20);//5
+        getProbability().put(i++, 10);//5
         getProbability().put(i++, 20);//6
         getProbability().put(i++, 20);//7
         getProbability().put(i++, 20);//8
-        getProbability().put(i++, 10);//9
+        getProbability().put(i++, 20);//9
         getProbability().put(i++, 10);//10
         //bonuses
         getProbability().put(i++, 30);//11
