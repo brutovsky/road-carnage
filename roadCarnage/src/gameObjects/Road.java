@@ -16,7 +16,7 @@ public class Road extends GameObject {
     public static final float Y = 0;
     public static final float HEIGHT = 700;
 
-    public static final String PATH = "res\\roadSkins\\arcticRoad" + ".png";
+    public static final String PATH = "res\\roadSkins\\backSide" + ".png";
 
     public static final float ROUGH_ROAD_WIDTH = 56;
     public static final float BLACK_LINE_WIDTH = 13;
@@ -24,7 +24,7 @@ public class Road extends GameObject {
     public static final float CENTER_LINES_WIDTH = 25;
     public static final float STRIP_LENGTH = 101;
 
-    public static final float LINE0= X;
+    public static final float LINE0 = X;
     public static final float LINE1 = X + ROUGH_ROAD_WIDTH + BLACK_LINE_WIDTH + STRIP_LENGTH / 2;
     public static final float LINE2 = X + ROUGH_ROAD_WIDTH + BLACK_LINE_WIDTH + 1.5f * STRIP_LENGTH + YELLOW_LINE_WIDTH;
     public static final float LINE3 = X + ROUGH_ROAD_WIDTH + BLACK_LINE_WIDTH + 2.5f * STRIP_LENGTH + YELLOW_LINE_WIDTH + CENTER_LINES_WIDTH;
@@ -34,16 +34,13 @@ public class Road extends GameObject {
     public static final Rectangle DANGER_ZONE_RIGHT = new Rectangle(LINE5, Y, ROUGH_ROAD_WIDTH, HEIGHT);
     public static final float WIDTH = 2 * ROUGH_ROAD_WIDTH + 2 * BLACK_LINE_WIDTH + 4 * STRIP_LENGTH + 2 * YELLOW_LINE_WIDTH + CENTER_LINES_WIDTH;
     public static final float ROAD_END = X + WIDTH;
-    public static final float CENTR = X + WIDTH/2;
+    public static final float CENTR = X + WIDTH / 2;
     public static final Rectangle FULL_ROAD = new Rectangle(X, Y, WIDTH, HEIGHT);
     public static final Rectangle ROAD = new Rectangle(X + ROUGH_ROAD_WIDTH, Y, WIDTH - 2 * ROUGH_ROAD_WIDTH, HEIGHT);
     private int id;
     Image road, secondRoad;
     float yS;
-
     private List<GameObject> obstacles;
-
-
 
     public Road() throws SlickException {
         super(new Image(PATH), 1f, 0, 0);
@@ -53,13 +50,12 @@ public class Road extends GameObject {
         this.secondRoad = getImage();
         yS = -road.getHeight();
         obstacles = new ArrayList<>();
+
     }
 
-
     public void update(float shift, int delta) {
-        y += shift* delta / Constants.DIVIDE_DELTA;
+        y += shift * delta / Constants.DIVIDE_DELTA;
         yS += shift * delta / Constants.DIVIDE_DELTA;
-
         if (y > 700) {
             y = -1500;
         }
@@ -68,35 +64,33 @@ public class Road extends GameObject {
         }
     }
 
-
     @Override
     public void draw() {
         road.draw(x, y);
         secondRoad.draw(x, yS);
-
     }
 
-    public float getLineX(int number){
-        switch(number){
-            case 0:{
+    public float getLineX(int number) {
+        switch (number) {
+            case 0: {
                 return LINE0;
             }
-            case 1:{
+            case 1: {
                 return LINE1;
             }
-            case 2:{
+            case 2: {
                 return LINE2;
             }
-            case 3:{
+            case 3: {
                 return LINE3;
             }
-            case 4:{
+            case 4: {
                 return LINE4;
             }
-            case 5:{
+            case 5: {
                 return LINE5;
             }
-            default:{
+            default: {
                 return 0;
             }
         }
@@ -106,14 +100,13 @@ public class Road extends GameObject {
         return obstacles;
     }
 
-
-    public String getName(){
+    public String getName() {
         return "Road";
     }
 
-    public void collectGarbage(){
-        for(GameObject object: obstacles){
-            if(object.getY() + object.getHeight() > Road.HEIGHT){
+    public void collectGarbage() {
+        for (GameObject object : obstacles) {
+            if (object.getY() + object.getHeight() > Road.HEIGHT) {
                 System.out.println(object.getName() + " DELETED");
                 obstacles.remove(object);
                 collectGarbage();

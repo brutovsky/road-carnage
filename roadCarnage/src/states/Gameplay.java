@@ -7,6 +7,7 @@ import gameObjects.Road;
 
 import gameObjects.levelGenerators.AntarcticLevel;
 import gameObjects.levelGenerators.DessertLevel;
+import gameObjects.levelGenerators.LevelDecorations;
 import gameObjects.stuff.*;
 import org.newdawn.slick.*;
 
@@ -33,11 +34,10 @@ public class Gameplay extends BasicGameState {
 
     // Test
     Road road;
+    LevelDecorations decor;
     int speed_koef;
     //
 
-    ArrayList<GameObject> obstacles = new ArrayList();
-    ArrayList<GameObject> decorations = new ArrayList();
 
     AntarcticLevel level;
 
@@ -54,6 +54,7 @@ public class Gameplay extends BasicGameState {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         road = new Road();
+        decor = new LevelDecorations();
         player = new Player(1f, Road.LINE5, 600, Road.FULL_ROAD, PlayerCars.ANISTON);
         speed_koef = 1;
         level = new AntarcticLevel();
@@ -63,7 +64,10 @@ public class Gameplay extends BasicGameState {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         road.draw();
-        for (GameObject go : decorations) {
+        for (GameObject go : decor.getDecorationsL()) {
+            go.draw();
+        }
+        for (GameObject go : decor.getDecorationsR()) {
             go.draw();
         }
         for (GameObject go : road.getObstacles()) {
@@ -110,13 +114,19 @@ public class Gameplay extends BasicGameState {
         }
 
         road.update(player.getCurrentSpeed() * speed_koef, i);
-        km += player.getCurrentSpeed() * speed_koef*i/ Constants.DIVIDE_DELTA/10000;
+        km += player.getCurrentSpeed() * speed_koef * i / Constants.DIVIDE_DELTA / 10000;
 
 
         for (GameObject go : road.getObstacles()) {
             go.update(player.getCurrentSpeed() * speed_koef, i);
         }
-
+        for (GameObject go : decor.getDecorationsL()) {
+            go.update(player.getCurrentSpeed() * speed_koef, i);
+        }
+        for (GameObject go : decor.getDecorationsR()) {
+            go.update(player.getCurrentSpeed() * speed_koef, i);
+        }
+        decor.update();
 
         if (!player.isBroken()) {
             speed_koef = 0;
@@ -158,10 +168,10 @@ public class Gameplay extends BasicGameState {
         for (GameObject car : road.getObstacles()) {
             if (car instanceof Car) {
                 for (GameObject object : road.getObstacles()) {
-                    if(car == object){
+                    if (car == object) {
                         continue;
                     }
-                    if(((Car) car).checkForCollision(object)){
+                    if (((Car) car).checkForCollision(object)) {
                         ((Car) car).setSpeed(0);
                         break;
                     }
