@@ -104,9 +104,6 @@ public class JungleLevel extends LevelGenerator{
                 for (int j = getFirstObstacleTypeId(type); j <= getLastObstacleTypeId(type); j++) {
                     sum += getProbability().get(j);
                     if (c <= sum) {
-                        /*if(getObstacles().get(j).getName().equals("FALLEN TREE")){
-
-                        }*/
                         grid[stage][i] = j;
                         break;
                     }

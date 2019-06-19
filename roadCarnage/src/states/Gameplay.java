@@ -5,10 +5,7 @@ import gameObjects.*;
 
 import gameObjects.Road;
 
-import gameObjects.levelGenerators.AntarcticLevel;
-import gameObjects.levelGenerators.DessertLevel;
-import gameObjects.levelGenerators.JungleLevel;
-import gameObjects.levelGenerators.LevelGenerator;
+import gameObjects.levelGenerators.*;
 import gameObjects.stuff.*;
 import org.newdawn.slick.*;
 
@@ -41,7 +38,7 @@ public class Gameplay extends BasicGameState {
     ArrayList<GameObject> obstacles = new ArrayList();
     ArrayList<GameObject> decorations = new ArrayList();
 
-    JungleLevel level;
+    CityLevel level;
 
 
     public Gameplay(int id) {
@@ -58,7 +55,7 @@ public class Gameplay extends BasicGameState {
         road = new Road();
         player = new Player(1f, Road.LINE5, 600, Road.FULL_ROAD, PlayerCars.ANISTON);
         speed_koef = 1;
-        level = new JungleLevel();
+        level = new CityLevel();
     }
 
 
@@ -112,7 +109,7 @@ public class Gameplay extends BasicGameState {
         }
 
         road.update(player.getCurrentSpeed() * speed_koef, i);
-        km += player.getCurrentSpeed() * speed_koef*i/ Constants.DIVIDE_DELTA/10000;
+        km += player.getCurrentSpeed() * speed_koef * i / Constants.DIVIDE_DELTA / 10000;
 
 
         for (GameObject go : road.getObstacles()) {
@@ -133,18 +130,14 @@ public class Gameplay extends BasicGameState {
             }
         }
 
-        if (!(player.isImmortal() || player.isJumping() || player.isFalling())) {
-            for (GameObject object : road.getObstacles()) {
-                if (player.checkForCollision(object)) {
+
+        for (GameObject object : road.getObstacles()) {
+            if (player.checkForCollision(object)) {
+                if (!(player.isImmortal() || player.isJumping() || player.isFalling())) {
                     if (object instanceof Car) {
                         ((Car) object).setSpeed(0);
                         player.collision(((Car) object).collisionOccured());
                         System.out.println("COLLISION");
-                        break;
-                    } else if (object instanceof Bonus) {
-                        player.collision(((Bonus) object).collisionOccured());
-                        road.getObstacles().remove(object);
-                        System.out.println("BONUS");
                         break;
                     } else if (object instanceof Obstacle) {
                         player.collision(((Obstacle) object).collisionOccured());
@@ -153,17 +146,24 @@ public class Gameplay extends BasicGameState {
                         break;
                     }
                 }
+                if (object instanceof Bonus) {
+                    player.collision(((Bonus) object).collisionOccured());
+                    road.getObstacles().remove(object);
+                    System.out.println("BONUS");
+                    break;
+                }
             }
         }
+
         player.update(i);
 
         for (GameObject car : road.getObstacles()) {
             if (car instanceof Car) {
                 for (GameObject object : road.getObstacles()) {
-                    if(car == object){
+                    if (car == object) {
                         continue;
                     }
-                    if(((Car) car).checkForCollision(object)){
+                    if (((Car) car).checkForCollision(object)) {
                         ((Car) car).setSpeed(0);
                         break;
                     }

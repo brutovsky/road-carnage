@@ -74,7 +74,7 @@ public class Player extends MovingObject {
         try {
             Image temp = new Image(typeOfCar.getPath() + "Immortal" + ".png").getScaledCopy(getScale());
             immortalAnimation = new Animation();
-            immortalAnimation.addFrame(typeOfCar.getImage(), immortalAnimDur);
+            immortalAnimation.addFrame(typeOfCar.getImage().getScaledCopy(getScale()), immortalAnimDur);
             immortalAnimation.addFrame(temp, immortalAnimDur);
         } catch (SlickException e) {
             e.printStackTrace();
@@ -83,7 +83,7 @@ public class Player extends MovingObject {
 
     private void setCarImage() {
         try {
-            setImage(new Image(typeOfCar.getPath()+".png"));
+            setImage(new Image(typeOfCar.getPath()+".png").getScaledCopy(getScale()));
         } catch (SlickException e) {
             e.printStackTrace();
         }

@@ -24,11 +24,14 @@ public class DessertLevel extends LevelGenerator {
         getObstacles().put(i++, new Obstacle(1f, X, Y, Obstacles.CACTUS));
         getObstacles().put(i++, new Obstacle(1f, X, Y, Obstacles.HOLE));
         getObstacles().put(i++, new Obstacle(1f, X, Y, Obstacles.TRAMPOLINE));
+
         getObstacles().put(i++, new Car(1f, X, Y, Road.ROAD, Cars.TRUCK));
         getObstacles().put(i++, new Car(1f, X, Y, Road.ROAD, Cars.TAXI));
         getObstacles().put(i++, new Car(1f, X, Y, Road.ROAD, Cars.CASUAL_BLUE));
         getObstacles().put(i++, new Car(1f, X, Y, Road.ROAD, Cars.CASUAL_GREEN));
         getObstacles().put(i++, new Car(1f, X, Y, Road.ROAD, CASUAL_BLACK));
+        getObstacles().put(i++, new Car(1f, X, Y, Road.ROAD, HOTDOG));
+
         getObstacles().put(i++, new Bonus(1f, X, Y, Bonuses.TOMAT));
         getObstacles().put(i++, new Bonus(1f, X, Y, Bonuses.CHERRY));
         getObstacles().put(i++, new Bonus(1f, X, Y, Bonuses.SURPRISE));
@@ -59,10 +62,11 @@ public class DessertLevel extends LevelGenerator {
         getProbability().put(i++, 30);//3
         //cars
         getProbability().put(i++, 20);
+        getProbability().put(i++, 10);
         getProbability().put(i++, 20);
         getProbability().put(i++, 20);
         getProbability().put(i++, 20);
-        getProbability().put(i++, 20);
+        getProbability().put(i++, 10);
         //bonuses
         getProbability().put(i++, 30);
         getProbability().put(i++, 10);
