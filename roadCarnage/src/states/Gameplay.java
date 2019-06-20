@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Gameplay extends BasicGameState {
+public class Gameplay extends BasicGame {
 
     private GameMenu menu;
 
@@ -45,29 +45,49 @@ public class Gameplay extends BasicGameState {
 
     DessertLevel level;
 
+    public Gameplay(String title) {
+        super(title);
+    }
 
-    public Gameplay(int id) {
-        this.id = id;
+
+    static public class Game implements Runnable{
+        @Override
+        public void run() {
+            AppGameContainer app = null;
+            try {
+                app = new AppGameContainer(new Gameplay("GAME"));
+                app.setDisplayMode(1000,700,false);
+                app.start();
+                app.destroy();
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public synchronized void stop() {
+        }
+
+        public synchronized void start(){
+            new Thread(this).run();
+        }
     }
 
     @Override
-    public int getID() {
-        return id;
-    }
-
-    @Override
-    public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+    public void init(GameContainer gc)
+            throws SlickException {
+        gc.setShowFPS(true);
+        gc.setTargetFrameRate(60);
         road = new Road();
         decor = new LevelDecorations();
         player = new Player(1f, Road.LINE5, 600, Road.FULL_ROAD, PlayerCars.ANISTON);
         speed_koef = 1;
         level = new DessertLevel();
         menu = new GameMenu();
-    }
+    }//end init
 
 
     @Override
-    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+    public void render(GameContainer gameContainer,Graphics graphics) throws SlickException {
         road.draw();
         for (GameObject go : decor.getDecorationsL()) {
             go.draw();
@@ -90,12 +110,12 @@ public class Gameplay extends BasicGameState {
 
 
     @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+    public void update(GameContainer gameContainer,int i) throws SlickException {
         Input input = gameContainer.getInput();
         if (menuActive) {
             menu.update(i, input.getMouseX(), input.getMouseY());
-            if(menu.isMouseOnExit(input.getMouseX(),input.getMouseY())){
-                if(input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)){
+            if (menu.isMouseOnExit(input.getMouseX(), input.getMouseY())) {
+                if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
                     gameContainer.setForceExit(false);
                     gameContainer.exit();
                 }

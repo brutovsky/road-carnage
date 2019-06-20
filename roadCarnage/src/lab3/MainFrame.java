@@ -7,7 +7,7 @@ package lab3;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
-import states.Game;
+import states.Gameplay;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -226,17 +226,9 @@ public class MainFrame extends javax.swing.JFrame {
 			sas.setVisible(false);
 			sas.clip.stop();
 
-			AppGameContainer app = null;
-			Game game = new Game("Game");
-			try {
-				app = new AppGameContainer(game);
-				app.setDisplayMode(1000,700,false);
-				app.setTargetFrameRate(60);
-				app.start();
-				app.destroy();
-			} catch (SlickException e) {
-				e.printStackTrace();
-			}
+			Gameplay.Game game = new Gameplay.Game();
+			game.start();
+			game.stop();
 
 			sas.setVisible(true);
 			sas.clip.start();
