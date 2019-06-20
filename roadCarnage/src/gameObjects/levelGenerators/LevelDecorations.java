@@ -24,7 +24,7 @@ public class LevelDecorations {
 
     private void typoOfMap() {
         if (Road.PATH.equals("res\\roadSkins\\backSide.png")) {
-            map = "Forest";
+            map = "Desert";//CHANGED
         }else if (Road.PATH.equals("res\\roadSkins\\desert.png")) {
             map = "Desert";
         } else if (Road.PATH.equals("res\\roadSkins\\arcticRoad.png")) {
@@ -95,35 +95,48 @@ System.out.println(map);
 
                 }
             case "Desert":
-                 rand = Constants.random.nextInt(11);
+                 rand = Constants.random.nextInt(15);
                 switch (rand) {
+                    case 0:
+                        return new Decoration(1f, x, y, Decorations.CACTUS1);
+                    case 1:
+                        return new Decoration(1f, x, y, Decorations.CACTUS2);
+                    case 3:
+                        return new Decoration(1f, x, y, Decorations.CACTUS4);
+                    case 4:
+                        return new Decoration(1f, x, y, Decorations.CACTUS5);
+                    case 5:
+                        return new Decoration(1f, x, y, Decorations.CACTUS6);
+                    case 6:
+                        return new Decoration(1f, x, y, Decorations.PALM);
+                    case 7:
+                        return new Decoration(1f, x, y, Decorations.GOLEM);
+                    default :
+                        return new Decoration(1f, x, y, Decorations.CACTUS3);
+
 
                 }
             case "Arctic":
-                 rand = Constants.random.nextInt(10);
+                 rand = Constants.random.nextInt(15);
                 switch (rand) {
                     case 0:
-                        return new Decoration(1f, x+20, y, Decorations.POLAR_BEAR);
-                    case 1:
-                        return new Decoration(1f, x+20, y, Decorations.POLAR_BEAR1);
-                    case 2:
-                        return new Decoration(1f, x+20, y, Decorations.WOLF);
+                        return new Decoration(1f, x+20, y-50, Decorations.POLAR_BEAR);
                     case 3:
-                        return new Decoration(1f, x+20, y, Decorations.POLAR_BEAR2);
+                        return new Decoration(1f, x+20, y-50, Decorations.POLAR_BEAR2);
                     case 4:
-                        return new Decoration(1f, x+20, y, Decorations.POCKEMON1);
-                    case 5:
-                        return new Decoration(1f, x+20, y, Decorations.WOLF1);
+                        return new Decoration(1f, x+20, y-50, Decorations.POCKEMON1);
                     case 6:
-                        return new Decoration(1f, x+20, y, Decorations.PENGUIN);
+                        return new Decoration(1f, x+20, y-50, Decorations.ROCK);
                     case 7:
-                        return new Decoration(1f, x+20, y, Decorations.ICEPOOL);
+                        return new Decoration(1f, x+20, y-50, Decorations.ICEPOOL);
                     case 8:
-                        return new Decoration(1f, x+20, y, Decorations.PENGUIN1);
+                        return new Decoration(1f, x+20, y-50, Decorations.PENGUIN1);
                     case 9:
-                        return new Decoration(1f, x+20, y, Decorations.POCKEMON);
-
+                        return new Decoration(1f, x+20, y-50, Decorations.POCKEMON);
+                    default:
+                        return new Decoration(1f, x+20, y-50, Decorations.PENGUIN);
                 }
+
             case "City":
                 rand = Constants.random.nextInt(11);
                 switch (rand) {
