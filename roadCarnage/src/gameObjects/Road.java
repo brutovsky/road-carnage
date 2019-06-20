@@ -15,7 +15,7 @@ public class Road extends GameObject {
     public static final float X = 200;
     public static final float Y = 0;
     public static final float HEIGHT = 700;
-    public static final String PATH = "res\\roadSkins\\arcticRoad" + ".png";
+    public static final String PATH = "res\\roadSkins\\desert" + ".png";
 
 
     public static final float ROUGH_ROAD_WIDTH = 56;

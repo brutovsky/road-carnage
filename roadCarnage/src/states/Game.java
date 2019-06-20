@@ -10,7 +10,7 @@ public class Game extends StateBasedGame{
     public static final float WIDTH = 1000;
     public static final float HEIGHT = 700;
 
-    public static void main(String[] args) {
+    public static void start() {
         Game game = new Game(GAME_NAME);
         AppGameContainer app = null;
         try {

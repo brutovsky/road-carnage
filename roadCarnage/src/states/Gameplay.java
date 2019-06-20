@@ -38,7 +38,7 @@ public class Gameplay extends BasicGameState {
     //
 
 
-    AntarcticLevel level;
+    DessertLevel level;
 
 
     public Gameplay(int id) {
@@ -56,7 +56,7 @@ public class Gameplay extends BasicGameState {
         decor = new LevelDecorations();
         player = new Player(1f, Road.LINE5, 600, Road.FULL_ROAD, PlayerCars.ANISTON);
         speed_koef = 1;
-        level = new AntarcticLevel();
+        level = new DessertLevel();
     }
 
 
