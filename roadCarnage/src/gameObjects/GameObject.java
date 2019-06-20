@@ -3,7 +3,7 @@ package gameObjects;
 import gameObjects.stuff.Constants;
 import org.newdawn.slick.*;
 
-public class GameObject {
+public abstract class GameObject implements Drawable{
     protected float x;
     protected float y;
     protected float width;
@@ -48,20 +48,34 @@ public class GameObject {
         return animation;
     }
 
-    public void setAnimation(Animation animation) {
-        this.animation = animation;
-    }
-
-    public void update(float shift, int delta){
-
-    }
-
+    /**
+     * EMPTY BODY
+     * @param delta
+     */
     public void update(int delta){
 
     }
 
-    public void draw(){
+    /**
+     * EMPTY BODY
+     * @param shift
+     * @param delta
+     */
+    @Override
+    public void update(float shift, int delta) {
 
+    }
+
+    /**
+     * EMPTY BODY
+     */
+    @Override
+    public void draw() {
+
+    }
+
+    public void setAnimation(Animation animation) {
+        this.animation = animation;
     }
 
     public String getName(){

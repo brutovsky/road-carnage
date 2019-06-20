@@ -21,6 +21,8 @@ import java.util.Random;
 
 public class Gameplay extends BasicGameState {
 
+    GameMenu menu;
+
     private int id;
     private Player player;
 
@@ -57,12 +59,15 @@ public class Gameplay extends BasicGameState {
         player = new Player(1f, Road.LINE5, 600, Road.FULL_ROAD, PlayerCars.ANISTON);
         speed_koef = 1;
         level = new DessertLevel();
+        menu = new GameMenu();
     }
 
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+
         road.draw();
+        menu.draw();
         for (GameObject go : decor.getDecorationsL()) {
             go.draw();
         }

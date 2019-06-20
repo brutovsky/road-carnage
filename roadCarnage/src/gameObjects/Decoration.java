@@ -22,4 +22,13 @@ public class Decoration extends GameObject {
         y += shift * delta / Constants.DIVIDE_DELTA;
     }
 
+    /**
+     * EMPTY BODY
+     * @param delta
+     */
+    @Override
+    public void update(int delta) {
+
+    }
+
 }
