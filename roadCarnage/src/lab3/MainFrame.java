@@ -226,9 +226,12 @@ public class MainFrame extends javax.swing.JFrame {
 			sas.setVisible(false);
 			sas.clip.stop();
 
-			Gameplay.Game game = new Gameplay.Game();
-			game.start();
-			game.stop();
+			Gameplay.Game game = new Gameplay.Game("GAME THREAD");
+			try {
+				game.join();
+			} catch (InterruptedException e) {
+				System.out.println("MAIN THREAD INTERRUPTED");
+			}
 
 			sas.setVisible(true);
 			sas.clip.start();
@@ -236,15 +239,6 @@ public class MainFrame extends javax.swing.JFrame {
 
 		@Override
 		public void jungleAction() {
-			sas.setVisible(false);
-			sas.clip.stop();
-
-			Gameplay.Game game = new Gameplay.Game();
-			game.start();
-			game.stop();
-
-			sas.setVisible(true);
-			sas.clip.start();
 		}
 
 		@Override

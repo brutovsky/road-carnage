@@ -5,6 +5,13 @@ import java.util.Random;
 public class Constants {
     public static final int DIVIDE_DELTA = 1000;
 
+    public static final String GAME_TITLE = "ROAD CARNAGE";
+
+    public static final int WINDOW_WIDTH = 1000;
+    public static final int WINDOW_HEIGHT = 700;
+
+    public static final boolean FULLSCREAN_MOD = false;
+
     public static final int NO_OUTPUT = 0;
     public static final int MINUS_DURABILITY = 10;
     public static final int JUMP = 20;

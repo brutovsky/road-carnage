@@ -63,13 +63,22 @@ public class Gameplay extends BasicGame {
     }
 
 
-    static public class Game implements Runnable{
+    static public class Game implements Runnable {
+
+        private Thread t;
+
+        public Game(String threadName) {
+            t = new Thread(this, threadName);
+            System.out.println("Game thread crated: " + t);
+            t.start();
+        }
+
         @Override
         public void run() {
             AppGameContainer app = null;
             try {
-                app = new AppGameContainer(new Gameplay("GAME"));
-                app.setDisplayMode(1000,700,false);
+                app = new AppGameContainer(new Gameplay(Constants.GAME_TITLE));
+                app.setDisplayMode(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT, Constants.FULLSCREAN_MOD);
                 app.start();
                 app.destroy();
             } catch (SlickException e) {
@@ -77,11 +86,8 @@ public class Gameplay extends BasicGame {
             }
         }
 
-        public synchronized void stop() {
-        }
-
-        public synchronized void start(){
-            new Thread(this).run();
+        public void join() throws InterruptedException{
+            t.join();
         }
     }
 
@@ -104,9 +110,9 @@ public class Gameplay extends BasicGame {
             e.printStackTrace();
         }
         try {
-            image =  ImageIO.read(new File("res/roadSkins/desert.png"));
+            image = ImageIO.read(new File("res/roadSkins/desert.png"));
             test = Animator.toSlickImage(image);
-            image =  ImageIO.read(new File("res/obstacles/cactus1.png"));
+            image = ImageIO.read(new File("res/obstacles/cactus1.png"));
             test2 = Animator.toSlickImage(image);
         } catch (IOException e) {
             e.printStackTrace();
@@ -115,7 +121,7 @@ public class Gameplay extends BasicGame {
 
 
     @Override
-    public void render(GameContainer gameContainer,Graphics graphics) throws SlickException {
+    public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
         road.draw();
         for (GameObject go : decor.getDecorationsL()) {
             go.draw();
@@ -135,15 +141,15 @@ public class Gameplay extends BasicGame {
             menu.draw();
         }
         graphics.setColor(Color.black);
-        graphics.drawRect(0,0,100,100);
-        graphics.drawRect(90,90,100,100);
+        graphics.drawRect(0, 0, 100, 100);
+        graphics.drawRect(90, 90, 100, 100);
         test.draw();
-        test2.draw(50,50);
+        test2.draw(50, 50);
     }
 
 
     @Override
-    public void update(GameContainer gameContainer,int i) throws SlickException {
+    public void update(GameContainer gameContainer, int i) throws SlickException {
         Input input = gameContainer.getInput();
         if (menuActive) {
             menu.update(i, input.getMouseX(), input.getMouseY());
