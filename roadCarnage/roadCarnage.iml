@@ -27,5 +27,6 @@
     </orderEntry>
     <orderEntry type="library" name="lwjgl" level="project" />
     <orderEntry type="library" name="slick" level="project" />
+    <orderEntry type="library" name="windows" level="project" />
   </component>
 </module>

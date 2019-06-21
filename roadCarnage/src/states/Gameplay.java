@@ -33,6 +33,8 @@ public class Gameplay extends BasicGame {
     Image test;
     Image test2;
 
+    Sound music;
+
     private GameMenu menu;
 
     Texture texture;
@@ -118,6 +120,8 @@ public class Gameplay extends BasicGame {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        music = new Sound("blaster.wav");
+        music.loop();
     }//end init
 
 

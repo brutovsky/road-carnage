@@ -44,8 +44,8 @@ public class Road extends GameObject {
 
     public Road() throws SlickException {
         super(new Image(PATH), 1f, 0, 0);
-        x = states.Game.WIDTH - getImage().getWidth();
-        y = states.Game.HEIGHT - getImage().getHeight();
+        x = Constants.WINDOW_WIDTH - getImage().getWidth();
+        y = Constants.WINDOW_HEIGHT - getImage().getHeight();
         this.road = getImage();
         this.secondRoad = getImage();
         yS = -road.getHeight();
