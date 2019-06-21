@@ -12,17 +12,30 @@ import lab3.MainFrame;
 import org.newdawn.slick.*;
 
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.ResourceLoader;
 
+import javax.imageio.ImageIO;
 import java.awt.font.FontRenderContext;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
 public class Gameplay extends BasicGame {
 
+    BufferedImage image;
+    Image test;
+    Image test2;
+
     private GameMenu menu;
+
+    Texture texture;
 
     private boolean menuActive = false;
 
@@ -83,6 +96,21 @@ public class Gameplay extends BasicGame {
         speed_koef = 1;
         level = new DessertLevel();
         menu = new GameMenu();
+        try {
+            texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("res/roadSkins/desert.png"));
+            texture.bind();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            image =  ImageIO.read(new File("res/roadSkins/desert.png"));
+            test = Animator.toSlickImage(image);
+            image =  ImageIO.read(new File("res/obstacles/cactus1.png"));
+            test2 = Animator.toSlickImage(image);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }//end init
 
 
@@ -106,6 +134,11 @@ public class Gameplay extends BasicGame {
         if (menuActive) {
             menu.draw();
         }
+        graphics.setColor(Color.black);
+        graphics.drawRect(0,0,100,100);
+        graphics.drawRect(90,90,100,100);
+        test.draw();
+        test2.draw(50,50);
     }
 
 

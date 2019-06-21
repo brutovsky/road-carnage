@@ -236,7 +236,15 @@ public class MainFrame extends javax.swing.JFrame {
 
 		@Override
 		public void jungleAction() {
+			sas.setVisible(false);
+			sas.clip.stop();
 
+			Gameplay.Game game = new Gameplay.Game();
+			game.start();
+			game.stop();
+
+			sas.setVisible(true);
+			sas.clip.start();
 		}
 
 		@Override

@@ -4,6 +4,11 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.util.BufferedImageUtil;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class Animator {
 
@@ -30,6 +35,16 @@ public class Animator {
         }
         animation.setLooping(looping);
         return animation;
+    }
+
+    public static Image toSlickImage(BufferedImage image) {
+        Texture tex = null;
+        try {
+            tex = BufferedImageUtil.getTexture("IMAGES", image);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new Image(tex);
     }
 
 }
