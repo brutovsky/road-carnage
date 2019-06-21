@@ -9,7 +9,7 @@ public class Car extends MovingObject{
     private Cars typeOf;
 
     public Car(float scale, float x, float y, Rectangle borders, Cars car) {
-        super(car.getImage(), scale, x, y, car.getSpeed(), borders);
+        super(Animator.createImage(car.getPath()), scale, x, y, car.getSpeed(), borders);
         typeOf = car;
     }
 

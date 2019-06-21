@@ -5,9 +5,11 @@ import gameObjects.stuff.Constants;
 
 public class Bonus extends GameObject {
 
+    public static final int DURATION = 100;
+
     Bonuses typeOf;
     public Bonus(float scale, float x, float y, Bonuses bonus) {
-        super(bonus.getAnimation(), scale, x, y);
+        super(Animator.animate(bonus.getPath(),bonus.getColumns(),bonus.getLines(),DURATION,true), scale, x, y);
         typeOf = bonus;
     }
 

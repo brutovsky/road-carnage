@@ -43,7 +43,7 @@ public class Road extends GameObject {
     private List<GameObject> obstacles;
 
     public Road() throws SlickException {
-        super(new Image(PATH), 1f, 0, 0);
+        super(Animator.createImage(PATH), 1f, 0, 0);
         x = Constants.WINDOW_WIDTH - getImage().getWidth();
         y = Constants.WINDOW_HEIGHT - getImage().getHeight();
         this.road = getImage();

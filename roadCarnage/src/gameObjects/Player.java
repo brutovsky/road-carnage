@@ -57,13 +57,8 @@ public class Player extends MovingObject {
         jumping = false;
         falling = false;
         counter = 0;
-        try {
-            wasted = new Image("res/playerCars/wasted.png");
-            badtomat = new Image("res/obstacles/badtomat.png");
-        } catch (SlickException e) {
-            e.printStackTrace();
-        }
-
+        wasted =   Animator.createImage("res/playerCars/wasted.png");
+        badtomat = Animator.createImage("res/obstacles/badtomat.png");
         setImmortlaAnim();
         setJumpAnim();
         setFallAnim();
@@ -71,22 +66,15 @@ public class Player extends MovingObject {
     }
 
     private void setImmortlaAnim() {
-        try {
-            Image temp = new Image(typeOfCar.getPath() + "Immortal" + ".png").getScaledCopy(getScale());
-            immortalAnimation = new Animation();
-            immortalAnimation.addFrame(typeOfCar.getImage().getScaledCopy(getScale()), immortalAnimDur);
-            immortalAnimation.addFrame(temp, immortalAnimDur);
-        } catch (SlickException e) {
-            e.printStackTrace();
-        }
+        Image temp = Animator.createImage(typeOfCar.getPath() + "Immortal" + ".png").getScaledCopy(getScale());
+        immortalAnimation = new Animation();
+        immortalAnimation.addFrame(getImage(), immortalAnimDur);
+        immortalAnimation.addFrame(temp, immortalAnimDur);
+        immortalAnimation.setLooping(true);
     }
 
     private void setCarImage() {
-        try {
-            setImage(new Image(typeOfCar.getPath()+".png").getScaledCopy(getScale()));
-        } catch (SlickException e) {
-            e.printStackTrace();
-        }
+        setImage(Animator.createImage(typeOfCar.getPath()+".png").getScaledCopy(getScale()));
     }
 
     public void setExplosionAnim() {
@@ -95,11 +83,7 @@ public class Player extends MovingObject {
         SpriteSheet sprite_sheet = null;
         int columns = 15;
         int lines = 1;
-        try {
-            image = new Image("res/playerCars/explosion.png");
-        } catch (SlickException e) {
-            e.printStackTrace();
-        }
+        image = Animator.createImage("res/playerCars/explosion.png");
         int spriteSheetWidth = image.getWidth();
         int spriteSheetHeight = image.getHeight();
         int spriteWidth = (int) (spriteSheetWidth / columns);

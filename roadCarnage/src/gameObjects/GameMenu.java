@@ -22,23 +22,14 @@ public class GameMenu implements Drawable {
     }
 
     private void createExitAnimations() {
-        Image temp = null;
+
         exit0 = new Animation();
         exit1 = new Animation();
         //0
-        try {
-            temp = new Image("res/menu/exit0.png");
-        } catch (SlickException e) {
-            e.printStackTrace();
-        }
-        exit0 = Animator.animate(temp, 3, 1, 100, true);
+
+        exit0 = Animator.animate("res/menu/exit0.png", 3, 1, 100, true);
         //1
-        try {
-            temp = new Image("res/menu/exit1.png");
-        } catch (SlickException e) {
-            e.printStackTrace();
-        }
-        exit1 = Animator.animate(temp, 3, 1, 100, true);
+        exit1 = Animator.animate("res/menu/exit1.png", 3, 1, 100, true);
     }
 
     @Override

@@ -12,6 +12,17 @@ public abstract class GameObject implements Drawable{
     private Animation animation;
     private float scale;
 
+    public GameObject(String path, float scale, float x, float y) {
+        this.scale = scale;
+        this.image = Animator.createImage(path);
+        this.animation = new Animation();
+        animation.addFrame(image,100);
+        width = this.image.getWidth();
+        height = this.image.getHeight();
+        this.x = x - image.getWidth()/2;
+        this.y = y;
+    }
+
     public GameObject(Image image, float scale, float x, float y) {
         this.scale = scale;
         this.image = image.getScaledCopy(scale);

@@ -1,6 +1,5 @@
 package gameObjects;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import gameObjects.stuff.Constants;
 import gameObjects.stuff.Obstacles;
 import org.newdawn.slick.Animation;
@@ -16,7 +15,7 @@ public class Obstacle extends GameObject {
 
 
     public Obstacle(float scale, float x, float y, Obstacles obstacle) {
-        super(obstacle.getAnimation(), scale, x , y);
+        super(Animator.animate(obstacle.getPath(),obstacle.getColumns(),obstacle.getLines(),100,true), scale, x , y);
         if(obstacle.getName().equals("FALLEN TREE")){
             setImageForFallenTree();
             System.out.println("HELLO");
@@ -28,13 +27,9 @@ public class Obstacle extends GameObject {
         int num = Constants.random.nextInt(4)+1;
         String path = "res/obstacles/fallenTree" + num +".png";
         Animation anim = new Animation();
+        anim.addFrame(Animator.createImage(path),100);
         setAnimation(anim);
-        try {
-            anim.addFrame(new Image(path),100);
-            setImage(anim.getImage(0));
-        } catch (SlickException e) {
-            e.printStackTrace();
-        }
+        setImage(anim.getImage(0));
     }
 
     public void draw() {

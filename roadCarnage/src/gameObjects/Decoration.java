@@ -9,7 +9,7 @@ public class Decoration extends GameObject {
     Decorations typeOf;
 
     public Decoration(float scale, int x, int y, Decorations decoration) {
-        super(decoration.getImage(), scale, x, y);
+        super(decoration.getPath(), scale, x, y);
         typeOf = decoration;
     }
 

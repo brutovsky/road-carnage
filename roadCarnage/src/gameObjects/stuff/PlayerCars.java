@@ -1,5 +1,6 @@
 package gameObjects.stuff;
 
+import gameObjects.Animator;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -16,11 +17,7 @@ public enum PlayerCars {
 
     PlayerCars(String path, String name, float speed, int durability, float mobility, int price) {
         this.path = path;
-        try {
-            image = new Image(path+".png");
-        } catch (SlickException e) {
-            e.printStackTrace();
-        }
+        image = Animator.createImage(path+".png");
         this.speed = speed;
         this.durability = durability;
         this.mobility = mobility;
