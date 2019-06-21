@@ -79,6 +79,7 @@ public class Gameplay extends BasicGame {
             try {
                 app = new AppGameContainer(new Gameplay(Constants.GAME_TITLE));
                 app.setDisplayMode(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT, Constants.FULLSCREAN_MOD);
+                app.setIcon("res/icon/icon.png");
                 app.start();
                 app.destroy();
             } catch (SlickException e) {
