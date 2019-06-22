@@ -225,7 +225,22 @@ public class MainFrame extends javax.swing.JFrame {
 		public void desertAction() {
 			sas.setVisible(false);
 			sas.clip.stop();
-			//Game.start();
+
+			AppGameContainer app = null;
+			Game game = new Game("Game");
+			try {
+				app = new AppGameContainer(game);
+				app.setDisplayMode(1000,700,false);
+				app.setTargetFrameRate(60);
+				app.start();
+				app.destroy();
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+
+			sas.setVisible(true);
+			sas.clip.start();
+
 		}
 
 		@Override
