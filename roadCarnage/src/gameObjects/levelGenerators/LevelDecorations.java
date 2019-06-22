@@ -25,7 +25,7 @@ public class LevelDecorations {
 
     private void typoOfMap() {
         if (Road.PATH.equals(Levels.JUNGLE.getPath())) {
-            map = "Forest";//CHANGED
+            map = "Forest";
         } else if (Road.PATH.equals(Levels.DESERT.getPath())) {
             map = "Desert";
         } else if (Road.PATH.equals(Levels.ARCTIC.getPath())) {
