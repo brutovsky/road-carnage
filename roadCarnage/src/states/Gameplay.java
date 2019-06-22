@@ -8,17 +8,25 @@ import gameObjects.Road;
 import gameObjects.levelGenerators.*;
 import gameObjects.levelGenerators.LevelDecorations;
 import gameObjects.stuff.*;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.openal.AL;
+import org.lwjgl.openal.AL10;
 import org.newdawn.slick.*;
 import org.newdawn.slick.opengl.Texture;
+
+import javax.sound.sampled.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 
 public class Gameplay extends BasicGame {
 
-    Sound music;
+    Clip clankSound;
+    Clip carHitSound;
+    private boolean soundCheck;
 
     private GameMenu menu;
-
 
     private boolean menuActive = false;
 
@@ -70,7 +78,7 @@ public class Gameplay extends BasicGame {
             }
         }
 
-        public void join() throws InterruptedException{
+        public void join() throws InterruptedException {
             t.join();
         }
     }
@@ -86,7 +94,19 @@ public class Gameplay extends BasicGame {
         speed_koef = 1;
         level = new DessertLevel();
         menu = new GameMenu();
+        try {
+            if (!AL.isCreated()) {
+                AL.create();
+            }
+        } catch (LWJGLException e) {
+            e.printStackTrace();
+        }
+        soundCheck = false;
     }//end init
+
+    ////
+
+    ////
 
 
     @Override
@@ -120,11 +140,18 @@ public class Gameplay extends BasicGame {
             menu.update(i, input.getMouseX(), input.getMouseY());
             if (menu.isMouseOnExit(input.getMouseX(), input.getMouseY())) {
                 if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+                    clankSound = Animator.createClip(clankSound,"src/sounds/CLANK!.wav");
+                    clankSound.start();
                     gameContainer.setForceExit(false);
                     gameContainer.exit();
                 }
-            }
-            if (input.isKeyPressed(Input.KEY_ESCAPE)) {
+            }else if(menu.isMouseOnContinue(input.getMouseX(), input.getMouseY())) {
+                if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+                    clankSound = Animator.createClip(clankSound,"src/sounds/CLANK!.wav");
+                    clankSound.start();
+                    menuActive = false;
+                }
+            }else if(input.isKeyPressed(Input.KEY_ESCAPE)) {
                 menuActive = false;
             }
         } else {
@@ -176,7 +203,7 @@ public class Gameplay extends BasicGame {
             }
 
 
-            if (!(player.isImmortal() || player.isJumping() || player.isFalling())) {
+            if (!(player.isImmortal() || player.isJumping()||!player.isBroken())) {
                 if (player.checkForCollision(Road.DANGER_ZONE_LEFT)) {
                     player.dangerZone();
                 } else if (player.checkForCollision(Road.DANGER_ZONE_RIGHT)) {
@@ -187,7 +214,7 @@ public class Gameplay extends BasicGame {
 
             for (GameObject object : road.getObstacles()) {
                 if (player.checkForCollision(object)) {
-                    if (!(player.isImmortal() || player.isJumping() || player.isFalling())) {
+                    if (!(player.isImmortal() || player.isJumping()||!player.isBroken())) {
                         if (object instanceof Car) {
                             ((Car) object).setSpeed(0);
                             player.collision(((Car) object).collisionOccured());
@@ -218,13 +245,20 @@ public class Gameplay extends BasicGame {
                             continue;
                         }
                         if (((Car) car).checkForCollision(object)) {
-                            ((Car) car).setSpeed(0);
-                            break;
+                            if(!(((Car) car).getSpeed() == 0)){
+                                if(!soundCheck){
+                                    carHitSound = Animator.createClip(carHitSound,"res/sounds/carsHit.wav");
+                                    carHitSound.start();
+                                    soundCheck = true;
+                                }
+                                ((Car) car).setSpeed(0);
+                                break;
+                            }
                         }
                     }
                 }
             }
-
+            soundCheck = false;
             if (input.isKeyPressed(Input.KEY_ESCAPE)) {
                 menuActive = true;
             }

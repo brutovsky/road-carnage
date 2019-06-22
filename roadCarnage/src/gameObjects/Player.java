@@ -2,13 +2,21 @@ package gameObjects;
 
 import gameObjects.stuff.Constants;
 import gameObjects.stuff.PlayerCars;
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.IOException;
+
 public class Player extends MovingObject {
+
+    Clip jumpSound;
+    Clip hitSound;
+    Clip bonusSound;
+    Clip cherrySound;
+    Clip tomatSound;
+    Clip deadEndSound;
 
     private int durability;
     private float mobility;
@@ -17,13 +25,11 @@ public class Player extends MovingObject {
 
     private boolean immortal;
     private boolean jumping;
-    private boolean falling;
     private boolean slipping;
 
     private float counter;
     private Animation immortalAnimation;
     private Animation jumpAnimation;
-    private Animation fallAnimation;
     private Animation explosionAnimation;
     //private Animation slipAnimation;
     private Image wasted;
@@ -55,14 +61,20 @@ public class Player extends MovingObject {
         }
         immortal = false;
         jumping = false;
-        falling = false;
         counter = 0;
-        wasted =   Animator.createImage("res/playerCars/wasted.png");
+        wasted = Animator.createImage("res/playerCars/wasted.png");
         badtomat = Animator.createImage("res/obstacles/badtomat.png");
         setImmortlaAnim();
         setJumpAnim();
-        setFallAnim();
         setExplosionAnim();
+    }
+
+    private void initSounds() {
+        jumpSound = null;
+        hitSound = null;
+        bonusSound = null;
+        cherrySound = null;
+        jumpSound = Animator.createClip(jumpSound, "res/sounds/jump.wav");
     }
 
     private void setImmortlaAnim() {
@@ -74,7 +86,7 @@ public class Player extends MovingObject {
     }
 
     private void setCarImage() {
-        setImage(Animator.createImage(typeOfCar.getPath()+".png").getScaledCopy(getScale()));
+        setImage(Animator.createImage(typeOfCar.getPath() + ".png").getScaledCopy(getScale()));
     }
 
     public void setExplosionAnim() {
@@ -99,22 +111,6 @@ public class Player extends MovingObject {
             }
         }
         explosionAnimation.setLooping(false);
-    }
-
-    private void setFallAnim() {
-        fallAnimation = new Animation();
-        fallAnimation.addFrame(getImage().getScaledCopy(0.9f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.8f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.7f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.6f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.5f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.4f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.3f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.2f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.1f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.05f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.05f), fallAnimDur);
-        fallAnimation.setLooping(false);
     }
 
     private void setJumpAnim() {
@@ -202,13 +198,14 @@ public class Player extends MovingObject {
             jumpAnimation.draw(x, y);
         } else if (immortal) {
             immortalAnimation.draw(x, y);
-        } else if (falling) {
-            wasted.draw(50, 100);
         } else {
             getImage().draw(x, y);
         }
         if (isTomat) {
             badtomat.draw(Road.CENTR - badtomat.getWidth() / 2, Road.Y);
+        }
+        if (!broken) {
+            wasted.draw(Road.CENTR - wasted.getWidth()/2,Road.HEIGHT/2-wasted.getHeight()/2);
         }
     }
 
@@ -216,12 +213,19 @@ public class Player extends MovingObject {
         switch (collision) {
             case Constants
                     .MINUS_DURABILITY: {
-                if(slipping){
+                hitSound = Animator.createClip(hitSound, "res/sounds/hit.wav");
+                hitSound.start();
+                if (slipping) {
                     toNormalMode();
                 }
                 durability--;
                 if (durability <= 0) {
+                    deadEndSound = Animator.createClip(deadEndSound, "res/sounds/deadEnd.wav");
+                    deadEndSound.start();
+                    durability = 0;
                     broken = false;
+                    speed = 0;
+                    mobility = 0;
                 } else {
                     immortal = true;
                     counter = 0;
@@ -230,20 +234,22 @@ public class Player extends MovingObject {
             }
             case Constants
                     .DEAD_END: {
-                if(slipping){
+                deadEndSound = Animator.createClip(deadEndSound, "res/sounds/deadEnd.wav");
+                deadEndSound.start();
+                if (slipping) {
                     toNormalMode();
                 }
                 durability = 0;
                 broken = false;
-                falling = true;
                 speed = 0;
                 mobility = 0;
-                setAnimation(fallAnimation);
                 break;
             }
             case Constants
                     .JUMP: {
-                if(slipping){
+                jumpSound = Animator.createClip(jumpSound, "res/sounds/jump.wav");
+                jumpSound.start();
+                if (slipping) {
                     toNormalMode();
                 }
                 counter = 0;
@@ -253,7 +259,9 @@ public class Player extends MovingObject {
                 break;
             }
             case Constants.BONUS_BARRIER: {
-                if(slipping){
+                bonusSound = Animator.createClip(bonusSound, "res/sounds/bonus.wav");
+                bonusSound.start();
+                if (slipping) {
                     toNormalMode();
                 }
                 immortal = true;
@@ -261,7 +269,9 @@ public class Player extends MovingObject {
                 break;
             }
             case Constants.BONUS_FIRE: {
-                if(slipping){
+                bonusSound = Animator.createClip(bonusSound, "res/sounds/bonus.wav");
+                bonusSound.start();
+                if (slipping) {
                     toNormalMode();
                 }
                 bonusActive = true;
@@ -270,7 +280,9 @@ public class Player extends MovingObject {
                 break;
             }
             case Constants.BONUS_ICE: {
-                if(slipping){
+                bonusSound = Animator.createClip(bonusSound, "res/sounds/bonus.wav");
+                bonusSound.start();
+                if (slipping) {
                     toNormalMode();
                 }
                 bonusActive = true;
@@ -279,14 +291,18 @@ public class Player extends MovingObject {
                 break;
             }
             case Constants.BONUS_WRENCH: {
-                if(slipping){
+                bonusSound = Animator.createClip(bonusSound, "res/sounds/bonus.wav");
+                bonusSound.start();
+                if (slipping) {
                     toNormalMode();
                 }
                 durability++;
                 break;
             }
             case Constants.BONUS_TOMAT: {
-                if(slipping){
+                tomatSound = Animator.createClip(tomatSound, "res/sounds/tomat.wav");
+                tomatSound.start();
+                if (slipping) {
                     toNormalMode();
                 }
                 bonusActive = true;
@@ -295,7 +311,9 @@ public class Player extends MovingObject {
                 break;
             }
             case Constants.BONUS_FAN: {
-                if(slipping){
+                bonusSound = Animator.createClip(bonusSound, "res/sounds/bonus.wav");
+                bonusSound.start();
+                if (slipping) {
                     toNormalMode();
                 }
                 bonusActive = true;
@@ -304,7 +322,9 @@ public class Player extends MovingObject {
                 break;
             }
             case Constants.BONUS_SURPRISE: {
-                if(slipping){
+                bonusSound = Animator.createClip(bonusSound, "res/sounds/bonus.wav");
+                bonusSound.start();
+                if (slipping) {
                     toNormalMode();
                 }
                 int bonus = 1000 + Constants.random.nextInt(7);
@@ -315,6 +335,11 @@ public class Player extends MovingObject {
                 slipping = true;
                 mobility = 0;
                 slipCounter = 0;
+                break;
+            }
+            case Constants.BONUS_CHERRY: {
+                cherrySound = Animator.createClip(cherrySound, "res/sounds/cherry.wav");
+                cherrySound.start();
                 break;
             }
         }
@@ -353,7 +378,6 @@ public class Player extends MovingObject {
                 jumping = false;
                 counter = 0;
             }
-        } else if (falling) {
 
         } else if (slipping) {
             slipCounter += (delta * 1f) / Constants.DIVIDE_DELTA;
@@ -389,10 +413,6 @@ public class Player extends MovingObject {
 
     public boolean isJumping() {
         return jumping;
-    }
-
-    public boolean isFalling() {
-        return falling;
     }
 
     public void dangerZone() {
