@@ -5,6 +5,8 @@
  */
 package lab3;
 
+import gameObjects.stuff.PlayerCars;
+import gameObjects.stuff.PlayerStats;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 import states.Gameplay;
@@ -225,6 +227,7 @@ public class MainFrame extends javax.swing.JFrame {
 		public void desertAction() {
 			sas.setVisible(false);
 			sas.clip.stop();
+			PlayerStats.currentLevel = gameObjects.stuff.Levels.ARCTIC;
 
 			Gameplay.Game game = new Gameplay.Game("GAME THREAD");
 			try {

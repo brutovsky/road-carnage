@@ -4,6 +4,7 @@ import gameObjects.stuff.Constants;
 import gameObjects.stuff.PlayerCars;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.openal.AiffData;
 
 import javax.sound.sampled.*;
 import java.io.File;
@@ -17,6 +18,9 @@ public class Player extends MovingObject {
     Clip cherrySound;
     Clip tomatSound;
     Clip deadEndSound;
+    Clip slippingSound;
+
+    private boolean soundCheck;
 
     private int durability;
     private float mobility;
@@ -67,6 +71,7 @@ public class Player extends MovingObject {
         setImmortlaAnim();
         setJumpAnim();
         setExplosionAnim();
+        soundCheck = false;
     }
 
     private void initSounds() {
@@ -80,7 +85,7 @@ public class Player extends MovingObject {
     private void setImmortlaAnim() {
         Image temp = Animator.createImage(typeOfCar.getPath() + "Immortal" + ".png").getScaledCopy(getScale());
         immortalAnimation = new Animation();
-        immortalAnimation.addFrame(getImage(), immortalAnimDur);
+        immortalAnimation.addFrame(Animator.createImage(typeOfCar.getPath() + ".png"), immortalAnimDur);
         immortalAnimation.addFrame(temp, immortalAnimDur);
         immortalAnimation.setLooping(true);
     }
@@ -205,7 +210,7 @@ public class Player extends MovingObject {
             badtomat.draw(Road.CENTR - badtomat.getWidth() / 2, Road.Y);
         }
         if (!broken) {
-            wasted.draw(Road.CENTR - wasted.getWidth()/2,Road.HEIGHT/2-wasted.getHeight()/2);
+            wasted.draw(Road.CENTR - wasted.getWidth() / 2, Road.HEIGHT / 2 - wasted.getHeight() / 2);
         }
     }
 
@@ -332,6 +337,11 @@ public class Player extends MovingObject {
                 break;
             }
             case Constants.NO_MOVABILITY: {
+                if (!soundCheck) {
+                    soundCheck = true;
+                    slippingSound = Animator.createClip(slippingSound, "res/sounds/slipping.wav");
+                    slippingSound.start();
+                }
                 slipping = true;
                 mobility = 0;
                 slipCounter = 0;
@@ -408,6 +418,8 @@ public class Player extends MovingObject {
         mobility = getMobility();
         isTomat = false;
         slipping = false;
+        slipCounter = 0;
+        soundCheck = false;
         System.out.println("NORMAL");
     }
 

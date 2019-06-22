@@ -10,14 +10,17 @@ import gameObjects.levelGenerators.LevelDecorations;
 import gameObjects.stuff.*;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.openal.AL;
-import org.lwjgl.openal.AL10;
 import org.newdawn.slick.*;
-import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.Graphics;
 
 import javax.sound.sampled.*;
+import java.awt.*;
+import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.logging.Level;
 
 
 public class Gameplay extends BasicGame {
@@ -27,6 +30,8 @@ public class Gameplay extends BasicGame {
     public static final int LEVEL_JUNGLE = 3;
     public static final int LEVEL_CITY = 4;
     public static final int LEVEL_WORLD = 5;
+
+    Font font;
 
     Clip clankSound;
     Clip carHitSound;
@@ -53,7 +58,7 @@ public class Gameplay extends BasicGame {
     //
 
 
-    DessertLevel level;
+    LevelGenerator level;
 
     public Gameplay(String title) {
         super(title);
@@ -77,6 +82,7 @@ public class Gameplay extends BasicGame {
                 app = new AppGameContainer(new Gameplay(Constants.GAME_TITLE));
                 app.setDisplayMode(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT, Constants.FULLSCREAN_MOD);
                 app.setIcon("res/icon/icon.png");
+                app.setShowFPS(false);
                 app.start();
                 app.destroy();
             } catch (SlickException e) {
@@ -92,26 +98,51 @@ public class Gameplay extends BasicGame {
     @Override
     public void init(GameContainer gc)
             throws SlickException {
-        gc.setShowFPS(true);
+        gc.setShowFPS(false);
         gc.setTargetFrameRate(60);
         road = new Road();
         decor = new LevelDecorations();
         player = new Player(1f, Road.LINE5, 600, Road.FULL_ROAD, PlayerCars.ANISTON);
         speed_koef = 1;
-        level = new DessertLevel();
+        initLevel();
         menu = new GameMenu();
+        soundCheck = false;
         try {
-            if (!AL.isCreated()) {
-                AL.create();
-            }
-        } catch (LWJGLException e) {
+            font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,new FileInputStream(new File("res/fonts/font.otf"))).deriveFont(java.awt.Font.PLAIN,14);
+        } catch (FontFormatException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        soundCheck = false;
     }//end init
 
     ////
+    private void initLevel() {
+        switch(PlayerStats.currentLevel){
+            case DESERT:{
+                level = new DessertLevel();
+                break;
+            }
+            case ARCTIC:{
+                level = new AntarcticLevel();
+                break;
+            }
+            case JUNGLE:{
+                level = new JungleLevel();
+                break;
+            }
+            case CITY:{
+                level = new CityLevel();
+                break;
+            }
+            case WORLD:{
 
+            }
+            default:{
+
+            }
+        }
+    }
     ////
 
 
@@ -128,10 +159,15 @@ public class Gameplay extends BasicGame {
             go.draw();
         }
         player.draw();
-        graphics.drawString("Speed - " + new Integer((int) player.getCurrentSpeed()).toString(), 10, 30);
-        graphics.drawString("Mobility - " + new Integer((int) player.getCurrentMobility()).toString(), 10, 60);
-        graphics.drawString("Durability - " + new Integer((int) player.getCurrentDurability()).toString(), 10, 90);
-        graphics.drawString("KM - " + km, 10, 150);
+        BufferedImage image = new BufferedImage(250,200,BufferedImage.TYPE_INT_ARGB);
+        java.awt.Graphics g = image.getGraphics();
+        g.setColor(java.awt.Color.BLACK);
+        g.setFont(font);
+        g.drawString("Speed - " + new Integer((int) player.getCurrentSpeed()).toString()+" px", 10, 30);
+        g.drawString("Agility - " + new Integer((int) player.getCurrentMobility()).toString() + " px", 10, 60);
+        g.drawString("Durability - " + new Integer((int) player.getCurrentDurability()).toString(), 10, 90);
+        g.drawString("KM - " + (int)(km*100)/100f, 10, 150);
+        Animator.toSlickImage(image).draw(10,10);
         if (menuActive) {
             menu.draw();
         }
@@ -146,18 +182,18 @@ public class Gameplay extends BasicGame {
             menu.update(i, input.getMouseX(), input.getMouseY());
             if (menu.isMouseOnExit(input.getMouseX(), input.getMouseY())) {
                 if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-                    clankSound = Animator.createClip(clankSound,"src/sounds/CLANK!.wav");
+                    clankSound = Animator.createClip(clankSound, "src/sounds/CLANK!.wav");
                     clankSound.start();
                     gameContainer.setForceExit(false);
                     gameContainer.exit();
                 }
-            }else if(menu.isMouseOnContinue(input.getMouseX(), input.getMouseY())) {
+            } else if (menu.isMouseOnContinue(input.getMouseX(), input.getMouseY())) {
                 if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-                    clankSound = Animator.createClip(clankSound,"src/sounds/CLANK!.wav");
+                    clankSound = Animator.createClip(clankSound, "src/sounds/CLANK!.wav");
                     clankSound.start();
                     menuActive = false;
                 }
-            }else if(input.isKeyPressed(Input.KEY_ESCAPE)) {
+            } else if (input.isKeyPressed(Input.KEY_ESCAPE)) {
                 menuActive = false;
             }
         } else {
@@ -209,7 +245,7 @@ public class Gameplay extends BasicGame {
             }
 
 
-            if (!(player.isImmortal() || player.isJumping()||!player.isBroken())) {
+            if (!(player.isImmortal() || player.isJumping() || !player.isBroken())) {
                 if (player.checkForCollision(Road.DANGER_ZONE_LEFT)) {
                     player.dangerZone();
                 } else if (player.checkForCollision(Road.DANGER_ZONE_RIGHT)) {
@@ -220,7 +256,7 @@ public class Gameplay extends BasicGame {
 
             for (GameObject object : road.getObstacles()) {
                 if (player.checkForCollision(object)) {
-                    if (!(player.isImmortal() || player.isJumping()||!player.isBroken())) {
+                    if (!(player.isImmortal() || player.isJumping() || !player.isBroken())) {
                         if (object instanceof Car) {
                             ((Car) object).setSpeed(0);
                             player.collision(((Car) object).collisionOccured());
@@ -251,9 +287,9 @@ public class Gameplay extends BasicGame {
                             continue;
                         }
                         if (((Car) car).checkForCollision(object)) {
-                            if(!(((Car) car).getSpeed() == 0)){
-                                if(!soundCheck){
-                                    carHitSound = Animator.createClip(carHitSound,"res/sounds/carsHit.wav");
+                            if (!(((Car) car).getSpeed() == 0)) {
+                                if (!soundCheck) {
+                                    carHitSound = Animator.createClip(carHitSound, "res/sounds/carsHit.wav");
                                     carHitSound.start();
                                     soundCheck = true;
                                 }

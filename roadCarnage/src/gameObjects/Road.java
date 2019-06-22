@@ -2,6 +2,8 @@ package gameObjects;
 
 import gameObjects.stuff.Constants;
 import gameObjects.stuff.Decorations;
+import gameObjects.stuff.Levels;
+import gameObjects.stuff.PlayerStats;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
@@ -15,7 +17,7 @@ public class Road extends GameObject {
     public static final float X = 200;
     public static final float Y = 0;
     public static final float HEIGHT = 700;
-    public static final String PATH = "res\\roadSkins\\desert" + ".png";
+    public static final String PATH = Levels.ARCTIC.getPath();
 
 
     public static final float ROUGH_ROAD_WIDTH = 56;
@@ -54,6 +56,7 @@ public class Road extends GameObject {
     }
 
     public void update(float shift, int delta) {
+        System.out.println(shift * delta/ Constants.DIVIDE_DELTA);
         y += shift * delta / Constants.DIVIDE_DELTA;
         yS += shift * delta / Constants.DIVIDE_DELTA;
         if (y > 700) {
