@@ -139,9 +139,30 @@ public class LevelDecorations {
                 }
 
             case "City":
-                rand = Constants.random.nextInt(11);
+                rand = Constants.random.nextInt(20);
                 switch (rand) {
-
+                    case 0:
+                        return new Decoration(1f, x + 20, y - 50, Decorations.HUMAN1);
+                    case 1:
+                        return new Decoration(1f, x + 20, y - 50, Decorations.HUMAN2);
+                    case 2:
+                        return new Decoration(1f, x + 20, y - 50, Decorations.HUMAN3);
+                    case 3:
+                        return new Decoration(1f, x + 20, y - 50, Decorations.HUMAN4);
+                    case 4:
+                        return new Decoration(1f, x + 20, y - 50, Decorations.HUMAN5);
+                    case 5:
+                        return new Decoration(1f, x + 20, y - 50, Decorations.HUMAN6);
+                    case 6:
+                        return new Decoration(1f, x + 20, y - 50, Decorations.BANNER);
+                    case 7:
+                        return new Decoration(1f, x + 20, y - 50, Decorations.BANNER1);
+                    case 8:
+                        return new Decoration(1f, x + 20, y - 50, Decorations.BANNER2);
+                    case 9:
+                        return new Decoration(1f, x + 20, y - 50, Decorations.BANNER3);
+                    default :
+                        return new Decoration(1f, x + 20, y - 50, Decorations.CITYTREE);
                 }
             default:
                 return new Decoration(1f, x, y, Decorations.COW);

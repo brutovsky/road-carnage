@@ -227,7 +227,7 @@ public class MainFrame extends javax.swing.JFrame {
 		public void desertAction() {
 			sas.setVisible(false);
 			sas.clip.stop();
-			PlayerStats.currentLevel = gameObjects.stuff.Levels.CITY;
+			PlayerStats.currentLevel = gameObjects.stuff.Levels.WORLD;
 
 			Gameplay.Game game = new Gameplay.Game("GAME THREAD");
 			try {

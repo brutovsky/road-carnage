@@ -5,7 +5,7 @@ public enum Levels {
     ARCTIC("res/roadSkins/arctic" + ".png"),
     JUNGLE("res/roadSkins/jungle" + ".png"),
     CITY("res/roadSkins/city" + ".png"),
-    WORLD("res/roadSkins/world" + ".png");
+    WORLD("res/roadSkins/city" + ".png");
     private String path;
     Levels(String path){
         this.path = path;

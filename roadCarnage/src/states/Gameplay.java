@@ -136,7 +136,8 @@ public class Gameplay extends BasicGame {
                 break;
             }
             case WORLD:{
-
+                level = new WorldLevel();
+                break;
             }
             default:{
 

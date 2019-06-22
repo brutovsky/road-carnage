@@ -17,7 +17,7 @@ public abstract class LevelGenerator {
     protected float stage_y;
 
     protected final int stages;
-    protected final int[][] grid;
+    protected int[][] grid;
     protected final int roadLines;
     protected int none_chance;
     protected int car_chance;
