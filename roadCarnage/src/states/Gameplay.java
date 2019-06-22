@@ -102,7 +102,7 @@ public class Gameplay extends BasicGame {
         gc.setTargetFrameRate(60);
         road = new Road();
         decor = new LevelDecorations();
-        player = new Player(1f, Road.LINE5, 600, Road.FULL_ROAD, PlayerCars.ANISTON);
+        player = new Player(1f, Road.LINE5, 600, Road.FULL_ROAD, PlayerCars.TANK);
         speed_koef = 1;
         initLevel();
         menu = new GameMenu();
@@ -185,6 +185,7 @@ public class Gameplay extends BasicGame {
                 if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
                     clankSound = Animator.createClip(clankSound, "src/sounds/CLANK!.wav");
                     clankSound.start();
+                    Player.SOUND.stop();
                     gameContainer.setForceExit(false);
                     gameContainer.exit();
                 }
@@ -254,6 +255,7 @@ public class Gameplay extends BasicGame {
                 }
             }
 
+            player.update(i);
 
             for (GameObject object : road.getObstacles()) {
                 if (player.checkForCollision(object)) {
@@ -276,10 +278,10 @@ public class Gameplay extends BasicGame {
                         System.out.println("BONUS");
                         break;
                     }
-                }
+
             }
 
-            player.update(i);
+
 
             for (GameObject car : road.getObstacles()) {
                 if (car instanceof Car) {

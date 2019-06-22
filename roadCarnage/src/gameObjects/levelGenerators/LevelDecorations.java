@@ -36,32 +36,65 @@ public class LevelDecorations {
     }
 
     public void update() {
-
-        if (getDownPictureL().getY() > 700) {
-            if (location % 2 == 0) {
-                decorationsLeft.add(randomDecoration(40, -90));
-                decorationsRight.add(randomDecoration(820, -90));
-            } else {
-                decorationsLeft.add(randomDecoration(150, -90));
-                decorationsRight.add(randomDecoration(910, -90));
-            }
-            decorationsLeft.remove(getDownPictureL());
-            decorationsRight.remove(getDownPictureR());
-            location++;
+        switch (map) {
+            case "City":
+                if (getDownPictureL().getY() > 700) {
+                    if (location % 2 == 0) {
+                        decorationsLeft.add(randomDecoration(20,-80));
+                        decorationsRight.add(new Decoration(1f, 810, -80 , Decorations.RIDER1));
+                    } else {
+                        decorationsLeft.add(new Decoration(1f, 190, -80 , Decorations.RIDER));
+                        decorationsRight.add(randomDecoration(910,-80));
+                    }
+                    decorationsLeft.remove(getDownPictureL());
+                    decorationsRight.remove(getDownPictureR());
+                    location++;
+                }
+                break;
+            default:
+                if (getDownPictureL().getY() > 700) {
+                    if (location % 2 == 0) {
+                        decorationsLeft.add(randomDecoration(40, -90));
+                        decorationsRight.add(randomDecoration(820, -90));
+                    } else {
+                        decorationsLeft.add(randomDecoration(150, -90));
+                        decorationsRight.add(randomDecoration(910, -90));
+                    }
+                    decorationsLeft.remove(getDownPictureL());
+                    decorationsRight.remove(getDownPictureR());
+                    location++;
+                }
         }
+
 
     }
 
     public void addDecorations() {
-        for (int i = 0; i < 8; i++) {
-            if (decorationsLeft.size() % 2 == 0) {
-                decorationsLeft.add(randomDecoration(20, -90 * i));
-                decorationsRight.add(randomDecoration(820, -90 * i));
-            } else {
-                decorationsLeft.add(randomDecoration(130, -90 * i));
-                decorationsRight.add(randomDecoration(910, -90 * i));
-            }
+        switch (map) {
+            case "City":
+                for (int i = 0; i < 8; i++) {
+                    if (decorationsLeft.size() % 2 == 0) {
+                        decorationsLeft.add(randomDecoration(20,-80*i));
+                        decorationsRight.add(new Decoration(1f, 810, -80 * i, Decorations.RIDER1));
+                    } else {
+                        decorationsLeft.add(new Decoration(1f, 190, -80 * i, Decorations.RIDER));
+                        decorationsRight.add(randomDecoration(910,-80*i));
+                    }
+                }
+                break;
+            default:
+                for (int i = 0; i < 8; i++) {
+                    if (decorationsLeft.size() % 2 == 0) {
+                        decorationsLeft.add(randomDecoration(20, -90 * i));
+                        decorationsRight.add(randomDecoration(820, -90 * i));
+                    } else {
+
+                        decorationsLeft.add(randomDecoration(130, -90 * i));
+                        decorationsRight.add(randomDecoration(910, -90 * i));
+                    }
+                }
         }
+
 
     }
 

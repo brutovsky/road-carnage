@@ -20,7 +20,7 @@ public class Player extends MovingObject {
     Clip deadEndSound;
     Clip slippingSound;
 
-    private boolean soundCheck;
+    public boolean soundCheck;
 
     private int durability;
     private float mobility;
@@ -53,6 +53,9 @@ public class Player extends MovingObject {
     private boolean bonusActive = false;
     private boolean isTomat;
 
+    private boolean tankMod;
+    public static Clip SOUND;
+
 
     public Player(float scale, float x, float y, Rectangle borders, PlayerCars car) {
         super(car.getImage(), scale, x, y, car.getSpeed(), borders);
@@ -72,6 +75,17 @@ public class Player extends MovingObject {
         setJumpAnim();
         setExplosionAnim();
         soundCheck = false;
+        if (car == PlayerCars.TANK) {
+            setSOUND();
+            tankMod = true;
+        } else {
+            tankMod = false;
+        }
+    }
+
+    private void setSOUND() {
+        SOUND = Animator.createClip(SOUND, "res/sounds/SOUND.wav");
+        SOUND.loop(10);
     }
 
     private void initSounds() {
@@ -218,49 +232,79 @@ public class Player extends MovingObject {
         switch (collision) {
             case Constants
                     .MINUS_DURABILITY: {
-                hitSound = Animator.createClip(hitSound, "res/sounds/hit.wav");
-                hitSound.start();
-                if (slipping) {
-                    toNormalMode();
-                }
-                durability--;
-                if (durability <= 0) {
-                    deadEndSound = Animator.createClip(deadEndSound, "res/sounds/deadEnd.wav");
-                    deadEndSound.start();
-                    durability = 0;
-                    broken = false;
-                    speed = 0;
-                    mobility = 0;
+                if (tankMod) {
+                    if(!soundCheck){
+                        hitSound = Animator.createClip(hitSound, "res/sounds/tankHit.wav");
+                        hitSound.start();
+                        soundCheck = true;
+                    }
                 } else {
-                    immortal = true;
-                    counter = 0;
+                    hitSound = Animator.createClip(hitSound, "res/sounds/hit.wav");
+                    hitSound.start();
+                    if (slipping) {
+                        toNormalMode();
+                    }
+                    durability--;
+                    if (durability <= 0) {
+                        deadEndSound = Animator.createClip(deadEndSound, "res/sounds/deadEnd.wav");
+                        deadEndSound.start();
+                        durability = 0;
+                        broken = false;
+                        speed = 0;
+                        mobility = 0;
+                    } else {
+                        immortal = true;
+                        counter = 0;
+                    }
                 }
                 break;
             }
             case Constants
                     .DEAD_END: {
-                deadEndSound = Animator.createClip(deadEndSound, "res/sounds/deadEnd.wav");
-                deadEndSound.start();
-                if (slipping) {
-                    toNormalMode();
+                if (tankMod) {
+                    hitSound = Animator.createClip(hitSound, "res/sounds/tankHit.wav");
+                    hitSound.start();
+                    durability--;
+                    if (durability <= 0) {
+                        deadEndSound = Animator.createClip(deadEndSound, "res/sounds/deadEnd.wav");
+                        deadEndSound.start();
+                        durability = 0;
+                        broken = false;
+                        speed = 0;
+                        mobility = 0;
+                    } else {
+                        immortal = true;
+                        counter = 0;
+                    }
+                } else {
+                    deadEndSound = Animator.createClip(deadEndSound, "res/sounds/deadEnd.wav");
+                    deadEndSound.start();
+                    if (slipping) {
+                        toNormalMode();
+                    }
+                    durability = 0;
+                    broken = false;
+                    speed = 0;
+                    mobility = 0;
                 }
-                durability = 0;
-                broken = false;
-                speed = 0;
-                mobility = 0;
                 break;
             }
             case Constants
                     .JUMP: {
-                jumpSound = Animator.createClip(jumpSound, "res/sounds/jump.wav");
-                jumpSound.start();
-                if (slipping) {
-                    toNormalMode();
+                if (tankMod) {
+                    hitSound = Animator.createClip(hitSound, "res/sounds/tankHit.wav");
+                    hitSound.start();
+                } else {
+                    jumpSound = Animator.createClip(jumpSound, "res/sounds/jump.wav");
+                    jumpSound.start();
+                    if (slipping) {
+                        toNormalMode();
+                    }
+                    counter = 0;
+                    jumping = true;
+                    setAnimation(jumpAnimation);
+                    setJumpAnim();
                 }
-                counter = 0;
-                jumping = true;
-                setAnimation(jumpAnimation);
-                setJumpAnim();
                 break;
             }
             case Constants.BONUS_BARRIER: {
@@ -337,14 +381,19 @@ public class Player extends MovingObject {
                 break;
             }
             case Constants.NO_MOVABILITY: {
-                if (!soundCheck) {
-                    soundCheck = true;
-                    slippingSound = Animator.createClip(slippingSound, "res/sounds/slipping.wav");
-                    slippingSound.start();
+                if (tankMod) {
+                    hitSound = Animator.createClip(hitSound, "res/sounds/tankHit.wav");
+                    hitSound.start();
+                } else {
+                    if (!soundCheck) {
+                        soundCheck = true;
+                        slippingSound = Animator.createClip(slippingSound, "res/sounds/slipping.wav");
+                        slippingSound.start();
+                    }
+                    slipping = true;
+                    mobility = 0;
+                    slipCounter = 0;
                 }
-                slipping = true;
-                mobility = 0;
-                slipCounter = 0;
                 break;
             }
             case Constants.BONUS_CHERRY: {
@@ -432,4 +481,5 @@ public class Player extends MovingObject {
             collision(Constants.MINUS_DURABILITY);
         }
     }
+
 }

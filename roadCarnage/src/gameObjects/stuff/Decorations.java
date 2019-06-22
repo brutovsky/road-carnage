@@ -34,7 +34,20 @@ public enum Decorations {
     CACTUS5("res\\decorations\\cactus5.png", 1f),
     CACTUS6("res\\decorations\\cactus6.png", 1f),
     GOLEM("res\\decorations\\golem.png", 1f),
-    PALM("res\\decorations\\palm.png", 1f);
+    PALM("res\\decorations\\palm.png", 1f),
+    HUMAN1("res\\decorations\\human1.png", 1f),
+    HUMAN2("res\\decorations\\human2.png", 1f),
+    HUMAN3("res\\decorations\\human3.png", 1f),
+    HUMAN4("res\\decorations\\human4.png", 1f),
+    HUMAN5("res\\decorations\\human5.png", 1f),
+    HUMAN6("res\\decorations\\human6.png", 1f),
+    BANNER("res\\decorations\\EntryBaner.png", 1f),
+    BANNER1("res\\decorations\\EntryBaner1.png", 1f),
+    BANNER2("res\\decorations\\EntryBaner2.png", 1f),
+    BANNER3("res\\decorations\\EntryBaner3.png", 1f),
+    RIDER("res\\decorations\\Rider.png", 1f),
+    RIDER1("res\\decorations\\Rider1.png", 1f),
+    CITYTREE("res\\decorations\\cityTree.png", 1f),;
     private float scale;
     private String path;
 
