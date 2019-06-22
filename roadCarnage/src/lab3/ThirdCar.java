@@ -541,8 +541,9 @@ public class ThirdCar extends javax.swing.JPanel {
 			speedSource = new File(System.getProperty("user.dir") + "/src/images/speed.gif"),
 			strengthSource = new File(System.getProperty("user.dir") + "/src/images/strength.gif"),
 			barFSource = new File(System.getProperty("user.dir") + "/src/images/barF.png"),
+					agilitySource = new File(System.getProperty("user.dir") + "/src/images/agility.gif"),
 			barESource = new File(System.getProperty("user.dir") + "/src/images/barE.png");
-	private BufferedImage background, car, barF, barE, speed, strength;
+	private BufferedImage background, car,agility, barF, barE, speed, strength;
 
 	public void paintComponent(Graphics g) {
 		try {
@@ -576,6 +577,13 @@ public class ThirdCar extends javax.swing.JPanel {
 		} catch (IOException ex) {
 			Logger.getLogger(ThirdCar.class.getName()).log(Level.SEVERE, null, ex);
 		}
+		try {
+			agility=ImageIO.read(agilitySource);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		g.drawImage(agility,567,370,null);
 		g.drawImage(car, 210, 170, 150, 300, null);
 		g.drawImage(speed, 575, 170, null);
 		g.drawImage(strength, 525, 270, null);
@@ -590,6 +598,13 @@ public class ThirdCar extends javax.swing.JPanel {
 		g.drawImage(barF, 625, 318, null);
 		g.drawImage(barF, 689, 318, null);
 		g.drawImage(barE, 753, 318, null);
+		
+		
+		g.drawImage(barF, 497, 418, null);
+		g.drawImage(barF, 561, 418, null);
+		g.drawImage(barF, 625, 418, null);
+		g.drawImage(barE, 689, 418, null);
+		g.drawImage(barE, 753, 418, null);
 		g.setColor(Color.green);
 		g.setFont(new Font("Century Gothic Bold", 28, 28));
 		g.drawString("Balance:" + balance, 780, 50);

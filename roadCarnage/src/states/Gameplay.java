@@ -22,6 +22,12 @@ import java.io.IOException;
 
 public class Gameplay extends BasicGame {
 
+    public static final int LEVEL_DESERT = 1;
+    public static final int LEVEL_ARCTIC = 2;
+    public static final int LEVEL_JUNGLE = 3;
+    public static final int LEVEL_CITY = 4;
+    public static final int LEVEL_WORLD = 5;
+
     Clip clankSound;
     Clip carHitSound;
     private boolean soundCheck;
