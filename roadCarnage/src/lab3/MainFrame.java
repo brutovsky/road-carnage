@@ -225,7 +225,7 @@ public class MainFrame extends javax.swing.JFrame {
 		public void desertAction() {
 			sas.setVisible(false);
 			sas.clip.stop();
-			Game.start();
+			//Game.start();
 		}
 
 		@Override

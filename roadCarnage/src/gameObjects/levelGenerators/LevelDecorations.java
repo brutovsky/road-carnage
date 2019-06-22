@@ -35,37 +35,70 @@ public class LevelDecorations {
     }
 
     public void update() {
-
-        if (getDownPictureL().getY() > 700) {
-            if (location % 2 == 0) {
-                decorationsLeft.add(randomDecoration(40, -90));
-                decorationsRight.add(randomDecoration(820, -90));
-            } else {
-                decorationsLeft.add(randomDecoration(150, -90));
-                decorationsRight.add(randomDecoration(910, -90));
-            }
-            decorationsLeft.remove(getDownPictureL());
-            decorationsRight.remove(getDownPictureR());
-            location++;
+        switch (map) {
+            case "City":
+                if (getDownPictureL().getY() > 700) {
+                    if (location % 2 == 0) {
+                        decorationsLeft.add(new Decoration(1f, 20, -90, Decorations.RIDER));
+                        decorationsRight.add(new Decoration(1f, 810, -200 , Decorations.RIDER1));
+                    } else {
+                        decorationsLeft.add(new Decoration(1f, 190, -200 , Decorations.RIDER));
+                        decorationsRight.add(new Decoration(1f, 910, -90 , Decorations.RIDER1));
+                    }
+                    decorationsLeft.remove(getDownPictureL());
+                    decorationsRight.remove(getDownPictureR());
+                    location++;
+                }
+                break;
+            default:
+                if (getDownPictureL().getY() > 700) {
+                    if (location % 2 == 0) {
+                        decorationsLeft.add(randomDecoration(40, -90));
+                        decorationsRight.add(randomDecoration(820, -90));
+                    } else {
+                        decorationsLeft.add(randomDecoration(150, -90));
+                        decorationsRight.add(randomDecoration(910, -90));
+                    }
+                    decorationsLeft.remove(getDownPictureL());
+                    decorationsRight.remove(getDownPictureR());
+                    location++;
+                }
         }
+
 
     }
 
     public void addDecorations() {
-        for (int i = 0; i < 8; i++) {
-            if (decorationsLeft.size() % 2 == 0) {
-                decorationsLeft.add(randomDecoration(20, -90 * i));
-                decorationsRight.add(randomDecoration(820, -90 * i));
-            } else {
-                decorationsLeft.add(randomDecoration(130, -90 * i));
-                decorationsRight.add(randomDecoration(910, -90 * i));
-            }
+        switch (map) {
+            case "City":
+                for (int i = 0; i < 8; i++) {
+                    if (decorationsLeft.size() % 2 == 0) {
+                        decorationsLeft.add(new Decoration(1f, 20, -90 * i, Decorations.RIDER));
+                        decorationsRight.add(new Decoration(1f, 810, -90 * i, Decorations.RIDER1));
+                    } else {
+                        decorationsLeft.add(new Decoration(1f, 190, -90 * i, Decorations.RIDER));
+                        decorationsRight.add(new Decoration(1f, 910, -90 * i, Decorations.RIDER1));
+                    }
+                }
+                break;
+            default:
+                for (int i = 0; i < 8; i++) {
+                    if (decorationsLeft.size() % 2 == 0) {
+                        decorationsLeft.add(randomDecoration(20, -90 * i));
+                        decorationsRight.add(randomDecoration(820, -90 * i));
+                    } else {
+
+                        decorationsLeft.add(randomDecoration(130, -90 * i));
+                        decorationsRight.add(randomDecoration(910, -90 * i));
+                    }
+                }
         }
+
 
     }
 
     private Decoration randomDecoration(int x, int y) {
-System.out.println(map);
+        System.out.println(map);
         switch (map) {
             case "Forest":
                 int rand = Constants.random.nextInt(11);
@@ -95,7 +128,7 @@ System.out.println(map);
 
                 }
             case "Desert":
-                 rand = Constants.random.nextInt(15);
+                rand = Constants.random.nextInt(15);
                 switch (rand) {
                     case 0:
                         return new Decoration(1f, x, y, Decorations.CACTUS1);
@@ -111,35 +144,39 @@ System.out.println(map);
                         return new Decoration(1f, x, y, Decorations.PALM);
                     case 7:
                         return new Decoration(1f, x, y, Decorations.GOLEM);
-                    default :
+                    default:
                         return new Decoration(1f, x, y, Decorations.CACTUS3);
 
 
                 }
             case "Arctic":
-                 rand = Constants.random.nextInt(15);
+                rand = Constants.random.nextInt(15);
                 switch (rand) {
                     case 0:
-                        return new Decoration(1f, x+20, y-50, Decorations.POLAR_BEAR);
+                        return new Decoration(1f, x + 20, y - 50, Decorations.POLAR_BEAR);
                     case 3:
-                        return new Decoration(1f, x+20, y-50, Decorations.POLAR_BEAR2);
+                        return new Decoration(1f, x + 20, y - 50, Decorations.POLAR_BEAR2);
                     case 4:
-                        return new Decoration(1f, x+20, y-50, Decorations.POCKEMON1);
+                        return new Decoration(1f, x + 20, y - 50, Decorations.POCKEMON1);
                     case 6:
-                        return new Decoration(1f, x+20, y-50, Decorations.ROCK);
+                        return new Decoration(1f, x + 20, y - 50, Decorations.ROCK);
                     case 7:
-                        return new Decoration(1f, x+20, y-50, Decorations.ICEPOOL);
+                        return new Decoration(1f, x + 20, y - 50, Decorations.ICEPOOL);
                     case 8:
-                        return new Decoration(1f, x+20, y-50, Decorations.PENGUIN1);
+                        return new Decoration(1f, x + 20, y - 50, Decorations.PENGUIN1);
                     case 9:
-                        return new Decoration(1f, x+20, y-50, Decorations.POCKEMON);
+                        return new Decoration(1f, x + 20, y - 50, Decorations.POCKEMON);
                     default:
-                        return new Decoration(1f, x+20, y-50, Decorations.PENGUIN);
+                        return new Decoration(1f, x + 20, y - 50, Decorations.PENGUIN);
                 }
 
             case "City":
-                rand = Constants.random.nextInt(11);
+                rand = Constants.random.nextInt(2);
                 switch (rand) {
+                    case 0:
+                        return new Decoration(1f, x + 20, y - 50, Decorations.RIDER);
+                    case 1:
+                        return new Decoration(1f, x + 20, y - 50, Decorations.RIDER1);
 
                 }
             default:

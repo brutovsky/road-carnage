@@ -37,8 +37,8 @@ public class CityLevel extends LevelGenerator {
         getObstacles().put(i++, new Car(1f, X, Y, Road.ROAD, ICECREAM));
         getObstacles().put(i++, new Car(1f, X, Y, Road.ROAD, HOTDOG));
         getObstacles().put(i++, new Car(1f, X, Y, Road.ROAD, MEGABUS));
-        getObstacles().put(i++, new Car(1f, X, Y, Road.ROAD, POLICE));
-        getObstacles().put(i++, new Car(1f, X, Y, Road.ROAD, AMBULANCE));
+       // getObstacles().put(i++, new Car(1f, X, Y, Road.ROAD, POLICE));
+       // getObstacles().put(i++, new Car(1f, X, Y, Road.ROAD, AMBULANCE));
         //bonuses
         getObstacles().put(i++, new Bonus(1f, X, Y, Bonuses.TOMAT));
         getObstacles().put(i++, new Bonus(1f, X, Y, Bonuses.CHERRY));
@@ -50,8 +50,8 @@ public class CityLevel extends LevelGenerator {
         getObstacles().put(i++, new Bonus(1f, X, Y, Bonuses.FAN));
 
         auxiliaryList = 2;
-        getObstacles().put(i++, new Obstacle(1f, X, Y, Obstacles.BIG_HOLE));
-        getObstacles().put(i++, new Obstacle(1f, X, Y, Obstacles.CENTRE_HOLE));
+        //getObstacles().put(i++, new Obstacle(1f, X, Y, Obstacles.BIG_HOLE));
+       // getObstacles().put(i++, new Obstacle(1f, X, Y, Obstacles.CENTRE_HOLE));
 
     }
 

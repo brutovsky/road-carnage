@@ -32,6 +32,8 @@ public enum Decorations {
     CACTUS4("\\res\\decorations\\cactus4.png", 1f),
     CACTUS5("\\res\\decorations\\cactus5.png", 1f),
     CACTUS6("\\res\\decorations\\cactus6.png", 1f),
+    RIDER("\\res\\decorations\\Rider.png", 1f),
+    RIDER1("\\res\\decorations\\Rider1.png", 1f),
     GOLEM("\\res\\decorations\\golem.png", 1f),
     PALM("\\res\\decorations\\palm.png", 1f);
     private Image image;
