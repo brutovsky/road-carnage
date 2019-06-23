@@ -10,18 +10,24 @@ import java.util.Random;
 
 public enum Obstacles {
     CACTUS("res/obstacles/cactus", "CACTUS", 1, 1, Obstacle.ONE_LINE_SIZE,Constants.MINUS_DURABILITY),
-    DUNA("res/obstacles/duna.png", "DUNA", 1, 1,Obstacle.THREE_LINES_SIZE,Constants.MINUS_DURABILITY),
+    DUNA("res/obstacles/duna.png", "DUNA", 1, 1,Obstacle.FOUR_LINES_SIZE,Constants.MINUS_DURABILITY),
+    PENGUINS("res/obstacles/penguins.png", "PENGUINS", 1, 1,Obstacle.FOUR_LINES_SIZE,Constants.MINUS_DURABILITY),
     KONUS("res/obstacles/stop.png", "KONUS", 1, 1,Obstacle.ONE_LINE_SIZE,Constants.MINUS_DURABILITY),
     HOLE("res/obstacles/hole.png", "HOLE", 1, 1,Obstacle.ONE_LINE_SIZE,Constants.DEAD_END),
-    TRAMPOLINE("res/obstacles/trampoline.png", "TRAMPOLINE", 5, 1,Obstacle.ONE_LINE_SIZE,Constants.JUMP);
+    TRAMPOLINE("res/obstacles/trampoline.png", "TRAMPOLINE", 5, 1,Obstacle.ONE_LINE_SIZE,Constants.JUMP),
+    ICE_POOL("res/obstacles/ice_pool.png", "ICE POOL", 1, 1,Obstacle.ONE_LINE_SIZE,Constants.NO_MOVABILITY),
+    ROAD_BARRIER("res/obstacles/roadBarrier.png","ROAD BARRIER",1,1,Obstacle.ONE_LINE_SIZE,Constants.MINUS_DURABILITY);
+
     private Animation animation;
     private Image image;
     private SpriteSheet sprite_sheet;
     private int collision;
+    private String name;
 
     private int size;
 
     Obstacles(String path, String name, int columns, int lines, int size, int collision) {
+        this.name = name;
         this.collision = collision;
         animation = new Animation();
         try {
@@ -50,6 +56,7 @@ public enum Obstacles {
                         sprite_sheet.getSprite(x, y), 100);
             }
         }
+        this.name = name;
     }
 
     public Animation getAnimation() {
@@ -60,6 +67,10 @@ public enum Obstacles {
         return image;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public int getSize() {
         return size;
     }
@@ -67,4 +78,6 @@ public enum Obstacles {
     public int collision() {
         return collision;
     }
+
+
 }

@@ -14,7 +14,7 @@ public class Obstacle extends GameObject {
 
 
     public Obstacle(float scale, float x, float y, Obstacles obstacle) {
-        super(obstacle.getAnimation(), scale, x - obstacle.getImage().getWidth()/2, y);
+        super(obstacle.getAnimation(), scale, x , y);
         typeOf = obstacle;
     }
 
@@ -24,11 +24,19 @@ public class Obstacle extends GameObject {
 
     @Override
     public void update(float shift, int delta) {
-        y += shift * delta / Constants.DIVIDE_DELTA;
+        y += (shift * delta) / Constants.DIVIDE_DELTA;
     }
 
     @Override
     public int collisionOccured() {
         return typeOf.collision();
+    }
+
+    public String getName(){
+        return typeOf.getName();
+    }
+
+    public Obstacles getType() {
+        return typeOf;
     }
 }

@@ -1,16 +1,25 @@
 package gameObjects.stuff;
 
+import gameObjects.Obstacle;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 public enum Bonuses {
-    CHERRY("res/bonuses/cherry_sprite_list.png","CHERRY",3, 1,Constants.BONUS_CHERRY);
+    CHERRY("res/bonuses/cherry.png","CHERRY",3, 1,Constants.BONUS_CHERRY),
+    SURPRISE("res/bonuses/surprise.png","SURPRISE",3, 1,Constants.BONUS_SURPRISE),
+    FIRE("res/bonuses/fire.png","FIRE",3, 1,Constants.BONUS_FIRE),
+    ICE("res/bonuses/ice.png","ICE",3, 1,Constants.BONUS_ICE),
+    BARRIER("res/bonuses/barrier.png","BARRIER",3, 1,Constants.BONUS_BARRIER),
+    WRENCH("res/bonuses/wrench.png","WRENCH",3, 1,Constants.BONUS_WRENCH),
+    FAN("res/bonuses/fan.png","FAN",3, 1,Constants.BONUS_FAN),
+    TOMAT("res/bonuses/tomat.png", "TOMAT", 1, 1,Constants.BONUS_TOMAT);
     private Animation animation;
     private Image image;
     private SpriteSheet sprite_sheet;
     private int collision;
+    private String name;
     Bonuses(String path, String name, int columns,int lines,int collision) {
         this.collision = collision;
         animation = new Animation();
@@ -33,7 +42,7 @@ public enum Bonuses {
                         sprite_sheet.getSprite(x,y),100);
             }
         }
-
+        this.name = name;
     }
 
     public Animation getAnimation() {
@@ -46,5 +55,9 @@ public enum Bonuses {
 
     public int collision(){
         return collision;
+    }
+
+    public String getName() {
+        return name;
     }
 }
