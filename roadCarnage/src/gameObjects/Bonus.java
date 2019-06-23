@@ -2,7 +2,10 @@ package gameObjects;
 
 import gameObjects.stuff.Bonuses;
 import gameObjects.stuff.Constants;
-
+/**
+ * @author Vadym Nakytniak
+ * Bonus object class
+ */
 public class Bonus extends GameObject {
 
     public static final int DURATION = 100;

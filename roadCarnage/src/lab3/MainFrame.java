@@ -5,19 +5,13 @@
  */
 package lab3;
 
-import gameObjects.stuff.PlayerCars;
 import gameObjects.stuff.PlayerStats;
-import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.SlickException;
 import states.Gameplay;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -131,7 +125,6 @@ public class MainFrame extends javax.swing.JFrame {
 
     public static void main(String[] args) {
         sas = new MainFrame();
-
         sas.setVisible(true);
     }
 

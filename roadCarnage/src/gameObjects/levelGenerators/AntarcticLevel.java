@@ -11,7 +11,11 @@ import gameObjects.stuff.Obstacles;
 
 import static gameObjects.stuff.Cars.*;
 
-public class AntarcticLevel extends LevelGenerator{
+/**
+ * @author Vadym Nakytniak
+ * Antarcic level generator
+ */
+public class AntarcticLevel extends LevelGenerator {
 
     public AntarcticLevel() {
         super(3, 4);
@@ -90,7 +94,6 @@ public class AntarcticLevel extends LevelGenerator{
     public void generate() {
         generateStage1();
         generateStage2();
-        //generateStage3();
     }
 
     private void generateStage1() {
@@ -125,7 +128,6 @@ public class AntarcticLevel extends LevelGenerator{
     }
 
     private void generateStage2() {
-//
         int stage = 1;
         int c = 0;
         int sum = 0;
@@ -141,8 +143,8 @@ public class AntarcticLevel extends LevelGenerator{
                 for (int j = getFirstObstacleTypeId(type); j <= getLastObstacleTypeId(type); j++) {
                     sum += getProbability().get(j);
                     if (c <= sum) {
-                        if(type == TYPE_BONUSES){
-                            if(checkForId(j)){
+                        if (type == TYPE_BONUSES) {
+                            if (checkForId(j)) {
                                 grid[stage][i] = getObstacleIdByName("noname");
                                 break;
                             }
@@ -153,13 +155,11 @@ public class AntarcticLevel extends LevelGenerator{
                 }
             }
         }
-//
     }
 
 
-
     private void generateStage3() {
-//
+
         int stage = 2;
         int c = 0;
         int sum = 0;
@@ -181,7 +181,7 @@ public class AntarcticLevel extends LevelGenerator{
                 }
             }
         }
-        //
+
     }
 
 }

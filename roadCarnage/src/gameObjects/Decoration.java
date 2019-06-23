@@ -1,6 +1,5 @@
 package gameObjects;
 
-import gameObjects.stuff.Bonuses;
 import gameObjects.stuff.Constants;
 import gameObjects.stuff.Decorations;
 

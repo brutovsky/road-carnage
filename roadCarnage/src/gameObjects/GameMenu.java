@@ -6,21 +6,23 @@ import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * @author Vadym Nakytniak
+ * Class for in-game menu
+ */
 public class GameMenu implements Drawable {
-
+    //Sounds
     private Clip chooseSound;
     private boolean soundCheck;
-
+    //Coordinates
     private float exitB_x;
     private float exitB_y;
-
     private float continueB_x;
     private float continueB_y;
-
+    //Animations
     private Animation exitB0;
     private Animation exitB1;
     private Animation exitB;
-
     private Animation continueB0;
     private Animation continueB1;
     private Animation continueB;
@@ -68,24 +70,16 @@ public class GameMenu implements Drawable {
     }
 
     private void createExitAnimations() {
-
         exitB0 = new Animation();
         exitB1 = new Animation();
-        //0
-
         exitB0 = Animator.animate("res/menu/exit0.png", 3, 1, 100, true);
-        //1
         exitB1 = Animator.animate("res/menu/exit1.png", 3, 1, 100, true);
     }
 
     private void createContinueAnimations() {
-
         continueB0 = new Animation();
         continueB1 = new Animation();
-        //0
-
         continueB0 = Animator.animate("res/menu/continue0.png", 3, 1, 100, true);
-        //1
         continueB1 = Animator.animate("res/menu/continue1.png", 3, 1, 100, true);
     }
 

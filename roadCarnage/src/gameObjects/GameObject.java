@@ -3,7 +3,11 @@ package gameObjects;
 import gameObjects.stuff.Constants;
 import org.newdawn.slick.*;
 
-public abstract class GameObject implements Drawable{
+/**
+ * @author Vadym Nakytniak
+ * Superclass for all game objects
+ */
+public abstract class GameObject implements Drawable {
     protected float x;
     protected float y;
     protected float width;
@@ -16,10 +20,10 @@ public abstract class GameObject implements Drawable{
         this.scale = scale;
         this.image = Animator.createImage(path);
         this.animation = new Animation();
-        animation.addFrame(image,100);
+        animation.addFrame(image, 100);
         width = this.image.getWidth();
         height = this.image.getHeight();
-        this.x = x - image.getWidth()/2;
+        this.x = x - image.getWidth() / 2;
         this.y = y;
     }
 
@@ -27,23 +31,23 @@ public abstract class GameObject implements Drawable{
         this.scale = scale;
         this.image = image.getScaledCopy(scale);
         this.animation = new Animation();
-        animation.addFrame(image,100);
+        animation.addFrame(image, 100);
         width = this.image.getWidth();
         height = this.image.getHeight();
-        this.x = x - image.getWidth()/2;
+        this.x = x - image.getWidth() / 2;
         this.y = y;
     }
 
     public GameObject(Animation animation, float scale, float x, float y) {
         Animation temp = new Animation();
-        for(int i =0;i < animation.getFrameCount();i++){
-            temp.addFrame(animation.getImage(i).getScaledCopy(scale),animation.getDuration(i));
+        for (int i = 0; i < animation.getFrameCount(); i++) {
+            temp.addFrame(animation.getImage(i).getScaledCopy(scale), animation.getDuration(i));
         }
         this.image = temp.getImage(0);
         this.animation = temp;
         width = this.image.getWidth();
         height = this.image.getHeight();
-        this.x = x - image.getWidth()/2;
+        this.x = x - image.getWidth() / 2;
         this.y = y;
     }
 
@@ -61,14 +65,16 @@ public abstract class GameObject implements Drawable{
 
     /**
      * EMPTY BODY
+     *
      * @param delta
      */
-    public void update(int delta){
+    public void update(int delta) {
 
     }
 
     /**
      * EMPTY BODY
+     *
      * @param shift
      * @param delta
      */
@@ -89,11 +95,11 @@ public abstract class GameObject implements Drawable{
         this.animation = animation;
     }
 
-    public String getName(){
+    public String getName() {
         return "noname";
     }
 
-    public int collisionOccured(){
+    public int collisionOccured() {
         return Constants.NO_OUTPUT;
     }
 

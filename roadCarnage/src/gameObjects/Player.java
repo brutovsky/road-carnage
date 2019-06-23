@@ -10,10 +10,14 @@ import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * @author Vadym Nakytniak
+ * Player car class
+ */
 public class Player extends MovingObject {
-
+    //Money
     private int money;
-
+    //Sounds
     Clip jumpSound;
     Clip hitSound;
     Clip bonusSound;
@@ -21,40 +25,37 @@ public class Player extends MovingObject {
     Clip tomatSound;
     Clip deadEndSound;
     Clip slippingSound;
-
     public boolean soundCheck;
-
+    //Characteristics
     private int durability;
     private float mobility;
     private PlayerCars typeOfCar;
+    //booleans
     private boolean broken;
-
     private boolean immortal;
     private boolean jumping;
     private boolean slipping;
-
+    //Animations and images
     private float counter;
     private Animation immortalAnimation;
     private Animation jumpAnimation;
     private Animation explosionAnimation;
-    //private Animation slipAnimation;
     private Image wasted;
     private Image badtomat;
-
     private int immortalAnimDur = 100;
     private int jumpAnimDur = 60;
     private int fallAnimDur = 100;
     private int immortalTimer = 5;
     private int jumpingTimer;
-
+    //Slipping animation
     private float slipTimer = 1;
     private float slipCounter = 0;
-
+    //Bonus
     private int bonusTimer = 5;
     private float bonusCounter = 0;
     private boolean bonusActive = false;
     private boolean isTomat;
-
+    //TankMod
     private boolean tankMod;
     public static Clip SOUND;
 

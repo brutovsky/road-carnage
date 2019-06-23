@@ -12,6 +12,10 @@ import static gameObjects.stuff.Cars.TRUCK;
 import static gameObjects.stuff.Obstacles.*;
 import static gameObjects.stuff.Obstacles.TRAMPOLINE;
 
+/**
+ * @author Vadym Nakytniak
+ * Superclass for all level generators
+ */
 public abstract class LevelGenerator {
 
     protected float stage_y;
@@ -33,7 +37,7 @@ public abstract class LevelGenerator {
     public static final int TYPE_CARS = 2;
     public static final int TYPE_BONUSES = 3;
 
-    protected int auxiliaryList=0;
+    protected int auxiliaryList = 0;
 
     LevelGenerator(int stages, int roadLines) {
         this.stages = stages;
@@ -84,7 +88,7 @@ public abstract class LevelGenerator {
     }
 
     public int getLastObstacleTypeId(int type) {
-        for (int i = getObstacles().size()-auxiliaryList; i > 0; i--) {
+        for (int i = getObstacles().size() - auxiliaryList; i > 0; i--) {
             if (type == TYPE_NONE) {
                 if (getObstacles().get(i) == null) {
                     return i;
@@ -139,21 +143,22 @@ public abstract class LevelGenerator {
         return grid;
     }
 
-    public boolean checkForId(int id){
-        for(int[] array:grid){
-            for(int i:array){
-                if(i == id){
+    public boolean checkForId(int id) {
+        for (int[] array : grid) {
+            for (int i : array) {
+                if (i == id) {
                     return true;
                 }
             }
         }
         return false;
     }
-    public int howManyId(int id){
+
+    public int howManyId(int id) {
         int counter = 0;
-        for(int[] array:grid){
-            for(int i:array){
-                if(i == id){
+        for (int[] array : grid) {
+            for (int i : array) {
+                if (i == id) {
                     counter++;
                 }
             }
@@ -173,15 +178,15 @@ public abstract class LevelGenerator {
                             road.getObstacles().add(new Obstacle(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, CACTUS));
                             continue;
                         }
-                        case ROAD_BARRIER:{
+                        case ROAD_BARRIER: {
                             road.getObstacles().add(new Obstacle(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, ROAD_BARRIER));
                             continue;
                         }
-                        case ICE_POOL:{
+                        case ICE_POOL: {
                             road.getObstacles().add(new Obstacle(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, ICE_POOL));
                             continue;
                         }
-                        case PENGUINS:{
+                        case PENGUINS: {
                             Obstacle penguins = new Obstacle(1f, Road.CENTR, Road.Y - (i + 1) * stage_y, PENGUINS);
                             road.getObstacles().add(penguins);
                             int r = Constants.random.nextInt(4) + 1;
@@ -201,7 +206,7 @@ public abstract class LevelGenerator {
                             j = grid[i].length;
                             break;
                         }
-                        case BIG_HOLE:{
+                        case BIG_HOLE: {
                             Obstacle hole = new Obstacle(1f, Road.CENTR, Road.Y - (i + 1) * stage_y, BIG_HOLE);
                             road.getObstacles().add(hole);
                             int r = Constants.random.nextInt(4) + 1;
@@ -215,11 +220,11 @@ public abstract class LevelGenerator {
                             road.getObstacles().add(new Obstacle(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, HOLE));
                             continue;
                         }
-                        case FALLEN_TREE:{
+                        case FALLEN_TREE: {
                             road.getObstacles().add(new Obstacle(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, FALLEN_TREE));
                             continue;
                         }
-                        case WOLF:{
+                        case WOLF: {
                             road.getObstacles().add(new Obstacle(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, WOLF));
                             continue;
                         }
@@ -271,7 +276,7 @@ public abstract class LevelGenerator {
                     }
                 } else if (object instanceof Bonus) {
                     switch (((Bonus) object).getType()) {
-                        case TOMAT:{
+                        case TOMAT: {
                             road.getObstacles().add(new Bonus(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, Bonuses.TOMAT));
                             continue;
                         }
@@ -331,8 +336,8 @@ public abstract class LevelGenerator {
     }
 
 
-    public void createCentreRoadObstacle(Road road){
-        Obstacle obstacle = new Obstacle(1f,Road.CENTR,-Road.HEIGHT/2, KONUS);
+    public void createCentreRoadObstacle(Road road) {
+        Obstacle obstacle = new Obstacle(1f, Road.CENTR, -Road.HEIGHT / 2, KONUS);
         road.getObstacles().add(obstacle);
     }
 

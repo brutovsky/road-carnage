@@ -3,7 +3,10 @@ package gameObjects;
 import gameObjects.stuff.Cars;
 import gameObjects.stuff.Constants;
 import org.newdawn.slick.geom.Rectangle;
-
+/**
+ * @author Vadym Nakytniak
+ * Car object class
+ */
 public class Car extends MovingObject{
 
     private Cars typeOf;

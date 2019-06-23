@@ -8,9 +8,11 @@ import gameObjects.stuff.Obstacles;
 
 import static gameObjects.stuff.Cars.*;
 
+/**
+ * @author Vadym Nakytniak
+ * Desert level generator
+ */
 public class DessertLevel extends LevelGenerator {
-
-    private boolean isDuna;
 
     public DessertLevel() {
         super(3, 4);
@@ -85,7 +87,6 @@ public class DessertLevel extends LevelGenerator {
     public void generate() {
         generateStage1();
         generateStage2();
-        //generateStage3();
     }
 
     private void generateStage1() {
@@ -120,7 +121,6 @@ public class DessertLevel extends LevelGenerator {
     }
 
     private void generateStage2() {
-//
         int stage = 1;
         int c = 0;
         int sum = 0;
@@ -136,8 +136,8 @@ public class DessertLevel extends LevelGenerator {
                 for (int j = getFirstObstacleTypeId(type); j <= getLastObstacleTypeId(type); j++) {
                     sum += getProbability().get(j);
                     if (c <= sum) {
-                        if(type == TYPE_BONUSES){
-                            if(checkForId(j)){
+                        if (type == TYPE_BONUSES) {
+                            if (checkForId(j)) {
                                 grid[stage][i] = getObstacleIdByName("noname");
                                 break;
                             }
@@ -148,13 +148,10 @@ public class DessertLevel extends LevelGenerator {
                 }
             }
         }
-//
     }
 
 
-
     private void generateStage3() {
-//
         int stage = 2;
         int c = 0;
         int sum = 0;
@@ -176,7 +173,6 @@ public class DessertLevel extends LevelGenerator {
                 }
             }
         }
-        //
     }
 
 }

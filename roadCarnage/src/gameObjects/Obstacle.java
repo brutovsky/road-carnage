@@ -3,9 +3,11 @@ package gameObjects;
 import gameObjects.stuff.Constants;
 import gameObjects.stuff.Obstacles;
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 
+/**
+ * @author Vadym Nakytniak
+ * Obstacle objects class
+ */
 public class Obstacle extends GameObject {
     Obstacles typeOf;
     public static final int ONE_LINE_SIZE = 1;

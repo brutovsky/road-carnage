@@ -11,6 +11,10 @@ import gameObjects.stuff.Obstacles;
 
 import static gameObjects.stuff.Cars.*;
 
+/**
+ * @author Vadym Nakytniak
+ * City level generator
+ */
 public class CityLevel extends LevelGenerator {
 
 
@@ -74,7 +78,6 @@ public class CityLevel extends LevelGenerator {
         getProbability().put(i++, 10);//6
         getProbability().put(i++, 10);//7
         getProbability().put(i++, 10);//8
-
         getProbability().put(i++, 5);//9
         getProbability().put(i++, 5);//10
         getProbability().put(i++, 10);//11
@@ -137,12 +140,6 @@ public class CityLevel extends LevelGenerator {
         int c = Constants.random.nextInt(101);
         int sum = 0;
         int type = TYPE_NONE;
-        /*if (c <= getProbability().get(getObstacleIdByName("BIG HOLE"))) {
-            for (int i = 0; i < grid[0].length; i++) {
-                grid[stage][i] = getObstacleIdByName("BIG HOLE");
-            }
-            return;
-        }*/
         for (int i = 0; i < grid[stage].length; i++) {
             c = Constants.random.nextInt(101);
             type = getRandomType();
@@ -160,11 +157,9 @@ public class CityLevel extends LevelGenerator {
                 }
             }
         }
-
     }
 
     private void generateStage2() {
-//
         int stage = 1;
         int c = 0;
         int sum = 0;
@@ -192,12 +187,10 @@ public class CityLevel extends LevelGenerator {
                 }
             }
         }
-//
     }
 
 
     private void generateStage3() {
-//
         int stage = 2;
         int c = 0;
         int sum = 0;
@@ -219,7 +212,6 @@ public class CityLevel extends LevelGenerator {
                 }
             }
         }
-        //
     }
 
 }

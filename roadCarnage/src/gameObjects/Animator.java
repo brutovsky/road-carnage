@@ -12,6 +12,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * @author Vadym Nakytniak
+ * Class for all all images? animations and sounds
+ */
 public class Animator {
 
     private Animator() {
@@ -29,7 +33,7 @@ public class Animator {
         sprite_sheet = new SpriteSheet(image, spriteWidth, spriteHeight);
         for (int y = 0; y < lines; y++) {
             for (int x = 0; x < columns; x++) {
-                animation.addFrame(sprite_sheet.getSubImage(x,y), duration);
+                animation.addFrame(sprite_sheet.getSubImage(x, y), duration);
             }
         }
         animation.setLooping(looping);
@@ -56,7 +60,7 @@ public class Animator {
         return null;
     }
 
-    public static Clip createClip(Clip clip,String path){
+    public static Clip createClip(Clip clip, String path) {
         AudioInputStream audioInputStream = null;
         try {
             audioInputStream = AudioSystem.getAudioInputStream(

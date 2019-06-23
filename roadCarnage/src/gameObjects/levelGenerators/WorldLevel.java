@@ -1,10 +1,12 @@
 package gameObjects.levelGenerators;
 
 import gameObjects.Road;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * @author Vadym Nakytniak
+ * World level generator
+ */
 public class WorldLevel extends LevelGenerator {
 
     private DessertLevel desert;
@@ -32,9 +34,6 @@ public class WorldLevel extends LevelGenerator {
             case 1: {
                 desert.generate();
                 grid = Arrays.copyOf(desert.grid, desert.grid.length);
-                for (int[] i : grid) {
-                    System.out.println(Arrays.toString(i));
-                }
                 counter++;
                 break;
             }

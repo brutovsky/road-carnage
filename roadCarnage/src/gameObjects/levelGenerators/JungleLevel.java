@@ -1,18 +1,17 @@
 package gameObjects.levelGenerators;
 
 import gameObjects.Bonus;
-import gameObjects.Car;
 import gameObjects.Obstacle;
 import gameObjects.Road;
 import gameObjects.stuff.Bonuses;
-import gameObjects.stuff.Cars;
 import gameObjects.stuff.Constants;
 import gameObjects.stuff.Obstacles;
 
-import static gameObjects.stuff.Cars.*;
-
-public class JungleLevel extends LevelGenerator{
-
+/**
+ * @author Vadym Nakytniak
+ * Jungle level generator
+ */
+public class JungleLevel extends LevelGenerator {
 
     public JungleLevel() {
         super(3, 4);
@@ -110,11 +109,9 @@ public class JungleLevel extends LevelGenerator{
                 }
             }
         }
-
     }
 
     private void generateStage2() {
-//
         int stage = 1;
         int c = 0;
         int sum = 0;
@@ -130,8 +127,8 @@ public class JungleLevel extends LevelGenerator{
                 for (int j = getFirstObstacleTypeId(type); j <= getLastObstacleTypeId(type); j++) {
                     sum += getProbability().get(j);
                     if (c <= sum) {
-                        if(type == TYPE_BONUSES){
-                            if(checkForId(j)){
+                        if (type == TYPE_BONUSES) {
+                            if (checkForId(j)) {
                                 grid[stage][i] = getObstacleIdByName("noname");
                                 break;
                             }
@@ -142,13 +139,10 @@ public class JungleLevel extends LevelGenerator{
                 }
             }
         }
-//
     }
 
 
-
     private void generateStage3() {
-//
         int stage = 2;
         int c = 0;
         int sum = 0;
@@ -170,11 +164,10 @@ public class JungleLevel extends LevelGenerator{
                 }
             }
         }
-        //
     }
 
-    public void createCentreRoadObstacle(Road road){
-        Obstacle obstacle = new Obstacle(1f,Road.CENTR,-Road.HEIGHT/2, Obstacles.HOLE);
+    public void createCentreRoadObstacle(Road road) {
+        Obstacle obstacle = new Obstacle(1f, Road.CENTR, -Road.HEIGHT / 2, Obstacles.HOLE);
         road.getObstacles().add(obstacle);
     }
 

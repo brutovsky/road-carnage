@@ -4,8 +4,11 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 
-
-public class MovingObject extends GameObject{
+/**
+ * @author Vadym Nakytniak
+ * Superclass for all moving objects
+ */
+public class MovingObject extends GameObject {
 
     protected float speed;
     private Rectangle borders;
@@ -62,23 +65,23 @@ public class MovingObject extends GameObject{
         return (true);
     }
 
-    public int startX(){
-        return (int)borders.getX();
+    public int startX() {
+        return (int) borders.getX();
     }
 
-    public int startY(){
-        return (int)borders.getY();
+    public int startY() {
+        return (int) borders.getY();
     }
 
-    public int bordersWidth(){
-        return (int)borders.getWidth();
+    public int bordersWidth() {
+        return (int) borders.getWidth();
     }
 
-    public int bordersHeight(){
-        return (int)borders.getHeight();
+    public int bordersHeight() {
+        return (int) borders.getHeight();
     }
 
-    public float getSpeed(){
+    public float getSpeed() {
         return speed;
     }
 

@@ -25,46 +25,42 @@ import java.util.logging.Level;
 
 public class Gameplay extends BasicGame {
 
+    //Constants
     public static final int LEVEL_DESERT = 1;
     public static final int LEVEL_ARCTIC = 2;
     public static final int LEVEL_JUNGLE = 3;
     public static final int LEVEL_CITY = 4;
     public static final int LEVEL_WORLD = 5;
-
-    Font font;
-
-    Clip clankSound;
-    Clip carHitSound;
+    //Font
+    private Font font;
+    //Sounds
+    private Clip clankSound;
+    private Clip carHitSound;
     private boolean soundCheck;
-
+    //GameMenu
     private GameMenu menu;
-
     private boolean menuActive = false;
-
-    private int id;
+    //Player
     private Player player;
-
+    int speed_koef;
+    //Score
     private double km = 0;
-
+    //Timers
     private float generateTimer = -Road.HEIGHT;
     float konusTimer = generateTimer;
     float counter = 0;
-
-
-    // Test
+    //Level
     Road road;
     LevelDecorations decor;
-    int speed_koef;
-    //
-
-
     LevelGenerator level;
 
     public Gameplay(String title) {
         super(title);
     }
 
-
+    /**
+     * Thread that starts the game
+     */
     static public class Game implements Runnable {
 
         private Thread t;
@@ -107,6 +103,7 @@ public class Gameplay extends BasicGame {
         initLevel();
         menu = new GameMenu();
         soundCheck = false;
+        //Set Font
         try {
             font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, new FileInputStream(new File("res/fonts/font.otf"))).deriveFont(java.awt.Font.PLAIN, 14);
         } catch (FontFormatException e) {
@@ -168,8 +165,6 @@ public class Gameplay extends BasicGame {
             }
         }
     }
-    ////
-
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
@@ -197,7 +192,6 @@ public class Gameplay extends BasicGame {
         if (menuActive) {
             menu.draw();
         }
-
     }
 
 
