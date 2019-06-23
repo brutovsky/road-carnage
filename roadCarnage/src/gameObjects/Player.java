@@ -12,6 +12,8 @@ import java.io.IOException;
 
 public class Player extends MovingObject {
 
+    private int money;
+
     Clip jumpSound;
     Clip hitSound;
     Clip bonusSound;
@@ -48,7 +50,7 @@ public class Player extends MovingObject {
     private float slipTimer = 1;
     private float slipCounter = 0;
 
-    private int bonusTimer = 10;
+    private int bonusTimer = 5;
     private float bonusCounter = 0;
     private boolean bonusActive = false;
     private boolean isTomat;
@@ -81,6 +83,7 @@ public class Player extends MovingObject {
         } else {
             tankMod = false;
         }
+        money = 0;
     }
 
     private void setSOUND() {
@@ -233,10 +236,9 @@ public class Player extends MovingObject {
             case Constants
                     .MINUS_DURABILITY: {
                 if (tankMod) {
-                    if(!soundCheck){
+                    if (!(hitSound != null && hitSound.isActive())) {
                         hitSound = Animator.createClip(hitSound, "res/sounds/tankHit.wav");
                         hitSound.start();
-                        soundCheck = true;
                     }
                 } else {
                     hitSound = Animator.createClip(hitSound, "res/sounds/hit.wav");
@@ -268,13 +270,14 @@ public class Player extends MovingObject {
                     if (durability <= 0) {
                         deadEndSound = Animator.createClip(deadEndSound, "res/sounds/deadEnd.wav");
                         deadEndSound.start();
+                        SOUND.stop();
                         durability = 0;
                         broken = false;
                         speed = 0;
                         mobility = 0;
                     } else {
                         immortal = true;
-                        counter = 0;
+                        counter = 3;
                     }
                 } else {
                     deadEndSound = Animator.createClip(deadEndSound, "res/sounds/deadEnd.wav");
@@ -292,8 +295,10 @@ public class Player extends MovingObject {
             case Constants
                     .JUMP: {
                 if (tankMod) {
-                    hitSound = Animator.createClip(hitSound, "res/sounds/tankHit.wav");
-                    hitSound.start();
+                    if (!(hitSound != null && hitSound.isActive())) {
+                        hitSound = Animator.createClip(hitSound, "res/sounds/tankHit.wav");
+                        hitSound.start();
+                    }
                 } else {
                     jumpSound = Animator.createClip(jumpSound, "res/sounds/jump.wav");
                     jumpSound.start();
@@ -382,8 +387,10 @@ public class Player extends MovingObject {
             }
             case Constants.NO_MOVABILITY: {
                 if (tankMod) {
-                    hitSound = Animator.createClip(hitSound, "res/sounds/tankHit.wav");
-                    hitSound.start();
+                    if (!(hitSound != null && hitSound.isActive())) {
+                        hitSound = Animator.createClip(hitSound, "res/sounds/tankHit.wav");
+                        hitSound.start();
+                    }
                 } else {
                     if (!soundCheck) {
                         soundCheck = true;
@@ -399,6 +406,7 @@ public class Player extends MovingObject {
             case Constants.BONUS_CHERRY: {
                 cherrySound = Animator.createClip(cherrySound, "res/sounds/cherry.wav");
                 cherrySound.start();
+                money += 10;
                 break;
             }
         }
@@ -482,4 +490,7 @@ public class Player extends MovingObject {
         }
     }
 
+    public int getMoney() {
+        return money;
+    }
 }

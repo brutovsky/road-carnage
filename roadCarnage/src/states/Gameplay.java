@@ -44,7 +44,7 @@ public class Gameplay extends BasicGame {
     private int id;
     private Player player;
 
-    private float km = 0;
+    private double km = 0;
 
     private float generateTimer = -Road.HEIGHT;
     float konusTimer = generateTimer;
@@ -102,44 +102,68 @@ public class Gameplay extends BasicGame {
         gc.setTargetFrameRate(60);
         road = new Road();
         decor = new LevelDecorations();
-        player = new Player(1f, Road.LINE5, 600, Road.FULL_ROAD, PlayerCars.TANK);
+        initPlayer();
         speed_koef = 1;
         initLevel();
         menu = new GameMenu();
         soundCheck = false;
         try {
-            font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,new FileInputStream(new File("res/fonts/font.otf"))).deriveFont(java.awt.Font.PLAIN,14);
+            font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, new FileInputStream(new File("res/fonts/font.otf"))).deriveFont(java.awt.Font.PLAIN, 14);
         } catch (FontFormatException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }//end init
+    }
 
-    ////
+    private void initPlayer() {
+        switch (PlayerStats.carChosen) {
+            case 1: {
+                player = new Player(1f, Road.CENTR, 500, Road.FULL_ROAD, PlayerCars.ANISTON);
+                break;
+            }
+            case 2: {
+                player = new Player(1f, Road.CENTR, 500, Road.FULL_ROAD, PlayerCars.Stinger);
+                break;
+            }
+            case 3: {
+                player = new Player(1f, Road.CENTR, 500, Road.FULL_ROAD, PlayerCars.Z_TYPE);
+                break;
+            }
+            case 4: {
+                player = new Player(1f, Road.CENTR, 500, Road.FULL_ROAD, PlayerCars.FURORE);
+                break;
+            }
+            case 5: {
+                player = new Player(1f, Road.CENTR, 500, Road.FULL_ROAD, PlayerCars.TANK);
+                break;
+            }
+        }
+    }
+
     private void initLevel() {
-        switch(PlayerStats.currentLevel){
-            case DESERT:{
+        switch (PlayerStats.currentLevel) {
+            case DESERT: {
                 level = new DessertLevel();
                 break;
             }
-            case ARCTIC:{
+            case ARCTIC: {
                 level = new AntarcticLevel();
                 break;
             }
-            case JUNGLE:{
+            case JUNGLE: {
                 level = new JungleLevel();
                 break;
             }
-            case CITY:{
+            case CITY: {
                 level = new CityLevel();
                 break;
             }
-            case WORLD:{
+            case WORLD: {
                 level = new WorldLevel();
                 break;
             }
-            default:{
+            default: {
 
             }
         }
@@ -160,15 +184,16 @@ public class Gameplay extends BasicGame {
             go.draw();
         }
         player.draw();
-        BufferedImage image = new BufferedImage(250,200,BufferedImage.TYPE_INT_ARGB);
+        BufferedImage image = new BufferedImage(250, 250, BufferedImage.TYPE_INT_ARGB);
         java.awt.Graphics g = image.getGraphics();
         g.setColor(java.awt.Color.BLACK);
         g.setFont(font);
-        g.drawString("Speed - " + new Integer((int) player.getCurrentSpeed()).toString()+" px", 10, 30);
+        g.drawString("Speed - " + new Integer((int) player.getCurrentSpeed()).toString() + " px", 10, 30);
         g.drawString("Agility - " + new Integer((int) player.getCurrentMobility()).toString() + " px", 10, 60);
         g.drawString("Durability - " + new Integer((int) player.getCurrentDurability()).toString(), 10, 90);
-        g.drawString("KM - " + (int)(km*100)/100f, 10, 150);
-        Animator.toSlickImage(image).draw(10,10);
+        g.drawString("KM - " + (int) (km * 100) / 100f, 10, 150);
+        g.drawString("CASH - " + player.getMoney() + " $", 10, 210);
+        Animator.toSlickImage(image).draw(10, 10);
         if (menuActive) {
             menu.draw();
         }
@@ -183,9 +208,16 @@ public class Gameplay extends BasicGame {
             menu.update(i, input.getMouseX(), input.getMouseY());
             if (menu.isMouseOnExit(input.getMouseX(), input.getMouseY())) {
                 if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+                    PlayerStats.LAST_TRIP_SCORE = km;
+                    if (km > PlayerStats.HIGHSCORE) {
+                        PlayerStats.HIGHSCORE = km;
+                    }
+                    PlayerStats.MONEY_EARNED = player.getMoney();
                     clankSound = Animator.createClip(clankSound, "src/sounds/CLANK!.wav");
                     clankSound.start();
-                    Player.SOUND.stop();
+                    if (Player.SOUND != null) {
+                        Player.SOUND.stop();
+                    }
                     gameContainer.setForceExit(false);
                     gameContainer.exit();
                 }
@@ -279,8 +311,8 @@ public class Gameplay extends BasicGame {
                         break;
                     }
 
+                }
             }
-
 
 
             for (GameObject car : road.getObstacles()) {
@@ -303,13 +335,15 @@ public class Gameplay extends BasicGame {
                     }
                 }
             }
-            soundCheck = false;
+
             if (input.isKeyPressed(Input.KEY_ESCAPE)) {
                 menuActive = true;
             }
+
+
         }
-
     }
-
 }
+
+
 

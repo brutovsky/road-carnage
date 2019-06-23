@@ -51,8 +51,8 @@ public class DessertLevel extends LevelGenerator {
     public void initProbability() {
         super.initProbability();
         int i = 0;
-        bonus_chance = 3;
-        none_chance = 52;
+        bonus_chance = 5;
+        none_chance = 50;
         car_chance = 10;
         obstacle_chance = 35;
         getProbability().put(i++, none_chance);//0
@@ -68,8 +68,8 @@ public class DessertLevel extends LevelGenerator {
         getProbability().put(i++, 20);
         getProbability().put(i++, 10);
         //bonuses
-        getProbability().put(i++, 30);
-        getProbability().put(i++, 10);
+        getProbability().put(i++, 20);
+        getProbability().put(i++, 20);
         getProbability().put(i++, 10);
         getProbability().put(i++, 10);
         getProbability().put(i++, 10);

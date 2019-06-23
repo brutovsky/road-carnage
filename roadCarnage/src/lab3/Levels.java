@@ -5,9 +5,7 @@
  */
 package lab3;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +32,7 @@ public class Levels extends javax.swing.JPanel {
 
 	public void setHighscore(double input) {
 		highscore = input;
+		repaint(new Rectangle(0,0,700,100));
 	}
 
 	private void bPositive() {
@@ -150,11 +149,15 @@ public class Levels extends javax.swing.JPanel {
 		g.drawImage(background, 0, 0, 1000, 700, null);
 		g.setColor(Color.red);
 		g.setFont(new Font("Century Gothic Bold", 30, 40));
-		g.drawString("Highscore : " + highscore, 710, 75);
+		g.drawString("Highscore : " + (int) (highscore * 100) / 100f + " km", 350, 75);
 	}
 
 	public void unlockAll() {
 		levelsUnlocked = 5;
+	}
+
+	public void unlockLevel(int level){
+		levelsUnlocked = level;
 	}
 
 	/**

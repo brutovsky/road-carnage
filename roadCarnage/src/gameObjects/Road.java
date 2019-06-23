@@ -17,7 +17,7 @@ public class Road extends GameObject {
     public static final float X = 200;
     public static final float Y = 0;
     public static final float HEIGHT = 700;
-    public static String PATH = Levels.CITY.getPath();
+    public static String PATH;
 
 
     public static final float ROUGH_ROAD_WIDTH = 56;
@@ -45,14 +45,14 @@ public class Road extends GameObject {
     private List<GameObject> obstacles;
 
     public Road() throws SlickException {
-        super(Animator.createImage(PATH), 1f, 0, 0);
+        super(Animator.createImage(PlayerStats.currentLevel.getPath()), 1f, 0, 0);
+        PATH = PlayerStats.currentLevel.getPath();
         x = Constants.WINDOW_WIDTH - getImage().getWidth();
         y = Constants.WINDOW_HEIGHT - getImage().getHeight();
         this.road = getImage();
         this.secondRoad = getImage();
         yS = -road.getHeight();
         obstacles = new ArrayList<>();
-
     }
 
     public void update(float shift, int delta) {

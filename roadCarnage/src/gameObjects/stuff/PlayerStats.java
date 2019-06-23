@@ -7,7 +7,7 @@ public class PlayerStats {
     }
 
     private static int money;
-    public static PlayerCars currentCar;
+    public static int carChosen;
     public static Levels currentLevel;
     public static boolean ownCar1;
     public static boolean ownCar2;
@@ -21,10 +21,14 @@ public class PlayerStats {
     public static boolean openLevel4;
     public static boolean openLevel5;
 
+    public static double HIGHSCORE;
+    public static double LAST_TRIP_SCORE;
+    public static int MONEY_EARNED;
+
     static
     {
         money = 0;
-        //currentCar = PlayerCars.ANISTON;
+        carChosen = 1;
         currentLevel = Levels.ARCTIC;
 
         ownCar1 = true;
@@ -38,6 +42,10 @@ public class PlayerStats {
         openLevel3 = false;
         openLevel4 = false;
         openLevel5 = false;
+
+        HIGHSCORE = 0;
+        LAST_TRIP_SCORE = 0;
+        MONEY_EARNED = 0;
     }
 
     public static void putMoney(int m) {

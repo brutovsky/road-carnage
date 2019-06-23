@@ -5,6 +5,8 @@
  */
 package lab3;
 
+import gameObjects.stuff.PlayerStats;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
