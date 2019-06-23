@@ -7,7 +7,7 @@ import java.util.Random;
 
 public enum Decorations {
 
-    TREE("\\res\\decorations\\tree0.png", 1f),
+    TREE0("\\res\\decorations\\tree0.png", 1f),
     TREE1("\\res\\decorations\\tree1.png", 1f),
     TREE2("\\res\\decorations\\tree2.png", 1f),
     TREE3("\\res\\decorations\\tree3.png", 1f),
