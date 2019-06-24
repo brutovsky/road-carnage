@@ -64,14 +64,14 @@ public class CityLevel extends LevelGenerator {
         super.initProbability();
         int i = 0;
         bonus_chance = 5;
-        none_chance = 0;
-        car_chance = 85;
-        obstacle_chance = 10;
+        none_chance = 10;
+        car_chance = 60;
+        obstacle_chance = 25;
         getProbability().put(i++, none_chance);//0
         //obstacles
-        getProbability().put(i++, 20);//1
+        getProbability().put(i++, 10);//1
         getProbability().put(i++, 40);//2
-        getProbability().put(i++, 40);//3
+        getProbability().put(i++, 50);//3
         //cars
         getProbability().put(i++, 5);//4
         getProbability().put(i++, 10);//5

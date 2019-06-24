@@ -13,6 +13,7 @@ import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -125,6 +126,12 @@ public class MainFrame extends javax.swing.JFrame {
 
     public static void main(String[] args) {
         sas = new MainFrame();
+        try {
+            sas.setIconImage(ImageIO.read(new File("res/icon/icon.png")));
+            sas.setTitle("ROAD CARNAGE");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         sas.setVisible(true);
     }
 

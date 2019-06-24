@@ -270,6 +270,14 @@ public abstract class LevelGenerator {
                             road.getObstacles().add(new Car(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, Road.ROAD, MEGABUS));
                             continue;
                         }
+                        case POLICE:{
+                            road.getObstacles().add(new Car(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, Road.ROAD, POLICE));
+                            continue;
+                        }
+                        case AMBULANCE:{
+                            road.getObstacles().add(new Car(1f, road.getLineX(j + 1), Road.Y - (i + 1) * stage_y, Road.ROAD, AMBULANCE));
+                            continue;
+                        }
                         default: {
                             System.out.println("NO CAR");
                         }

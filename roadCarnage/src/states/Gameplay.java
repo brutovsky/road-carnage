@@ -320,7 +320,7 @@ public class Gameplay extends BasicGame {
                                 if (!soundCheck) {
                                     carHitSound = Animator.createClip(carHitSound, "res/sounds/carsHit.wav");
                                     carHitSound.start();
-                                    soundCheck = true;
+                                    soundCheck = false;
                                 }
                                 ((Car) car).setSpeed(0);
                                 break;

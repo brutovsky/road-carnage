@@ -79,16 +79,21 @@ public class Player extends MovingObject {
         setExplosionAnim();
         soundCheck = false;
         if (car == PlayerCars.TANK) {
-            setSOUND();
             tankMod = true;
         } else {
             tankMod = false;
         }
+        setSOUND();
         money = 0;
     }
 
     private void setSOUND() {
-        SOUND = Animator.createClip(SOUND, "res/sounds/SOUND.wav");
+        if(tankMod){
+            SOUND = Animator.createClip(SOUND, "res/sounds/SOUND.wav");
+        }else{
+            int i = Constants.random.nextInt(7)+1;
+            SOUND = Animator.createClip(SOUND, "res/sounds/sound" + i+".wav");
+        }
         SOUND.loop(10);
     }
 

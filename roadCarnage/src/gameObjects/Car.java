@@ -28,6 +28,9 @@ public class Car extends MovingObject{
 
     @Override
     public int collisionOccured() {
+        if(typeOf == Cars.POLICE){
+            return Constants.DEAD_END;
+        }
         return Constants.MINUS_DURABILITY;
     }
 
