@@ -20,9 +20,20 @@ public class Obstacle extends GameObject {
         super(Animator.animate(obstacle.getPath(),obstacle.getColumns(),obstacle.getLines(),100,true), scale, x , y);
         if(obstacle.getName().equals("FALLEN TREE")){
             setImageForFallenTree();
-            System.out.println("HELLO");
+        }
+        if(obstacle.getName().equals("CACTUS")){
+            setImageForCactus();
         }
         typeOf = obstacle;
+    }
+
+    private void setImageForCactus(){
+        int num = Constants.random.nextInt(6)+1;
+        String path = "res/obstacles/cactus" + num +".png";
+        Animation anim = new Animation();
+        anim.addFrame(Animator.createImage(path),100);
+        setAnimation(anim);
+        setImage(anim.getImage(0));
     }
 
     private void setImageForFallenTree() {
