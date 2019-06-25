@@ -15,6 +15,7 @@ public class LevelDecorations {
     private List<GameObject> decorationsRight;
     private String map;
     private int location;
+    private int counter;
 
     public LevelDecorations() {
         decorationsLeft = new ArrayList<>();
@@ -32,19 +33,69 @@ public class LevelDecorations {
             map = "Arctic";
         } else if (Road.PATH.equals(Levels.CITY.getPath())) {
             map = "City";
-        }
+        } else
+            map = "Tour";
     }
 
     public void update() {
         switch (map) {
+            case "Tour":
+                if (getDownPictureL().getY() > 700) {
+                    if (counter < 8) {
+                        map = "Desert";
+                        if (counter % 2 == 0) {
+                            decorationsLeft.add(randomDecoration(20, -92 * 23));
+                            decorationsRight.add(randomDecoration(820, -92 * 23));
+                        } else {
+
+                            decorationsLeft.add(randomDecoration(130, -92 * 23));
+                            decorationsRight.add(randomDecoration(910, -92 * 23));
+                        }
+                    } else if (counter >= 8 && counter < 16) {
+                        map = "Arctic";
+                        if (counter % 2 == 0) {
+                            decorationsLeft.add(randomDecoration(20, -88 * 23));
+                            decorationsRight.add(randomDecoration(820, -88 * 23));
+                        } else {
+
+                            decorationsLeft.add(randomDecoration(130, -88 * 23));
+                            decorationsRight.add(randomDecoration(910, -88 * 23));
+                        }
+                    } else if (counter >= 16 && counter < 24) {
+                        map = "Forest";
+                        if (counter % 2 == 0) {
+                            decorationsLeft.add(randomDecoration(20, -91 * 23));
+                            decorationsRight.add(randomDecoration(820, -91 * 23));
+                        } else {
+
+                            decorationsLeft.add(randomDecoration(130, -91 * 23));
+                            decorationsRight.add(randomDecoration(910, -91 * 23));
+                        }
+                    } else  {
+                        map = "City";
+                        if (counter % 2 == 0) {
+                            decorationsLeft.add(randomDecoration(20, -89 * 23));
+                            decorationsRight.add(new Decoration(1f, 810, -89 * 23, Decorations.RIDER1));
+                        } else {
+                            decorationsLeft.add(new Decoration(1f, 190, -89 * 23, Decorations.RIDER));
+                            decorationsRight.add(randomDecoration(910, -89 * 23));
+                        }
+                    }
+                    decorationsLeft.remove(getDownPictureL());
+                    decorationsRight.remove(getDownPictureR());
+                    counter++;
+                    if (counter == 32) counter = 0;
+                }
+                map = "Tour";
+                break;
             case "City":
                 if (getDownPictureL().getY() > 700) {
                     if (location % 2 == 0) {
-                        decorationsLeft.add(randomDecoration(20,-80));
-                        decorationsRight.add(new Decoration(1f, 810, -80 , Decorations.RIDER1));
+                        decorationsLeft.add(randomDecoration(20, -80));
+                        decorationsRight.add(new Decoration(1f, 810, -80, Decorations.RIDER1));
                     } else {
-                        decorationsLeft.add(new Decoration(1f, 190, -80 , Decorations.RIDER));
-                        decorationsRight.add(randomDecoration(910,-80));
+                        decorationsLeft.add(new Decoration(1f, 190, -80, Decorations.RIDER));
+                        decorationsRight.add(randomDecoration(910, -80));
                     }
                     decorationsLeft.remove(getDownPictureL());
                     decorationsRight.remove(getDownPictureR());
@@ -71,14 +122,60 @@ public class LevelDecorations {
 
     public void addDecorations() {
         switch (map) {
+            case "Tour":
+                for (int i = 0; i < 32; i++) {
+                    if (i < 8) {
+                        map = "Desert";
+                        if (decorationsLeft.size() % 2 == 0) {
+                            decorationsLeft.add(randomDecoration(20, -90 * i));
+                            decorationsRight.add(randomDecoration(820, -90 * i));
+                        } else {
+
+                            decorationsLeft.add(randomDecoration(130, -90 * i));
+                            decorationsRight.add(randomDecoration(910, -90 * i));
+                        }
+                    } else if (i >= 8 && i < 16) {
+                        map = "Arctic";
+                        if (decorationsLeft.size() % 2 == 0) {
+                            decorationsLeft.add(randomDecoration(20, -90 * i));
+                            decorationsRight.add(randomDecoration(820, -90 * i));
+                        } else {
+
+                            decorationsLeft.add(randomDecoration(130, -90 * i));
+                            decorationsRight.add(randomDecoration(910, -90 * i));
+                        }
+                    } else if (i >= 16 && i < 24) {
+                        map = "Forest";
+                        if (decorationsLeft.size() % 2 == 0) {
+                            decorationsLeft.add(randomDecoration(20, -90 * i));
+                            decorationsRight.add(randomDecoration(820, -90 * i));
+                        } else {
+
+                            decorationsLeft.add(randomDecoration(130, -90 * i));
+                            decorationsRight.add(randomDecoration(910, -90 * i));
+                        }
+                    } else if (i >= 24) {
+                        map = "City";
+                        if (decorationsLeft.size() % 2 == 0) {
+                            decorationsLeft.add(randomDecoration(20, -90 * i));
+                            decorationsRight.add(new Decoration(1f, 810, -90 * i, Decorations.RIDER1));
+                        } else {
+                            decorationsLeft.add(new Decoration(1f, 190, -90 * i, Decorations.RIDER));
+                            decorationsRight.add(randomDecoration(910, -90 * i));
+                        }
+                    }
+
+                }
+                map = "Tour";
+                break;
             case "City":
                 for (int i = 0; i < 8; i++) {
                     if (decorationsLeft.size() % 2 == 0) {
-                        decorationsLeft.add(randomDecoration(20,-80*i));
+                        decorationsLeft.add(randomDecoration(20, -80 * i));
                         decorationsRight.add(new Decoration(1f, 810, -80 * i, Decorations.RIDER1));
                     } else {
                         decorationsLeft.add(new Decoration(1f, 190, -80 * i, Decorations.RIDER));
-                        decorationsRight.add(randomDecoration(910,-80*i));
+                        decorationsRight.add(randomDecoration(910, -80 * i));
                     }
                 }
                 break;
@@ -194,7 +291,7 @@ public class LevelDecorations {
                         return new Decoration(1f, x + 20, y - 50, Decorations.BANNER2);
                     case 9:
                         return new Decoration(1f, x + 20, y - 50, Decorations.BANNER3);
-                    default :
+                    default:
                         return new Decoration(1f, x + 20, y - 50, Decorations.CITYTREE);
                 }
             default:

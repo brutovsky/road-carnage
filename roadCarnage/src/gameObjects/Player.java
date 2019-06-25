@@ -412,7 +412,7 @@ public class Player extends MovingObject {
             case Constants.BONUS_CHERRY: {
                 cherrySound = Animator.createClip(cherrySound, "res/sounds/cherry.wav");
                 cherrySound.start();
-                money += 10;
+                money += 50;
                 break;
             }
         }

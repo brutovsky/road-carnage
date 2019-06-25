@@ -1,6 +1,7 @@
 package gameObjects;
 
 import gameObjects.stuff.Constants;
+import gameObjects.stuff.Levels;
 import gameObjects.stuff.PlayerStats;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
@@ -36,7 +37,7 @@ public class Road extends GameObject {
     public static final Rectangle FULL_ROAD = new Rectangle(X, Y, WIDTH, HEIGHT);
     public static final Rectangle ROAD = new Rectangle(X + ROUGH_ROAD_WIDTH, Y, WIDTH - 2 * ROUGH_ROAD_WIDTH, HEIGHT);
     private int id;
-    Image road, secondRoad;
+    Image road, secondRoad ;
     float yS;
     private List<GameObject> obstacles;
 
@@ -47,26 +48,29 @@ public class Road extends GameObject {
         y = Constants.WINDOW_HEIGHT - getImage().getHeight();
         this.road = getImage();
         this.secondRoad = getImage();
-        yS = -road.getHeight();
+        yS = y - getImage().getHeight();
         obstacles = new ArrayList<>();
     }
 
     public void update(float shift, int delta) {
-        System.out.println(shift * delta / Constants.DIVIDE_DELTA);
+
         y += shift * delta / Constants.DIVIDE_DELTA;
         yS += shift * delta / Constants.DIVIDE_DELTA;
         if (y > 700) {
-            y = -1500;
+            y = yS - getImage().getHeight() ;
         }
         if (yS > 700) {
-            yS = -1500;
+            yS = y - getImage().getHeight();
         }
+
     }
 
     @Override
     public void draw() {
-        road.draw(x, y);
-        secondRoad.draw(x, yS);
+
+            road.draw(x, y );
+            secondRoad.draw(x, yS );
+
     }
 
     public float getLineX(int number) {
