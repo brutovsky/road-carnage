@@ -2,47 +2,146 @@ package gameObjects;
 
 import gameObjects.stuff.Constants;
 import gameObjects.stuff.PlayerCars;
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.openal.AiffData;
 
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.IOException;
+
+/**
+ * @author Vadym Nakytniak
+ * Player car class
+ */
 public class Player extends MovingObject {
-
+    //Money
+    private int money;
+    //Sounds
+    Clip jumpSound;
+    Clip hitSound;
+    Clip bonusSound;
+    Clip cherrySound;
+    Clip tomatSound;
+    Clip deadEndSound;
+    Clip slippingSound;
+    public boolean soundCheck;
+    //Characteristics
     private int durability;
     private float mobility;
     private PlayerCars typeOfCar;
-    private boolean unbroken;
+    //booleans
+    private boolean broken;
     private boolean immortal;
     private boolean jumping;
-    private boolean falling;
-    private int counter;
+    private boolean slipping;
+    //Animations and images
+    private float counter;
     private Animation immortalAnimation;
     private Animation jumpAnimation;
-    private Animation fallAnimation;
-    private int jumpAnimDur = 50;
+    private Animation explosionAnimation;
+    private Image wasted;
+    private Image badtomat;
+    private int immortalAnimDur = 100;
+    private int jumpAnimDur = 60;
     private int fallAnimDur = 100;
+    private int immortalTimer = 5;
+    private int jumpingTimer;
+    //Slipping animation
+    private float slipTimer = 1;
+    private float slipCounter = 0;
+    //Bonus
+    private int bonusTimer = 5;
+    private float bonusCounter = 0;
+    private boolean bonusActive = false;
+    private boolean isTomat;
+    //TankMod
+    private boolean tankMod;
+    public static Clip SOUND;
 
 
-    public Player(float scale, int x, int y, Rectangle borders, PlayerCars car) {
+    public Player(float scale, float x, float y, Rectangle borders, PlayerCars car) {
         super(car.getImage(), scale, x, y, car.getSpeed(), borders);
         typeOfCar = car;
+        setCarImage();
         durability = typeOfCar.getDurability();
         mobility = typeOfCar.getMobility();
         if (durability >= 0) {
-            unbroken = true;
+            broken = true;
         }
         immortal = false;
+        jumping = false;
         counter = 0;
-        try {
-            Image temp = new Image(typeOfCar.getPath() + "Immortal" + ".png").getScaledCopy(scale);
-            immortalAnimation = new Animation();
-            immortalAnimation.addFrame(getImage(), 100);
-            immortalAnimation.addFrame(temp, 100);
-        } catch (SlickException e) {
-            e.printStackTrace();
+        wasted = Animator.createImage("res/playerCars/wasted.png");
+        badtomat = Animator.createImage("res/obstacles/badtomat.png");
+        setImmortlaAnim();
+        setJumpAnim();
+        setExplosionAnim();
+        soundCheck = false;
+        if (car == PlayerCars.TANK) {
+            tankMod = true;
+        } else {
+            tankMod = false;
         }
+        setSOUND();
+        money = 0;
+    }
 
+    private void setSOUND() {
+        if(tankMod){
+            SOUND = Animator.createClip(SOUND, "res/sounds/SOUND.wav");
+        }else{
+            int i = Constants.random.nextInt(7)+1;
+            SOUND = Animator.createClip(SOUND, "res/sounds/sound" + i+".wav");
+        }
+        SOUND.loop(10);
+    }
+
+    private void initSounds() {
+        jumpSound = null;
+        hitSound = null;
+        bonusSound = null;
+        cherrySound = null;
+        jumpSound = Animator.createClip(jumpSound, "res/sounds/jump.wav");
+    }
+
+    private void setImmortlaAnim() {
+        Image temp = Animator.createImage(typeOfCar.getPath() + "Immortal" + ".png").getScaledCopy(getScale());
+        immortalAnimation = new Animation();
+        immortalAnimation.addFrame(Animator.createImage(typeOfCar.getPath() + ".png"), immortalAnimDur);
+        immortalAnimation.addFrame(temp, immortalAnimDur);
+        immortalAnimation.setLooping(true);
+    }
+
+    private void setCarImage() {
+        setImage(Animator.createImage(typeOfCar.getPath() + ".png").getScaledCopy(getScale()));
+    }
+
+    public void setExplosionAnim() {
+        explosionAnimation = new Animation();
+        Image image = null;
+        SpriteSheet sprite_sheet = null;
+        int columns = 15;
+        int lines = 1;
+        image = Animator.createImage("res/playerCars/explosion.png");
+        int spriteSheetWidth = image.getWidth();
+        int spriteSheetHeight = image.getHeight();
+        int spriteWidth = (int) (spriteSheetWidth / columns);
+        int spriteHeight =
+                (int) (spriteSheetHeight / lines);
+        sprite_sheet = new SpriteSheet(image,
+                spriteWidth,
+                spriteHeight);
+        for (int y = 0; y < lines; y++) {
+            for (int x = 0; x < columns; x++) {
+                explosionAnimation.addFrame(
+                        sprite_sheet.getSprite(x, y), 100);
+            }
+        }
+        explosionAnimation.setLooping(false);
+    }
+
+    private void setJumpAnim() {
         jumpAnimation = new Animation();
         jumpAnimation.addFrame(getImage().getScaledCopy(1.1f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.15f), jumpAnimDur);
@@ -55,25 +154,15 @@ public class Player extends MovingObject {
         jumpAnimation.addFrame(getImage().getScaledCopy(1.50f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.45f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.40f), jumpAnimDur);
+        jumpAnimation.addFrame(getImage().getScaledCopy(1.35f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.30f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.25f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.20f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.15f), jumpAnimDur);
         jumpAnimation.addFrame(getImage().getScaledCopy(1.1f), jumpAnimDur);
+        jumpAnimation.addFrame(getImage().getScaledCopy(1f), jumpAnimDur);
         jumpAnimation.setLooping(false);
-
-        fallAnimation = new Animation();
-        fallAnimation.addFrame(getImage().getScaledCopy(0.9f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.8f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.7f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.6f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.5f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.4f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.3f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.2f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.1f), fallAnimDur);
-        fallAnimation.addFrame(getImage().getScaledCopy(0.05f), fallAnimDur);
-        fallAnimation.setLooping(false);
+        jumpingTimer = ((jumpAnimation.getFrameCount()) * jumpAnimDur) / Constants.DIVIDE_DELTA;
     }
 
     public int getDurability() {
@@ -97,7 +186,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveForward(int delta) {
-        y -= speed * delta / Constants.DIVIDE_DELTA;
+        y -= speed * delta * 1f / 1000;
         if (y <= startY()) {
             y = startY();
             return false;
@@ -106,7 +195,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveBackward(int delta) {
-        y += speed * delta / Constants.DIVIDE_DELTA;
+        y += speed * delta * 1f / 1000;
         if (y + height >= bordersHeight() + startY()) {
             y = bordersHeight() - height;
             return false;
@@ -115,7 +204,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveRight(int delta) {
-        x += getCurrentMobility() * delta / Constants.DIVIDE_DELTA;
+        x += getCurrentMobility() * delta * 1f / 1000;
         if (x + width >= startX() + bordersWidth()) {
             x = bordersWidth() + startX() - width;
             return false;
@@ -124,7 +213,7 @@ public class Player extends MovingObject {
     }
 
     public boolean moveLeft(int delta) {
-        x -= getCurrentMobility() * delta / Constants.DIVIDE_DELTA;
+        x -= getCurrentMobility() * delta * 1f / 1000;
         if (x <= startX()) {
             x = startX();
             return false;
@@ -137,92 +226,204 @@ public class Player extends MovingObject {
             jumpAnimation.draw(x, y);
         } else if (immortal) {
             immortalAnimation.draw(x, y);
-        } else if(falling){
-            y -= 0.5;
-            fallAnimation.draw(x,y);
-        }
-        else {
+        } else {
             getImage().draw(x, y);
         }
-    }
-
-    public boolean checkForCollision(GameObject object) {
-        float thisTop = y;
-        float thisBottom = thisTop + height;
-        float thisLeft = x;
-        float thisRight = thisLeft + width;
-
-        float otherTop = object.y;
-        float otherBottom = otherTop + object.height;
-        float otherLeft = object.x;
-        float otherRight = otherLeft + object.width;
-
-        if (thisBottom < otherTop) return (false);
-        if (thisTop > otherBottom) return (false);
-
-        if (thisRight < otherLeft) return (false);
-        if (thisLeft > otherRight) return (false);
-
-        return (true);
-    }
-
-    public boolean checkForCollision(Rectangle object) {
-        float thisTop = y;
-        float thisBottom = thisTop + height;
-        float thisLeft = x;
-        float thisRight = thisLeft + width;
-
-        float otherTop = object.getY();
-        float otherBottom = otherTop + object.getHeight();
-        float otherLeft = object.getX();
-        float otherRight = otherLeft + object.getWidth();
-
-        if (thisBottom < otherTop) return (false);
-        if (thisTop > otherBottom) return (false);
-
-        if (thisRight < otherLeft) return (false);
-        if (thisLeft > otherRight) return (false);
-
-        return (true);
+        if (isTomat) {
+            badtomat.draw(Road.CENTR - badtomat.getWidth() / 2, Road.Y);
+        }
+        if (!broken) {
+            wasted.draw(Road.CENTR - wasted.getWidth() / 2, Road.HEIGHT / 2 - wasted.getHeight() / 2);
+        }
     }
 
     public void collision(int collision) {
         switch (collision) {
             case Constants
                     .MINUS_DURABILITY: {
-                durability--;
-                if (durability <= 0) {
-                    unbroken = false;
+                if (tankMod) {
+                    if (!(hitSound != null && hitSound.isActive())) {
+                        hitSound = Animator.createClip(hitSound, "res/sounds/tankHit.wav");
+                        hitSound.start();
+                    }
                 } else {
-                    immortal = true;
-                    counter = 3;
+                    hitSound = Animator.createClip(hitSound, "res/sounds/hit.wav");
+                    hitSound.start();
+                    if (slipping) {
+                        toNormalMode();
+                    }
+                    durability--;
+                    if (durability <= 0) {
+                        deadEndSound = Animator.createClip(deadEndSound, "res/sounds/deadEnd.wav");
+                        deadEndSound.start();
+                        durability = 0;
+                        broken = false;
+                        speed = 0;
+                        mobility = 0;
+                    } else {
+                        immortal = true;
+                        counter = 0;
+                    }
                 }
                 break;
             }
             case Constants
                     .DEAD_END: {
-                durability = 0;
-                unbroken = false;
-                falling = true;
-                setAnimation(fallAnimation);
+                if (tankMod) {
+                    hitSound = Animator.createClip(hitSound, "res/sounds/tankHit.wav");
+                    hitSound.start();
+                    durability--;
+                    if (durability <= 0) {
+                        deadEndSound = Animator.createClip(deadEndSound, "res/sounds/deadEnd.wav");
+                        deadEndSound.start();
+                        SOUND.stop();
+                        durability = 0;
+                        broken = false;
+                        speed = 0;
+                        mobility = 0;
+                    } else {
+                        immortal = true;
+                        counter = 3;
+                    }
+                } else {
+                    deadEndSound = Animator.createClip(deadEndSound, "res/sounds/deadEnd.wav");
+                    deadEndSound.start();
+                    if (slipping) {
+                        toNormalMode();
+                    }
+                    durability = 0;
+                    broken = false;
+                    speed = 0;
+                    mobility = 0;
+                }
                 break;
             }
             case Constants
                     .JUMP: {
-                jumping = true;
-                setAnimation(jumpAnimation);
+                if (tankMod) {
+                    if (!(hitSound != null && hitSound.isActive())) {
+                        hitSound = Animator.createClip(hitSound, "res/sounds/tankHit.wav");
+                        hitSound.start();
+                    }
+                } else {
+                    jumpSound = Animator.createClip(jumpSound, "res/sounds/jump.wav");
+                    jumpSound.start();
+                    if (slipping) {
+                        toNormalMode();
+                    }
+                    counter = 0;
+                    jumping = true;
+                    setAnimation(jumpAnimation);
+                    setJumpAnim();
+                }
                 break;
             }
-
+            case Constants.BONUS_BARRIER: {
+                bonusSound = Animator.createClip(bonusSound, "res/sounds/bonus.wav");
+                bonusSound.start();
+                if (slipping) {
+                    toNormalMode();
+                }
+                immortal = true;
+                counter = 0;
+                break;
+            }
+            case Constants.BONUS_FIRE: {
+                bonusSound = Animator.createClip(bonusSound, "res/sounds/bonus.wav");
+                bonusSound.start();
+                if (slipping) {
+                    toNormalMode();
+                }
+                bonusActive = true;
+                speed *= 2;
+                bonusCounter = 0;
+                break;
+            }
+            case Constants.BONUS_ICE: {
+                bonusSound = Animator.createClip(bonusSound, "res/sounds/bonus.wav");
+                bonusSound.start();
+                if (slipping) {
+                    toNormalMode();
+                }
+                bonusActive = true;
+                speed /= 2;
+                bonusCounter = 0;
+                break;
+            }
+            case Constants.BONUS_WRENCH: {
+                bonusSound = Animator.createClip(bonusSound, "res/sounds/bonus.wav");
+                bonusSound.start();
+                if (slipping) {
+                    toNormalMode();
+                }
+                durability++;
+                break;
+            }
+            case Constants.BONUS_TOMAT: {
+                tomatSound = Animator.createClip(tomatSound, "res/sounds/tomat.wav");
+                tomatSound.start();
+                if (slipping) {
+                    toNormalMode();
+                }
+                bonusActive = true;
+                isTomat = true;
+                bonusCounter = 0;
+                break;
+            }
+            case Constants.BONUS_FAN: {
+                bonusSound = Animator.createClip(bonusSound, "res/sounds/bonus.wav");
+                bonusSound.start();
+                if (slipping) {
+                    toNormalMode();
+                }
+                bonusActive = true;
+                mobility *= 2;
+                bonusCounter = 0;
+                break;
+            }
+            case Constants.BONUS_SURPRISE: {
+                bonusSound = Animator.createClip(bonusSound, "res/sounds/bonus.wav");
+                bonusSound.start();
+                if (slipping) {
+                    toNormalMode();
+                }
+                int bonus = 1000 + Constants.random.nextInt(7);
+                collision(bonus);
+                break;
+            }
+            case Constants.NO_MOVABILITY: {
+                if (tankMod) {
+                    if (!(hitSound != null && hitSound.isActive())) {
+                        hitSound = Animator.createClip(hitSound, "res/sounds/tankHit.wav");
+                        hitSound.start();
+                    }
+                } else {
+                    if (!soundCheck) {
+                        soundCheck = true;
+                        slippingSound = Animator.createClip(slippingSound, "res/sounds/slipping.wav");
+                        slippingSound.start();
+                    }
+                    slipping = true;
+                    mobility = 0;
+                    slipCounter = 0;
+                }
+                break;
+            }
+            case Constants.BONUS_CHERRY: {
+                cherrySound = Animator.createClip(cherrySound, "res/sounds/cherry.wav");
+                cherrySound.start();
+                money += 10;
+                break;
+            }
         }
     }
 
-    public boolean isUnbroken() {
-        return unbroken;
+    public boolean isBroken() {
+        return broken;
     }
 
-    public void setUnbroken(boolean unbroken) {
-        this.unbroken = unbroken;
+    public void setBroken(boolean broken) {
+        this.broken = broken;
     }
 
     public boolean isImmortal() {
@@ -237,36 +438,65 @@ public class Player extends MovingObject {
     @Override
     public void update(int delta) {
         if (immortal) {
-            counter += delta;
-            if (counter >= 5000) {
+            counter += (delta * 1f) / Constants.DIVIDE_DELTA;
+            System.out.println(counter);
+            if (counter >= immortalTimer) {
                 immortal = false;
                 counter = 0;
             }
         } else if (jumping) {
-            counter += (jumpAnimation.getFrameCount() * jumpAnimDur) / 60;
-            if (counter >= jumpAnimation.getFrameCount() * jumpAnimDur) {
+            counter += (delta * 1f) / Constants.DIVIDE_DELTA;
+            System.out.println(counter);
+            if (counter >= jumpingTimer) {
                 jumping = false;
+                counter = 0;
             }
-        } else if (falling) {
-            counter += (fallAnimation.getFrameCount() * fallAnimDur) / 40;
-            if (counter >= jumpAnimation.getFrameCount() * fallAnimDur) {
-                falling = false;
+
+        } else if (slipping) {
+            slipCounter += (delta * 1f) / Constants.DIVIDE_DELTA;
+            if (slipCounter >= slipTimer) {
+                toNormalMode();
+            } else {
+                System.out.println("ROTATE");
+                getImage().rotate(5);
             }
         }
 
+        if (bonusActive) {
+            bonusCounter += (delta * 1f) / Constants.DIVIDE_DELTA;
+            System.out.println(bonusCounter);
+            if (bonusCounter >= bonusTimer) {
+                bonusActive = false;
+                toNormalMode();
+                bonusCounter = 0;
+            }
+        }
+
+
+    }
+
+    private void toNormalMode() {
+        setCarImage();
+        speed = getSpeed();
+        mobility = getMobility();
+        isTomat = false;
+        slipping = false;
+        slipCounter = 0;
+        soundCheck = false;
+        System.out.println("NORMAL");
     }
 
     public boolean isJumping() {
         return jumping;
     }
 
-    public boolean isFalling() {
-        return falling;
-    }
-
     public void dangerZone() {
         if (Constants.random.nextInt(1001) < Constants.RISK) {
             collision(Constants.MINUS_DURABILITY);
         }
+    }
+
+    public int getMoney() {
+        return money;
     }
 }

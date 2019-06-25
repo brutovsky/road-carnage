@@ -3,8 +3,11 @@ package gameObjects;
 import gameObjects.stuff.Constants;
 import gameObjects.stuff.Obstacles;
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Image;
 
+/**
+ * @author Vadym Nakytniak
+ * Obstacle objects class
+ */
 public class Obstacle extends GameObject {
     Obstacles typeOf;
     public static final int ONE_LINE_SIZE = 1;
@@ -14,8 +17,32 @@ public class Obstacle extends GameObject {
 
 
     public Obstacle(float scale, float x, float y, Obstacles obstacle) {
-        super(obstacle.getAnimation(), scale, x, y);
+        super(Animator.animate(obstacle.getPath(),obstacle.getColumns(),obstacle.getLines(),100,true), scale, x , y);
+        if(obstacle.getName().equals("FALLEN TREE")){
+            setImageForFallenTree();
+        }
+        if(obstacle.getName().equals("CACTUS")){
+            setImageForCactus();
+        }
         typeOf = obstacle;
+    }
+
+    private void setImageForCactus(){
+        int num = Constants.random.nextInt(6)+1;
+        String path = "res/obstacles/cactus" + num +".png";
+        Animation anim = new Animation();
+        anim.addFrame(Animator.createImage(path),100);
+        setAnimation(anim);
+        setImage(anim.getImage(0));
+    }
+
+    private void setImageForFallenTree() {
+        int num = Constants.random.nextInt(4)+1;
+        String path = "res/obstacles/fallenTree" + num +".png";
+        Animation anim = new Animation();
+        anim.addFrame(Animator.createImage(path),100);
+        setAnimation(anim);
+        setImage(anim.getImage(0));
     }
 
     public void draw() {
@@ -24,11 +51,19 @@ public class Obstacle extends GameObject {
 
     @Override
     public void update(float shift, int delta) {
-        y += shift * delta / Constants.DIVIDE_DELTA;
+        y += (shift * delta) / Constants.DIVIDE_DELTA;
     }
 
     @Override
     public int collisionOccured() {
         return typeOf.collision();
+    }
+
+    public String getName(){
+        return typeOf.getName();
+    }
+
+    public Obstacles getType() {
+        return typeOf;
     }
 }
