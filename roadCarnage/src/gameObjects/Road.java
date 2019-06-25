@@ -53,6 +53,7 @@ public class Road extends GameObject {
     }
 
     public void update(float shift, int delta) {
+
         y += shift * delta / Constants.DIVIDE_DELTA;
         yS += shift * delta / Constants.DIVIDE_DELTA;
         if (y > 700) {
